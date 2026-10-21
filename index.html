@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#10110f" />
+    <meta name="description" content="ECHO-TALE — đọc bằng mắt, lắng nghe bằng tâm trí." />
+    <title>ECHO-TALE — Khoảng lặng giữa hai chương</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styler.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Điều hướng">
+        <a class="wordmark" href="#" aria-label="ECHO-TALE trang chủ">
+          <span class="wordmark-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span>ECHO<span class="wordmark-dash">—</span>TALE</span>
+        </a>
+        <div class="sidebar-label">KHÔNG GIAN CỦA BẠN</div>
+        <nav class="side-nav">
+          <a class="side-link" href="#discover"><span class="nav-icon">⌂</span> Khám phá</a>
+          <a class="side-link" href="#library"><span class="nav-icon">▤</span> Thư viện của tôi <span class="nav-count">12</span></a>
+          <a class="side-link" href="#reader"><span class="nav-icon">◉</span> Đang nghe</a>
+          <a class="side-link" href="#reviews"><span class="nav-icon">✳</span> Đánh giá</a>
+        </nav>
+        <div class="sidebar-label shelf-label">BỘ SƯU TẬP <button class="add-collection" aria-label="Thêm bộ sưu tập">+</button></div>
+        <a class="collection-link" href="#library"><span class="collection-dot dot-lilac"></span> Đọc trước khi ngủ <span>08</span></a>
+        <a class="collection-link" href="#library"><span class="collection-dot dot-orange"></span> Những chuyến đi <span>12</span></a>
+        <a class="collection-link" href="#library"><span class="collection-dot dot-blue"></span> Giọng kể yêu thích <span>05</span></a>
+        <div class="sidebar-spacer"></div>
+        <div class="sidebar-quote"><span>“</span><p>Stories are the<br />heartbeat of memory.</p><small>— ECHO JOURNAL, Nº 08</small></div>
+        <button class="profile-card" id="profile-button"><span class="profile-avatar">L</span><span><strong>Lan Nguyễn</strong><small>Thành viên từ 2024</small></span><span class="profile-dots">···</span></button>
+      </aside>
+
+      <main class="main-area" id="discover">
+        <header class="topbar">
+          <div class="breadcrumbs"><span>THƯ VIỆN CỦA TÔI</span><b>/</b><span class="crumb-current">ĐANG ĐỌC</span></div>
+          <div class="topbar-actions">
+            <button class="search-button" id="search-button" aria-label="Tìm truyện"><span>⌕</span><span>Tìm truyện...</span><kbd>⌘ K</kbd></button>
+            <button class="top-icon" id="notifications" aria-label="Thông báo">♧<i></i></button>
+            <button class="mobile-menu" id="mobile-menu" aria-label="Mở menu">☰</button>
+          </div>
+        </header>
+
+        <section class="reader-page" id="reader">
+          <div class="page-heading">
+            <div>
+              <div class="eyebrow"><span class="live-dot"></span> CHƯƠNG ĐANG PHÁT <span class="eyebrow-separator">/</span> 04 — 18</div>
+              <h1>Khoảng lặng <em>giữa hai chương</em></h1>
+              <div class="book-byline"><span class="tiny-cover">K</span><span>Người kể chuyện: <strong>Nguyễn An</strong></span><span class="byline-dot"></span><span>Giọng đọc: <strong>Mộc Lam</strong></span></div>
+            </div>
+            <button class="mode-toggle" id="mode-toggle" aria-pressed="false"><span class="mode-icon">◉</span><span>Chế độ nghe</span><span class="toggle-track"><i></i></span></button>
+          </div>
+
+          <div class="reader-grid">
+            <section class="reader-column" aria-label="Nội dung chương">
+              <div class="reader-card">
+                <div class="chapter-heading">
+                  <div><span class="chapter-kicker">CHƯƠNG IV</span><h2>Những điều chưa kịp nói</h2></div>
+                  <button class="more-button" id="bookmark-button" aria-pressed="false" aria-label="Lưu dấu trang">♧</button>
+                </div>
+                <div class="chapter-rule"><span></span><i>✳</i><span></span></div>
+                <div class="reading-copy" id="reading-copy">
+                  <p data-paragraph="p1">Cơn mưa bắt đầu vào lúc thành phố vừa lên đèn. Những giọt nước nhỏ chạm vào ô cửa kính, kéo theo những vệt sáng dài như ai đó vừa khẽ tay xóa đi một ngày cũ.</p>
+                  <p data-paragraph="p2">An ngồi ở chiếc bàn cạnh cửa sổ, trước mặt là tách trà đã nguội. Cậu vẫn giữ thói quen gọi hai tách — một cho mình, một cho những câu chuyện chưa tìm được người để kể.</p>
+                  <p data-paragraph="p3">“Nếu một ngày mình quên mất giọng nói của mẹ thì sao?” Câu hỏi của Linh, từ buổi chiều nào đó rất xa, bỗng trở lại rõ ràng đến lạ.</p>
+                  <p data-paragraph="p4">An khép mắt. Trong khoảng lặng giữa tiếng mưa, cậu nghe thấy tiếng cười của mẹ — ấm áp, chậm rãi, như thể bà chỉ vừa rời khỏi căn phòng này một lát.</p>
+                  <p data-paragraph="p5">Ngoài kia, chuyến tàu cuối ngày đi qua cây cầu. Ánh đèn trên toa tàu chớp lên rồi khuất sau màn mưa. Có những cuộc chia tay không cần lời tạm biệt; chỉ cần ta vẫn nhớ đường về.</p>
+                  <p data-paragraph="p6">Cậu mở cuốn sổ cũ, viết một dòng vào trang giấy trắng: “Ngày mai, mình sẽ kể tiếp.” Rồi lần đầu tiên sau nhiều tháng, An đặt tách trà thứ hai xuống bàn.</p>
+                </div>
+                <div class="chapter-end"><span>✳</span><span>HẾT CHƯƠNG 04</span><span>✳</span></div>
+                <div class="chapter-navigation"><button disabled>← Chương trước</button><span>04 <i>/</i> 18</span><button id="next-chapter">Chương tiếp theo →</button></div>
+              </div>
+              <section class="inline-panel" id="inline-panel" hidden>
+                <div class="inline-panel-head"><span class="inline-marker">↳</span><div><strong>Bình luận đoạn văn</strong><small id="selected-excerpt"></small></div><button id="close-inline" aria-label="Đóng">×</button></div>
+                <form id="inline-form"><textarea id="inline-input" maxlength="500" required placeholder="Viết điều bạn nghĩ về đoạn này..."></textarea><div class="inline-submit-row"><span>Chỉ bạn và cộng đồng ECHO-TALE</span><button type="submit">Gửi bình luận ↗</button></div></form>
+              </section>
+              <div class="reader-hint"><span>TIP</span> Chọn <strong>bình luận đoạn</strong> bên cạnh đoạn văn để bắt đầu trò chuyện.</div>
+            </section>
+
+            <aside class="right-rail">
+              <section class="rail-card chapter-card">
+                <div class="rail-card-heading"><div><span class="card-eyebrow">HÀNH TRÌNH</span><h3>Trong cuốn sách này</h3></div><button aria-label="Tùy chọn danh sách">···</button></div>
+                <div class="chapter-progress"><div class="progress-ring"><span>4<small>/18</small></span></div><div><strong>22%</strong><small>đã hoàn thành</small></div></div>
+                <div class="chapter-list">
+                  <button><span class="chapter-check">✓</span><span><small>CHƯƠNG 01</small><strong>Ngày đầu tiên</strong></span><time>08:24</time></button>
+                  <button><span class="chapter-check">✓</span><span><small>CHƯƠNG 02</small><strong>Con đường về nhà</strong></span><time>12:10</time></button>
+                  <button><span class="chapter-check">✓</span><span><small>CHƯƠNG 03</small><strong>Một tách trà nguội</strong></span><time>09:46</time></button>
+                  <button class="chapter-active"><span class="playing-bars"><i></i><i></i><i></i></span><span><small>CHƯƠNG 04 · ĐANG PHÁT</small><strong>Những điều chưa kịp nói</strong></span><time>11:32</time></button>
+                  <button><span class="chapter-number">05</span><span><small>CHƯƠNG 05</small><strong>Phía bên kia mưa</strong></span><time>—</time></button>
+                </div>
+                <button class="all-chapters">Xem tất cả 18 chương <span>↗</span></button>
+              </section>
+
+              <section class="rail-card comments-card" id="comments">
+                <div class="rail-card-heading"><div><span class="card-eyebrow">GÓC CỘNG ĐỒNG</span><h3>Để lại tiếng vọng <span class="comment-count" id="comment-count">03</span></h3></div><button id="comments-menu" aria-label="Tùy chọn bình luận">···</button></div>
+                <div class="comments-list" id="comments-list">
+                  <article class="comment"><span class="comment-avatar avatar-peach">M</span><div><div class="comment-author"><strong>Mai Phương</strong><time>2 phút trước</time></div><p>Đoạn “tách trà thứ hai” làm mình nhớ bà ngoại. Đẹp quá. 🥺</p><button class="reply-button">♡ 12 <span>Trả lời</span></button></div></article>
+                  <article class="comment"><span class="comment-avatar avatar-violet">Q</span><div><div class="comment-author"><strong>Quốc Huy</strong><time>18 phút trước</time></div><p>Giọng Mộc Lam kể đến đây tự nhiên thấy lòng dịu lại.</p><button class="reply-button">♡ 08 <span>Trả lời</span></button></div></article>
+                  <article class="comment"><span class="comment-avatar avatar-green">T</span><div><div class="comment-author"><strong>Thảo Vy</strong><time>1 giờ trước</time></div><p>Mình đang nghe lúc trời cũng vừa mưa. Trùng hợp thật.</p><button class="reply-button">♡ 05 <span>Trả lời</span></button></div></article>
+                </div>
+                <form class="comment-form" id="comment-form"><span class="profile-avatar mini-avatar">L</span><input id="comment-input" maxlength="500" required placeholder="Thêm tiếng vọng của bạn..." /><button aria-label="Gửi bình luận">↗</button></form>
+              </section>
+
+              <section class="rail-card rating-card" id="reviews">
+                <div><span class="card-eyebrow">CẢM NHẬN CỦA BẠN</span><h3>Chấm điểm câu chuyện</h3></div>
+                <div class="rating-criteria">
+                  <label>Cốt truyện <span class="star-picker" data-criterion="plot" aria-label="Điểm cốt truyện"></span></label>
+                  <label>Giọng đọc <span class="star-picker" data-criterion="voice" aria-label="Điểm giọng đọc"></span></label>
+                  <label>Nhân vật <span class="star-picker" data-criterion="characters" aria-label="Điểm nhân vật"></span></label>
+                </div>
+                <button class="submit-rating" id="submit-rating">Gửi đánh giá <span>↗</span></button>
+              </section>
+            </aside>
+          </div>
+        </section>
+        <footer class="page-footer"><span>© 2025 ECHO-TALE STUDIO</span><span>MADE FOR THE LOVE OF STORIES <i>✳</i></span><button id="footer-about">VỀ ECHO-TALE ↗</button></footer>
+      </main>
+    </div>
+
+    <section class="audio-player" aria-label="Trình phát audio">
+      <div class="track-info"><div class="mini-art"><span>Khoảng<br />lặng</span><i>✳</i></div><div><strong>Những điều chưa kịp nói</strong><small>Khoảng lặng giữa hai chương · Nguyễn An</small></div><button id="player-bookmark" aria-label="Lưu vào thư viện">♡</button></div>
+      <div class="player-center">
+        <div class="player-controls"><button id="back-15" aria-label="Lùi 15 giây">↶<small>15</small></button><button id="play-button" class="play-button" aria-label="Phát audio">▶</button><button id="forward-15" aria-label="Tiến 15 giây">↷<small>15</small></button></div>
+        <div class="timeline"><time id="current-time">00:00</time><input id="seek-bar" type="range" min="0" max="100" value="0" aria-label="Tiến trình audio" /><time id="duration">11:32</time></div>
+      </div>
+      <div class="player-options"><span class="audio-state"><i></i><span id="audio-state">SẴN SÀNG LẮNG NGHE</span></span><label class="speed-control"><span class="sr-only">Tốc độ phát</span><select id="speed-select"><option value="0.5">0.5×</option><option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="1.75">1.75×</option><option value="2">2×</option></select></label><button id="sleep-button" class="sleep-button" aria-label="Hẹn giờ tắt">☾ <span id="sleep-label">Hẹn giờ</span></button><button id="queue-button" class="queue-button" aria-label="Danh sách phát">☷</button></div>
+    </section>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div class="sleep-popover" id="sleep-popover" hidden><strong>Hẹn giờ tắt</strong><button data-timer="15">15 phút</button><button data-timer="30">30 phút</button><button data-timer="45">45 phút</button><button data-timer="end">Hết chương</button><button data-timer="cancel" class="cancel-timer">Hủy hẹn giờ</button></div>
+
+    <script>
+      const $ = (selector, root = document) => root.querySelector(selector);
+      const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+      const toast = $("#toast");
+      let toastTimeout;
+      let speaking = false;
+      let chapterFinished = false;
+      let currentParagraph = 0;
+      let elapsedSeconds = 0;
+      let timerSeconds = 0;
+      let timerInterval;
+      let selectedRatings = { plot: 0, voice: 0, characters: 0 };
+      let inlineTarget = null;
+      const paragraphs = $$("#reading-copy p");
+      const paragraphSeconds = [72, 80, 64, 60, 69, 47];
+      const commentsKey = "echotale-comments-v1";
+      const ratingsKey = "echotale-ratings-v1";
+      const bookmarkKey = "echotale-bookmark-v1";
+
+      function notify(message) {
+        toast.textContent = message;
+        toast.classList.add("visible");
+        clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(() => toast.classList.remove("visible"), 2600);
+      }
+
+      function readSaved(key, fallback) {
+        try {
+          const raw = localStorage.getItem(key);
+          return raw ? JSON.parse(raw) : fallback;
+        } catch (error) {
+          console.error(`Không đọc được dữ liệu ${key}.`, error);
+          return fallback;
+        }
+      }
+
+      function save(key, value) {
+        try {
+          localStorage.setItem(key, JSON.stringify(value));
+          return true;
+        } catch (error) {
+          console.error(`Không thể lưu dữ liệu ${key}.`, error);
+          notify("Không lưu được thay đổi. Hãy kiểm tra bộ nhớ trình duyệt.");
+          return false;
+        }
+      }
+
+      function formatTime(seconds) {
+        const mins = Math.floor(seconds / 60).toString().padStart(2, "0");
+        const secs = Math.floor(seconds % 60).toString().padStart(2, "0");
+        return `${mins}:${secs}`;
+      }
+
+      function totalDuration() {
+        return paragraphSeconds.reduce((sum, value) => sum + value, 0);
+      }
+
+      function updateTimeline() {
+        const duration = totalDuration();
+        $("#current-time").textContent = formatTime(elapsedSeconds);
+        $("#seek-bar").value = String(Math.round((elapsedSeconds / duration) * 100));
+        $("#duration").textContent = formatTime(duration);
+      }
+
+      function markParagraph(index) {
+        paragraphs.forEach((paragraph, paragraphIndex) => paragraph.classList.toggle("is-speaking", paragraphIndex === index));
+        if (paragraphs[index]) {
+          paragraphs[index].scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }
+
+      function speakParagraph(index) {
+        if (!speaking) return;
+        if (index >= paragraphs.length) {
+          chapterFinished = true;
+          stopPlayback(false);
+          notify("Bạn đã nghe hết chương này.");
+          return;
+        }
+        currentParagraph = index;
+        markParagraph(index);
+        const engine = window.speechSynthesis;
+        if (!engine || !("SpeechSynthesisUtterance" in window)) {
+          stopPlayback(false);
+          notify("Trình duyệt này chưa hỗ trợ đọc văn bản thành tiếng.");
+          return;
+        }
+        const utterance = new SpeechSynthesisUtterance(paragraphs[index].textContent);
+        utterance.lang = "vi-VN";
+        utterance.rate = Number($("#speed-select").value);
+        utterance.onstart = () => { $("#audio-state").textContent = "ĐANG ĐỌC VĂN BẢN"; };
+        utterance.onend = () => {
+          elapsedSeconds = paragraphSeconds.slice(0, index + 1).reduce((sum, value) => sum + value, 0);
+          updateTimeline();
+          if (speaking) speakParagraph(index + 1);
+        };
+        utterance.onerror = (event) => {
+          if (event.error !== "canceled" && event.error !== "interrupted") {
+            stopPlayback(false);
+            notify("Không thể phát giọng đọc trên thiết bị này.");
+          }
+        };
+        engine.speak(utterance);
+      }
+
+      function startPlayback() {
+        if (!("speechSynthesis" in window)) {
+          notify("Trình duyệt này chưa hỗ trợ TTS. Có thể dùng file audio trong bản kết nối backend.");
+          return;
+        }
+        if (window.speechSynthesis.paused) {
+          speaking = true;
+          window.speechSynthesis.resume();
+          $("#play-button").textContent = "Ⅱ";
+          $("#audio-state").textContent = "ĐANG PHÁT";
+          return;
+        }
+        speaking = true;
+        chapterFinished = false;
+        $("#play-button").textContent = "Ⅱ";
+        speakParagraph(currentParagraph);
+      }
+
+      function stopPlayback(reset = true) {
+        speaking = false;
+        if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+        $("#play-button").textContent = "▶";
+        $("#audio-state").textContent = "ĐÃ TẠM DỪNG";
+        if (reset) {
+          paragraphs.forEach((paragraph) => paragraph.classList.remove("is-speaking"));
+        }
+      }
+
+      function setBookmark(button) {
+        const isSaved = button.getAttribute("aria-pressed") !== "true";
+        if (!save(bookmarkKey, { chapter: 4, paragraph: currentParagraph, saved: isSaved })) return;
+        $$("#bookmark-button, #player-bookmark").forEach((item) => {
+          item.setAttribute("aria-pressed", String(isSaved));
+          item.classList.toggle("is-saved", isSaved);
+          if (item.id === "player-bookmark") item.textContent = isSaved ? "♥" : "♡";
+        });
+        notify(isSaved ? "Đã lưu vị trí đọc của bạn." : "Đã bỏ dấu trang.");
+      }
+
+      function renderComments() {
+        const comments = readSaved(commentsKey, []);
+        const list = $("#comments-list");
+        $$(".user-comment", list).forEach((comment) => comment.remove());
+        comments.forEach((comment) => {
+          const article = document.createElement("article");
+          article.className = "comment user-comment";
+          const avatar = document.createElement("span");
+          avatar.className = "comment-avatar avatar-violet";
+          avatar.textContent = "L";
+          const content = document.createElement("div");
+          const author = document.createElement("div");
+          author.className = "comment-author";
+          const name = document.createElement("strong");
+          name.textContent = "Lan Nguyễn";
+          const time = document.createElement("time");
+          time.textContent = "Vừa xong";
+          author.append(name, time);
+          const text = document.createElement("p");
+          text.textContent = comment.text;
+          content.append(author);
+          if (comment.quote) {
+            const quote = document.createElement("blockquote");
+            quote.textContent = `“${comment.quote}”`;
+            content.append(quote);
+          }
+          content.append(text);
+          article.append(avatar, content);
+          list.prepend(article);
+        });
+        $("#comment-count").textContent = String(3 + comments.length).padStart(2, "0");
+      }
+
+      paragraphs.forEach((paragraph) => {
+        const button = document.createElement("button");
+        button.className = "inline-comment-trigger";
+        button.type = "button";
+        button.textContent = "↳ Bình luận đoạn";
+        button.setAttribute("aria-label", `Bình luận đoạn: ${paragraph.textContent.slice(0, 55)}`);
+        button.addEventListener("click", () => {
+          inlineTarget = paragraph;
+          $("#selected-excerpt").textContent = `“${paragraph.textContent.slice(0, 100)}${paragraph.textContent.length > 100 ? "…" : ""}”`;
+          $("#inline-panel").hidden = false;
+          $("#inline-input").focus();
+          $("#inline-panel").scrollIntoView({ behavior: "smooth", block: "nearest" });
+        });
+        paragraph.append(button);
+      });
+
+      $$(".star-picker").forEach((picker) => {
+        const criterion = picker.dataset.criterion;
+        for (let value = 1; value <= 5; value += 1) {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.textContent = "★";
+          button.setAttribute("aria-label", `${value} trên 5`);
+          button.addEventListener("click", () => {
+            selectedRatings[criterion] = value;
+            $$(".star-picker button", picker).forEach((star, index) => {
+              star.classList.toggle("selected", index < value);
+              star.setAttribute("aria-pressed", String(index < value));
+            });
+          });
+          picker.append(button);
+        }
+      });
+
+      const savedBookmark = readSaved(bookmarkKey, null);
+      if (savedBookmark?.saved) {
+        $$("#bookmark-button, #player-bookmark").forEach((button) => {
+          button.setAttribute("aria-pressed", "true");
+          button.classList.add("is-saved");
+          if (button.id === "player-bookmark") button.textContent = "♥";
+        });
+        currentParagraph = Math.min(savedBookmark.paragraph || 0, paragraphs.length - 1);
+      }
+      renderComments();
+      updateTimeline();
+
+      $("#play-button").addEventListener("click", () => {
+        if (speaking) {
+          if ("speechSynthesis" in window) window.speechSynthesis.pause();
+          speaking = false;
+          $("#play-button").textContent = "▶";
+          $("#audio-state").textContent = "ĐÃ TẠM DỪNG";
+        } else startPlayback();
+      });
+      $("#speed-select").addEventListener("change", () => {
+        if (!speaking) return;
+        const resumeAt = currentParagraph;
+        stopPlayback(false);
+        speaking = true;
+        speakParagraph(resumeAt);
+      });
+      $("#seek-bar").addEventListener("input", (event) => {
+        elapsedSeconds = Math.round((Number(event.target.value) / 100) * totalDuration());
+        let total = 0;
+        currentParagraph = paragraphSeconds.findIndex((seconds) => {
+          total += seconds;
+          return elapsedSeconds <= total;
+        });
+        currentParagraph = Math.max(0, currentParagraph);
+        updateTimeline();
+        if (speaking) {
+          stopPlayback(false);
+          speaking = true;
+          speakParagraph(currentParagraph);
+        }
+      });
+      $("#back-15").addEventListener("click", () => {
+        elapsedSeconds = Math.max(0, elapsedSeconds - 15);
+        currentParagraph = Math.max(0, currentParagraph - (elapsedSeconds === 0 ? 1 : 0));
+        updateTimeline();
+        if (speaking) {
+          stopPlayback(false);
+          speaking = true;
+          speakParagraph(currentParagraph);
+        }
+      });
+      $("#forward-15").addEventListener("click", () => {
+        elapsedSeconds = Math.min(totalDuration(), elapsedSeconds + 15);
+        updateTimeline();
+        if (speaking) {
+          stopPlayback(false);
+          speaking = true;
+          speakParagraph(currentParagraph);
+        }
+      });
+      $("#bookmark-button").addEventListener("click", (event) => setBookmark(event.currentTarget));
+      $("#player-bookmark").addEventListener("click", (event) => setBookmark(event.currentTarget));
+      $("#mode-toggle").addEventListener("click", (event) => {
+        const listening = event.currentTarget.getAttribute("aria-pressed") !== "true";
+        event.currentTarget.setAttribute("aria-pressed", String(listening));
+        event.currentTarget.classList.toggle("mode-active", listening);
+        event.currentTarget.querySelector("span:nth-child(2)").textContent = listening ? "Chế độ đọc" : "Chế độ nghe";
+        document.body.classList.toggle("listening-mode", listening);
+        if (listening && !speaking) startPlayback();
+        if (!listening && speaking) {
+          stopPlayback(false);
+          $("#audio-state").textContent = "SẴN SÀNG LẮNG NGHE";
+        }
+      });
+      $("#inline-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const text = $("#inline-input").value.trim();
+        if (!text || !inlineTarget) return;
+        const comments = readSaved(commentsKey, []);
+        comments.push({ text, quote: inlineTarget.textContent.replace("↳ Bình luận đoạn", "").trim() });
+        if (!save(commentsKey, comments)) return;
+        $("#inline-input").value = "";
+        $("#inline-panel").hidden = true;
+        inlineTarget = null;
+        renderComments();
+        notify("Tiếng vọng của bạn đã được gửi.");
+      });
+      $("#close-inline").addEventListener("click", () => { $("#inline-panel").hidden = true; inlineTarget = null; });
+      $("#comment-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const input = $("#comment-input");
+        const text = input.value.trim();
+        if (!text) return;
+        const comments = readSaved(commentsKey, []);
+        comments.push({ text, quote: "" });
+        if (!save(commentsKey, comments)) return;
+        input.value = "";
+        renderComments();
+        notify("Bình luận của bạn đã được thêm.");
+      });
+      $("#submit-rating").addEventListener("click", () => {
+        if (Object.values(selectedRatings).some((rating) => rating === 0)) {
+          notify("Hãy chấm điểm đủ cả ba tiêu chí nhé.");
+          return;
+        }
+        const ratings = readSaved(ratingsKey, []);
+        ratings.push({ ...selectedRatings, createdAt: new Date().toISOString() });
+        if (!save(ratingsKey, ratings)) return;
+        notify("Cảm ơn bạn đã chia sẻ cảm nhận.");
+      });
+      $("#sleep-button").addEventListener("click", () => { $("#sleep-popover").hidden = !$("#sleep-popover").hidden; });
+      $$("#sleep-popover [data-timer]").forEach((button) => {
+        button.addEventListener("click", () => {
+          clearInterval(timerInterval);
+          const value = button.dataset.timer;
+          if (value === "cancel") {
+            timerSeconds = 0;
+            $("#sleep-label").textContent = "Hẹn giờ";
+            notify("Đã hủy hẹn giờ tắt.");
+          } else {
+            timerSeconds = value === "end" ? null : Number(value) * 60;
+            $("#sleep-label").textContent = value === "end" ? "Hết chương" : `${value} phút`;
+            timerInterval = setInterval(() => {
+              if (timerSeconds === null) {
+                if (chapterFinished) {
+                  clearInterval(timerInterval);
+                  $("#sleep-label").textContent = "Hẹn giờ";
+                  $("#sleep-popover").hidden = true;
+                }
+                return;
+              }
+              timerSeconds -= 1;
+              if (timerSeconds <= 0) {
+                stopPlayback();
+                clearInterval(timerInterval);
+                $("#sleep-label").textContent = "Hẹn giờ";
+                $("#sleep-popover").hidden = true;
+                notify("Hẹn giờ kết thúc. Chúc bạn ngủ ngon.");
+              }
+            }, 1000);
+            notify(value === "end" ? "Sẽ dừng phát khi hết chương." : `Sẽ dừng phát sau ${value} phút.`);
+          }
+          $("#sleep-popover").hidden = true;
+        });
+      });
+      $("#next-chapter").addEventListener("click", () => notify("Chương tiếp theo sẽ sớm được cập nhật."));
+      $("#search-button").addEventListener("click", () => notify("Tìm kiếm sẽ khả dụng khi kết nối thư viện."));
+      $("#notifications").addEventListener("click", () => notify("Bạn đã xem hết thông báo mới."));
+      $("#queue-button").addEventListener("click", () => notify("Danh sách phát đang được cập nhật."));
+      $("#profile-button").addEventListener("click", () => notify("Tài khoản mẫu — đăng nhập sẽ có ở phiên bản tiếp theo."));
+      $("#footer-about").addEventListener("click", () => notify("ECHO-TALE — đọc bằng mắt, lắng nghe bằng tâm trí."));
+      $("#mobile-menu").addEventListener("click", () => document.body.classList.toggle("sidebar-open"));
+      document.addEventListener("keydown", (event) => {
+        if (event.code === "Space" && !["INPUT", "TEXTAREA", "SELECT", "BUTTON"].includes(document.activeElement.tagName)) {
+          event.preventDefault();
+          $("#play-button").click();
+        }
+        if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+          event.preventDefault();
+          $("#search-button").click();
+        }
+        if (event.key === "Escape") {
+          document.body.classList.remove("sidebar-open");
+          $("#sleep-popover").hidden = true;
+        }
+      });
+      window.addEventListener("beforeunload", () => {
+        if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+      });
+    </script>
+  </body>
+</html>
