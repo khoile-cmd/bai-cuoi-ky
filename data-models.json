@@ -1,0 +1,197 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ECHO-TALE data models",
+  "version": 1,
+  "$defs": {
+    "userProfile": {
+      "type": "object",
+      "required": ["name", "contact", "provider", "joinedAt", "avatar"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1, "maxLength": 60 },
+        "contact": { "type": "string" },
+        "provider": { "enum": ["phone", "google"] },
+        "joinedAt": { "type": "string", "format": "date-time" },
+        "avatar": { "type": "string", "description": "Optional resized data URL stored by the browser demo." }
+      }
+    },
+    "chapter": {
+      "type": "object",
+      "required": ["title", "paragraphs"],
+      "properties": {
+        "title": { "type": "string" },
+        "paragraphs": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "novelContent": {
+      "type": "object",
+      "required": ["storyId", "title", "author", "sourceUrl", "language", "chapters", "cachedAt"],
+      "properties": {
+        "storyId": { "type": "string" },
+        "title": { "type": "string" },
+        "author": { "type": "string" },
+        "sourceUrl": { "type": "string", "format": "uri" },
+        "language": { "type": "string" },
+        "chapters": { "type": "array", "items": { "$ref": "#/$defs/chapter" } },
+        "cachedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "savedItem": {
+      "type": "object",
+      "required": ["id", "storyId", "chapterIndex", "chapterTitle", "paragraphIndex", "addedAt"],
+      "properties": {
+        "id": { "type": "string" },
+        "storyId": { "type": "string" },
+        "chapterIndex": { "type": ["integer", "null"] },
+        "chapterTitle": { "type": "string" },
+        "paragraphIndex": { "type": "integer", "minimum": 0 },
+        "addedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "collection": {
+      "type": "object",
+      "required": ["id", "name", "items", "createdAt", "updatedAt"],
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "name": { "type": "string", "minLength": 1, "maxLength": 40 },
+        "items": { "type": "array", "items": { "$ref": "#/$defs/savedItem" } },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "bookmark": {
+      "type": "object",
+      "required": ["userId", "storyId", "chapterIndex", "paragraphIndex", "saved", "updatedAt"],
+      "properties": {
+        "userId": { "type": "string" },
+        "storyId": { "type": "string" },
+        "chapterIndex": { "type": ["integer", "null"] },
+        "paragraphIndex": { "type": "integer", "minimum": 0 },
+        "saved": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "comment": {
+      "type": "object",
+      "required": ["id", "userId", "storyId", "text", "createdAt"],
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "storyId": { "type": "string" },
+        "chapterIndex": { "type": ["integer", "null"] },
+        "paragraphIndex": { "type": "integer", "minimum": 0 },
+        "quote": { "type": "string" },
+        "text": { "type": "string", "minLength": 1 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "rating": {
+      "type": "object",
+      "required": ["id", "userId", "storyId", "plot", "voice", "characters", "createdAt"],
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "storyId": { "type": "string" },
+        "plot": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "voice": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "characters": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "preferences": {
+      "type": "object",
+      "required": ["userId", "theme", "fontFamily", "fontSize", "speechRate", "volume", "updatedAt"],
+      "properties": {
+        "userId": { "type": "string" },
+        "theme": { "enum": ["dark", "light", "sepia"] },
+        "fontFamily": { "type": "string" },
+        "fontSize": { "type": "number", "minimum": 12, "maximum": 32 },
+        "speechRate": { "enum": [0.8, 1, 1.25, 1.5] },
+        "volume": { "type": "number", "minimum": 0, "maximum": 1 },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "examples": {
+    "userProfile": {
+      "name": "Bạn đọc",
+      "contact": "+84 901234567",
+      "provider": "phone",
+      "joinedAt": "2026-10-23T08:30:00.000Z",
+      "avatar": ""
+    },
+    "novelContent": {
+      "storyId": "sample-public-domain-story",
+      "title": "The Lantern at Willow Bridge",
+      "author": "ECHO-TALE sample",
+      "sourceUrl": "https://example.org/books/sample",
+      "language": "en-US",
+      "chapters": [
+        {
+          "title": "Chapter 1: The Quiet Crossing",
+          "paragraphs": [
+            "At dusk, Mira reached the old bridge with a lantern in one hand and a letter in the other. The river moved below her, carrying the last gold of the evening toward the sea.",
+            "She had promised to meet her brother before the moon rose. A light appeared on the far bank, then vanished behind the willow trees. Mira took a breath, lifted the lantern, and stepped onto the bridge."
+          ]
+        }
+      ],
+      "cachedAt": "2026-10-23T08:30:00.000Z"
+    },
+    "collection": {
+      "id": "collection-uuid",
+      "userId": "user-uuid",
+      "name": "Truyện yêu thích",
+      "items": [
+        {
+          "id": "saved-item-uuid",
+          "storyId": "gutenberg-145",
+          "chapterIndex": 2,
+          "chapterTitle": "CHAPTER III",
+          "paragraphIndex": 4,
+          "addedAt": "2026-10-23T08:30:00.000Z"
+        }
+      ],
+      "createdAt": "2026-10-23T08:00:00.000Z",
+      "updatedAt": "2026-10-23T08:30:00.000Z"
+    },
+    "bookmark": {
+      "userId": "user-uuid",
+      "storyId": "gutenberg-145",
+      "chapterIndex": 2,
+      "paragraphIndex": 4,
+      "saved": true,
+      "updatedAt": "2026-10-23T08:30:00.000Z"
+    },
+    "comment": {
+      "id": "comment-uuid",
+      "userId": "user-uuid",
+      "storyId": "gutenberg-145",
+      "chapterIndex": 2,
+      "paragraphIndex": 4,
+      "quote": "Đoạn trích được bình luận",
+      "text": "Cảm nhận của người đọc",
+      "createdAt": "2026-10-23T08:30:00.000Z"
+    },
+    "rating": {
+      "id": "rating-uuid",
+      "userId": "user-uuid",
+      "storyId": "gutenberg-145",
+      "plot": 5,
+      "voice": 4,
+      "characters": 5,
+      "createdAt": "2026-10-23T08:30:00.000Z"
+    },
+    "preferences": {
+      "userId": "user-uuid",
+      "theme": "sepia",
+      "fontFamily": "Georgia",
+      "fontSize": 18,
+      "speechRate": 1,
+      "volume": 0.8,
+      "updatedAt": "2026-10-23T08:30:00.000Z"
+    }
+  }
+}
