@@ -61,12 +61,20 @@ class AuthenticationTests(unittest.TestCase):
         self.assertEqual(response.status_code, 409)
 
     def test_password_validation_and_login_errors(self):
-        short_password = self.post_auth("/api/auth/register", {
+        too_short_password = self.post_auth("/api/auth/register", {
             "username": "Lan",
             "email": "lan@example.com",
-            "password": "short",
+            "password": "ab",
         })
-        self.assertEqual(short_password.status_code, 400)
+        self.assertEqual(too_short_password.status_code, 400)
+
+        short_password = self.post_auth("/api/auth/register", {
+            "username": "Lan",
+            "email": "short@example.com",
+            "password": "abc",
+        })
+        self.assertEqual(short_password.status_code, 201)
+        self.csrf_token = self.client.get("/api/auth/csrf").get_json()["csrfToken"]
 
         self.post_auth("/api/auth/register", {
             "username": "Lan",

@@ -195,8 +195,8 @@ def create_app(test_config=None):
             return json_error("Tên hiển thị phải có từ 1 đến 60 ký tự.", 400)
         if len(email) > 254 or not EMAIL_PATTERN.fullmatch(email):
             return json_error("Email không đúng định dạng.", 400)
-        if len(password) < 12:
-            return json_error("Mật khẩu cần có ít nhất 12 ký tự.", 400)
+        if len(password) < 3:
+            return json_error("Mật khẩu cần có ít nhất 3 ký tự.", 400)
         try:
             password_bytes = password.encode("utf-8")
         except UnicodeEncodeError:
