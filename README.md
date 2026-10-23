@@ -1,10 +1,8 @@
 # ECHO-TALE authentication
 
-The existing site is served by a small Flask application. Accounts are stored in SQLite, and passwords are hashed with bcrypt before they are saved. Authentication uses a signed, `HttpOnly` session cookie; the browser does not store passwords or session tokens in local storage.
+The current frontend uses browser-local registration and sign-in. Accounts and the signed-in user ID are stored in `localStorage`, so registration signs in immediately and remains signed in on that browser. Passwords are not stored in plain text: `auth-client.js` derives a salted PBKDF2-SHA-256 hash in the browser. This mode works for a prototype only; browser storage can be read or changed by scripts running on the page, accounts do not sync between devices, and client-side authentication is not a security boundary. Do not use it for production accounts or sensitive content. Use the Flask/SQLite backend below for a production-oriented deployment instead.
 
-The former OTP and Google buttons were demo-only and have been replaced with real email/password registration and sign-in. SMS verification, email verification, password reset, and Google OAuth need external providers and are not included.
-
-On page load, the app checks `/api/auth/me` before enabling member actions. Signed-out visitors can browse story introductions and chapter titles. Opening chapter text, listening, favorites, bookmarks, comments, ratings, and collection actions prompt them to sign in or register; the interrupted action resumes after successful authentication. The account dialog cannot be dismissed with its close button, backdrop, or Escape. The server's `HttpOnly` session cookie is authoritative; `localStorage` is not used as proof of authentication.
+On page load, the app checks its local session before enabling member actions. Signed-out visitors can browse story introductions and chapter titles. Opening chapter text, listening, favorites, bookmarks, comments, ratings, and collection actions prompt them to sign in or register; the interrupted action resumes after successful authentication. The account dialog cannot be dismissed with its close button, backdrop, or Escape.
 
 Guest restrictions in the page are a user-interface gate, not a security boundary. Public Gutenberg source files are fetched by the browser to derive chapter titles, so a determined visitor may inspect those public responses. Content that must be confidential or access-controlled needs to be served through an authenticated backend endpoint rather than a public source URL.
 
@@ -66,9 +64,11 @@ The `users` table contains:
 
 The separate `auth_attempts` table tracks short-lived IP/action timestamps used by the built-in registration and login rate limits.
 
-## Authentication API
+## Optional Flask authentication backend
 
-All endpoints are same-origin and exchange JSON:
+`app.py` still provides a Flask/SQLite authentication API, but the current browser client does not call these routes. If you switch the UI back to server-backed auth, configure the client and server together; do not treat browser-local authentication as authorization for backend data.
+
+The available same-origin JSON endpoints are:
 
 | Method | Endpoint | Purpose |
 | --- | --- | --- |
@@ -78,7 +78,7 @@ All endpoints are same-origin and exchange JSON:
 | `GET` | `/api/auth/me` | Return the current account |
 | `POST` | `/api/auth/logout` | End the current session |
 
-Mutating requests require the `X-CSRF-Token` header. Registration validates the display name, email, and a password of at least 12 characters. Login errors do not disclose whether an email is registered. Repeated registration and login attempts are rate-limited by client IP.
+Mutating requests require the `X-CSRF-Token` header. Registration validates the display name, email, and a password of at least 3 characters (without composition rules). bcrypt accepts at most 72 UTF-8 bytes per password. Login errors do not disclose whether an email is registered. Repeated registration and login attempts are rate-limited by client IP.
 
 ## Run the tests
 
@@ -93,4 +93,4 @@ python -m unittest discover -s tests -v
 - Keep `FLASK_DEBUG=false`, use a production WSGI server, and configure HTTPS at the hosting layer.
 - Back up the SQLite database and restrict access to the `instance` directory. For multi-instance hosting, use a shared database instead of a local SQLite file and configure the same strong signing secret on every instance. If you switch to server-side sessions, use a shared session store.
 
-The existing profile name/avatar editor remains a per-browser preference; account identity, email, and password are managed by the server.
+Profile name and avatar remain per-browser preferences. In the current local-auth mode, account details and password hashes are also browser-local; the optional Flask backend stores account identity and bcrypt password hashes in SQLite.

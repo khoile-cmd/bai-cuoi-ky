@@ -199,10 +199,10 @@
             <label for="register-email">Email</label>
             <input id="register-email" name="email" type="email" maxlength="254" autocomplete="email" placeholder="ban@example.com" required />
             <label for="register-password">Mật khẩu</label>
-            <input id="register-password" name="password" type="password" minlength="12" maxlength="72" autocomplete="new-password" aria-describedby="password-hint" required />
-            <small id="password-hint" class="account-password-hint">Ít nhất 12 ký tự, tối đa 72 byte UTF-8.</small>
+            <input id="register-password" name="password" type="password" minlength="3" maxlength="72" autocomplete="new-password" aria-describedby="password-hint" required />
+            <small id="password-hint" class="account-password-hint">Mật khẩu tối thiểu 3 ký tự</small>
             <label for="register-password-confirm">Xác nhận mật khẩu</label>
-            <input id="register-password-confirm" name="password-confirm" type="password" minlength="12" maxlength="72" autocomplete="new-password" required />
+            <input id="register-password-confirm" name="password-confirm" type="password" minlength="3" maxlength="72" autocomplete="new-password" required />
             <p class="account-form-message" id="register-error" role="alert" hidden></p>
             <button class="account-primary" id="account-register-submit" type="submit">Tạo tài khoản</button>
           </form>
@@ -2056,6 +2056,7 @@
           notify("Đăng nhập thành công.");
           completeMemberAction();
         } catch (error) {
+          console.error("Đăng nhập thất bại.", error);
           setAccountError($("#login-error"), error);
         } finally {
           submit.disabled = false;
@@ -2090,6 +2091,7 @@
           notify("Tài khoản đã được tạo.");
           completeMemberAction();
         } catch (error) {
+          console.error("Đăng ký thất bại.", error);
           setAccountError($("#register-error"), error);
         } finally {
           submit.disabled = false;
