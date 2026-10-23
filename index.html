@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#10110f" />
     <meta name="description" content="ECHO-TALE — đọc bằng mắt, lắng nghe bằng tâm trí." />
-    <title>ECHO-TALE — Khoảng lặng giữa hai chương</title>
+    <title>Kiêu hãnh và định kiến — ECHO-TALE</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet" />
@@ -21,22 +21,25 @@
         <div class="sidebar-label">KHÔNG GIAN CỦA BẠN</div>
         <nav class="side-nav">
           <a class="side-link" href="#discover"><span class="nav-icon">⌂</span> Khám phá</a>
-          <a class="side-link" href="#library"><span class="nav-icon">▤</span> Thư viện của tôi <span class="nav-count">12</span></a>
+          <a class="side-link" href="#library"><span class="nav-icon">▤</span> Thư viện của tôi <span class="nav-count" id="favorite-count">0</span></a>
+          <a class="side-link" href="#my-collections"><span class="nav-icon">▧</span> Bộ sưu tập của tôi</a>
           <a class="side-link" href="#reader"><span class="nav-icon">◉</span> Đang nghe</a>
           <a class="side-link" href="#reviews"><span class="nav-icon">✳</span> Đánh giá</a>
         </nav>
-        <div class="sidebar-label shelf-label">BỘ SƯU TẬP <button class="add-collection" aria-label="Thêm bộ sưu tập">+</button></div>
-        <a class="collection-link" href="#library"><span class="collection-dot dot-lilac"></span> Đọc trước khi ngủ <span>08</span></a>
-        <a class="collection-link" href="#library"><span class="collection-dot dot-orange"></span> Những chuyến đi <span>12</span></a>
-        <a class="collection-link" href="#library"><span class="collection-dot dot-blue"></span> Giọng kể yêu thích <span>05</span></a>
+        <div class="sidebar-label shelf-label">BỘ SƯU TẬP <button class="add-collection" id="create-collection-shortcut" type="button" aria-label="Tạo bộ sưu tập mới">+</button></div>
+        <nav class="sidebar-collections" id="sidebar-collections" aria-label="Bộ sưu tập của tôi"></nav>
         <div class="sidebar-spacer"></div>
         <div class="sidebar-quote"><span>“</span><p>Stories are the<br />heartbeat of memory.</p><small>— ECHO JOURNAL, Nº 08</small></div>
-        <button class="profile-card" id="profile-button"><span class="profile-avatar">L</span><span><strong>Lan Nguyễn</strong><small>Thành viên từ 2024</small></span><span class="profile-dots">···</span></button>
+        <button class="profile-card" id="profile-button" type="button" aria-haspopup="dialog" aria-label="Đăng nhập hoặc xem tài khoản">
+          <span class="profile-avatar" id="sidebar-profile-avatar">?</span>
+          <span><strong id="sidebar-profile-name">Đăng nhập</strong><small id="sidebar-profile-status">Lưu bộ sưu tập của bạn</small></span>
+          <span class="profile-dots">···</span>
+        </button>
       </aside>
 
       <main class="main-area" id="discover">
         <header class="topbar">
-          <div class="breadcrumbs"><span>THƯ VIỆN CỦA TÔI</span><b>/</b><span class="crumb-current">ĐANG ĐỌC</span></div>
+          <div class="breadcrumbs"><span>THƯ VIỆN CỦA TÔI</span><b>/</b><span class="crumb-current">TÁC PHẨM ĐANG XEM</span></div>
           <div class="topbar-actions">
             <button class="search-button" id="search-button" aria-label="Tìm truyện"><span>⌕</span><span>Tìm truyện...</span><kbd>⌘ K</kbd></button>
             <button class="top-icon" id="notifications" aria-label="Thông báo">♧<i></i></button>
@@ -44,12 +47,42 @@
           </div>
         </header>
 
+        <section class="library-section" id="library" aria-labelledby="library-title">
+          <div class="library-heading">
+            <div>
+              <span class="card-eyebrow">GÓC SÁCH ECHO-TALE</span>
+              <h2 id="library-title">Chọn câu chuyện cho riêng bạn</h2>
+              <p>Khám phá truyện mới, lưu sách yêu thích và đọc các tác phẩm kinh điển trực tuyến.</p>
+            </div>
+            <button class="favorites-filter" id="favorites-filter" type="button" aria-pressed="false">♡ <span>Yêu thích</span></button>
+          </div>
+          <label class="library-search">
+            <span aria-hidden="true">⌕</span>
+            <input id="library-search" type="search" placeholder="Tìm truyện hoặc tác giả..." aria-label="Tìm truyện hoặc tác giả" />
+          </label>
+          <div class="story-grid" id="story-grid" aria-live="polite"></div>
+          <p class="library-empty" id="library-empty" hidden>Không tìm thấy câu chuyện phù hợp.</p>
+          <nav class="library-pagination" id="library-pagination" aria-label="Trang danh mục tiểu thuyết">
+            <button id="library-previous" type="button" disabled>← Trước</button>
+            <span id="library-page-status" aria-live="polite"></span>
+            <button id="library-next" type="button">Tiếp →</button>
+          </nav>
+        </section>
+
+        <section class="collections-section" id="my-collections" aria-labelledby="collections-title">
+          <div class="collections-heading">
+            <div><span class="card-eyebrow">KHÔNG GIAN RIÊNG</span><h2 id="collections-title">Bộ sưu tập của tôi</h2><p>Lưu truyện và chương để quay lại bất cứ lúc nào.</p></div>
+            <button class="create-collection-button" id="create-collection-button" type="button">＋ Tạo bộ sưu tập mới</button>
+          </div>
+          <div class="collections-content" id="collections-content" aria-live="polite"></div>
+        </section>
+
         <section class="reader-page" id="reader">
           <div class="page-heading">
             <div>
-              <div class="eyebrow"><span class="live-dot"></span> CHƯƠNG ĐANG PHÁT <span class="eyebrow-separator">/</span> 04 — 18</div>
-              <h1>Khoảng lặng <em>giữa hai chương</em></h1>
-              <div class="book-byline"><span class="tiny-cover">K</span><span>Người kể chuyện: <strong>Nguyễn An</strong></span><span class="byline-dot"></span><span>Giọng đọc: <strong>Mộc Lam</strong></span></div>
+              <div class="eyebrow"><span class="live-dot"></span> TÁC PHẨM ĐANG XEM <span class="eyebrow-separator">/</span> 01 — 60</div>
+              <h1>Kiêu hãnh và định kiến</h1>
+              <div class="book-byline"><span class="tiny-cover">K</span><span>Tác giả: <strong>Jane Austen</strong></span><span class="byline-dot"></span><span>Nguyên tác: <strong>Pride and Prejudice</strong></span></div>
             </div>
             <button class="mode-toggle" id="mode-toggle" aria-pressed="false"><span class="mode-icon">◉</span><span>Chế độ nghe</span><span class="toggle-track"><i></i></span></button>
           </div>
@@ -58,48 +91,57 @@
             <section class="reader-column" aria-label="Nội dung chương">
               <div class="reader-card">
                 <div class="chapter-heading">
-                  <div><span class="chapter-kicker">CHƯƠNG IV</span><h2>Những điều chưa kịp nói</h2></div>
-                  <button class="more-button" id="bookmark-button" aria-pressed="false" aria-label="Lưu dấu trang">♧</button>
+                  <div><span class="chapter-kicker">TÓM TẮT · ĐỌC TOÀN VĂN TRỰC TUYẾN</span><h2>Giới thiệu tác phẩm</h2></div>
+                  <div class="reader-bookmark-actions">
+                    <button class="collection-add-button" id="add-to-collection" type="button" aria-haspopup="dialog">＋ Thêm bộ sưu tập</button>
+                    <button class="more-button" id="bookmark-button" aria-pressed="false" aria-label="Lưu dấu trang">♧</button>
+                  </div>
                 </div>
                 <div class="chapter-rule"><span></span><i>✳</i><span></span></div>
-                <div class="reading-copy" id="reading-copy">
-                  <p data-paragraph="p1">Cơn mưa bắt đầu vào lúc thành phố vừa lên đèn. Những giọt nước nhỏ chạm vào ô cửa kính, kéo theo những vệt sáng dài như ai đó vừa khẽ tay xóa đi một ngày cũ.</p>
-                  <p data-paragraph="p2">An ngồi ở chiếc bàn cạnh cửa sổ, trước mặt là tách trà đã nguội. Cậu vẫn giữ thói quen gọi hai tách — một cho mình, một cho những câu chuyện chưa tìm được người để kể.</p>
-                  <p data-paragraph="p3">“Nếu một ngày mình quên mất giọng nói của mẹ thì sao?” Câu hỏi của Linh, từ buổi chiều nào đó rất xa, bỗng trở lại rõ ràng đến lạ.</p>
-                  <p data-paragraph="p4">An khép mắt. Trong khoảng lặng giữa tiếng mưa, cậu nghe thấy tiếng cười của mẹ — ấm áp, chậm rãi, như thể bà chỉ vừa rời khỏi căn phòng này một lát.</p>
-                  <p data-paragraph="p5">Ngoài kia, chuyến tàu cuối ngày đi qua cây cầu. Ánh đèn trên toa tàu chớp lên rồi khuất sau màn mưa. Có những cuộc chia tay không cần lời tạm biệt; chỉ cần ta vẫn nhớ đường về.</p>
-                  <p data-paragraph="p6">Cậu mở cuốn sổ cũ, viết một dòng vào trang giấy trắng: “Ngày mai, mình sẽ kể tiếp.” Rồi lần đầu tiên sau nhiều tháng, An đặt tách trà thứ hai xuống bàn.</p>
+                <div class="reader-tools" role="group" aria-label="Tùy chỉnh giao diện đọc">
+                  <span>CỠ CHỮ</span>
+                  <button id="font-decrease" type="button" aria-label="Thu nhỏ cỡ chữ">A−</button>
+                  <output id="font-size-value" aria-live="polite">14 px</output>
+                  <button id="font-increase" type="button" aria-label="Phóng to cỡ chữ">A+</button>
+                  <button id="font-reset" type="button" aria-label="Đặt lại cỡ chữ">Đặt lại</button>
+                  <label class="reader-setting"><span>NỀN</span><select id="reader-theme" aria-label="Màu nền đọc"><option value="dark">Tối</option><option value="light">Sáng</option><option value="sepia">Sepia</option></select></label>
+                  <label class="reader-setting"><span>CHỮ</span><select id="reader-font" aria-label="Phông chữ đọc"><option value="literary">Văn học</option><option value="sans">Không chân</option><option value="serif">Serif</option></select></label>
+                  <label class="reader-setting chapter-setting" id="chapter-setting" hidden><span>CHƯƠNG</span><select id="chapter-select" aria-label="Chọn chương"></select></label>
+                  <button class="return-to-intro" id="return-to-intro" type="button" hidden>Về giới thiệu</button>
                 </div>
-                <div class="chapter-end"><span>✳</span><span>HẾT CHƯƠNG 04</span><span>✳</span></div>
-                <div class="chapter-navigation"><button disabled>← Chương trước</button><span>04 <i>/</i> 18</span><button id="next-chapter">Chương tiếp theo →</button></div>
+                <p class="reading-load-status" id="reading-load-status" role="status" aria-live="polite" hidden></p>
+                <div class="reading-copy" id="reading-copy" aria-live="polite">
+                  <p data-paragraph="p1">Elizabeth Bennet sống cùng cha mẹ và bốn chị em gái tại vùng quê nước Anh. Khi chàng Bingley giàu có chuyển đến Netherfield, bà Bennet hy vọng một trong các con gái sẽ nên duyên với anh.</p>
+                  <p data-paragraph="p2">Bạn thân của Bingley là Fitzwilliam Darcy gây ấn tượng ban đầu là một người kiêu hãnh, khiến Elizabeth có ác cảm với anh.</p>
+                  <p data-paragraph="p3">Những lần gặp gỡ sau đó làm nảy sinh hiểu lầm, lời đồn và những đánh giá vội vàng giữa Elizabeth và Darcy.</p>
+                  <p data-paragraph="p4">Khi các sự kiện trong gia đình Bennet dần được hé lộ, Elizabeth bắt đầu nhận ra rằng ấn tượng đầu tiên của cô có thể chưa đầy đủ.</p>
+                  <p data-paragraph="p5">Qua những lựa chọn của các nhân vật, Jane Austen khắc họa tình yêu, địa vị xã hội và những định kiến trong nước Anh đầu thế kỷ XIX.</p>
+                  <p data-paragraph="p6">Kiêu hãnh và định kiến là tiểu thuyết kinh điển xuất bản năm 1813. Mở liên kết Project Gutenberg bên dưới để đọc toàn văn nguyên tác.</p>
+                </div>
+                <div class="chapter-end"><span>✳</span><span>HẾT PHẦN GIỚI THIỆU</span><span>✳</span></div>
+                <div class="chapter-navigation"><button id="previous-chapter" disabled>← Chương trước</button><span>01 <i>/</i> 10</span><button id="next-chapter" disabled>Chương tiếp →</button></div>
               </div>
               <section class="inline-panel" id="inline-panel" hidden>
                 <div class="inline-panel-head"><span class="inline-marker">↳</span><div><strong>Bình luận đoạn văn</strong><small id="selected-excerpt"></small></div><button id="close-inline" aria-label="Đóng">×</button></div>
                 <form id="inline-form"><textarea id="inline-input" maxlength="500" required placeholder="Viết điều bạn nghĩ về đoạn này..."></textarea><div class="inline-submit-row"><span>Chỉ bạn và cộng đồng ECHO-TALE</span><button type="submit">Gửi bình luận ↗</button></div></form>
               </section>
+              <p class="story-source" id="story-source">Đây là phần giới thiệu, không phải toàn văn. <button id="story-source-link" type="button">Đọc toàn văn ngay trong trang ↗</button></p>
               <div class="reader-hint"><span>TIP</span> Chọn <strong>bình luận đoạn</strong> bên cạnh đoạn văn để bắt đầu trò chuyện.</div>
             </section>
 
             <aside class="right-rail">
-              <section class="rail-card chapter-card">
-                <div class="rail-card-heading"><div><span class="card-eyebrow">HÀNH TRÌNH</span><h3>Trong cuốn sách này</h3></div><button aria-label="Tùy chọn danh sách">···</button></div>
-                <div class="chapter-progress"><div class="progress-ring"><span>4<small>/18</small></span></div><div><strong>22%</strong><small>đã hoàn thành</small></div></div>
-                <div class="chapter-list">
-                  <button><span class="chapter-check">✓</span><span><small>CHƯƠNG 01</small><strong>Ngày đầu tiên</strong></span><time>08:24</time></button>
-                  <button><span class="chapter-check">✓</span><span><small>CHƯƠNG 02</small><strong>Con đường về nhà</strong></span><time>12:10</time></button>
-                  <button><span class="chapter-check">✓</span><span><small>CHƯƠNG 03</small><strong>Một tách trà nguội</strong></span><time>09:46</time></button>
-                  <button class="chapter-active"><span class="playing-bars"><i></i><i></i><i></i></span><span><small>CHƯƠNG 04 · ĐANG PHÁT</small><strong>Những điều chưa kịp nói</strong></span><time>11:32</time></button>
-                  <button><span class="chapter-number">05</span><span><small>CHƯƠNG 05</small><strong>Phía bên kia mưa</strong></span><time>—</time></button>
+              <section class="rail-card chapter-card preview-story">
+                <div class="rail-card-heading"><div><span class="card-eyebrow">HÀNH TRÌNH</span><h3 id="chapter-card-title">Trong cuốn sách này</h3></div><button aria-label="Tùy chọn danh sách">···</button></div>
+                <div class="chapter-progress"><div class="progress-ring"><span id="chapter-progress-value">1<small>/10</small></span></div><div><strong id="chapter-progress-percent">10%</strong><small>đã hoàn thành</small></div></div>
+                <div class="chapter-list" id="chapter-list">
+                  <p class="chapter-list-empty">Chọn “Đọc ngay” để tải danh sách chương.</p>
                 </div>
-                <button class="all-chapters">Xem tất cả 18 chương <span>↗</span></button>
+                <button class="all-chapters" id="all-chapters" hidden>Chọn chương <span>↗</span></button>
               </section>
 
               <section class="rail-card comments-card" id="comments">
                 <div class="rail-card-heading"><div><span class="card-eyebrow">GÓC CỘNG ĐỒNG</span><h3>Để lại tiếng vọng <span class="comment-count" id="comment-count">03</span></h3></div><button id="comments-menu" aria-label="Tùy chọn bình luận">···</button></div>
                 <div class="comments-list" id="comments-list">
-                  <article class="comment"><span class="comment-avatar avatar-peach">M</span><div><div class="comment-author"><strong>Mai Phương</strong><time>2 phút trước</time></div><p>Đoạn “tách trà thứ hai” làm mình nhớ bà ngoại. Đẹp quá. 🥺</p><button class="reply-button">♡ 12 <span>Trả lời</span></button></div></article>
-                  <article class="comment"><span class="comment-avatar avatar-violet">Q</span><div><div class="comment-author"><strong>Quốc Huy</strong><time>18 phút trước</time></div><p>Giọng Mộc Lam kể đến đây tự nhiên thấy lòng dịu lại.</p><button class="reply-button">♡ 08 <span>Trả lời</span></button></div></article>
-                  <article class="comment"><span class="comment-avatar avatar-green">T</span><div><div class="comment-author"><strong>Thảo Vy</strong><time>1 giờ trước</time></div><p>Mình đang nghe lúc trời cũng vừa mưa. Trùng hợp thật.</p><button class="reply-button">♡ 05 <span>Trả lời</span></button></div></article>
                 </div>
                 <form class="comment-form" id="comment-form"><span class="profile-avatar mini-avatar">L</span><input id="comment-input" maxlength="500" required placeholder="Thêm tiếng vọng của bạn..." /><button aria-label="Gửi bình luận">↗</button></form>
               </section>
@@ -121,22 +163,90 @@
     </div>
 
     <section class="audio-player" aria-label="Trình phát audio">
-      <div class="track-info"><div class="mini-art"><span>Khoảng<br />lặng</span><i>✳</i></div><div><strong>Những điều chưa kịp nói</strong><small>Khoảng lặng giữa hai chương · Nguyễn An</small></div><button id="player-bookmark" aria-label="Lưu vào thư viện">♡</button></div>
+      <div class="track-info"><div class="mini-art"><span id="player-cover-title">K</span><i>✳</i></div><div><strong id="player-book-title">Kiêu hãnh và định kiến</strong><small id="player-book-author">Pride and Prejudice · Jane Austen</small></div><button id="player-bookmark" aria-label="Lưu vào thư viện">♡</button></div>
       <div class="player-center">
-        <div class="player-controls"><button id="back-15" aria-label="Lùi 15 giây">↶<small>15</small></button><button id="play-button" class="play-button" aria-label="Phát audio">▶</button><button id="forward-15" aria-label="Tiến 15 giây">↷<small>15</small></button></div>
+        <div class="player-controls"><button id="back-15" aria-label="Lùi 15 giây">↶<small>15</small></button><button id="play-button" class="play-button" aria-label="Phát">▶</button><button id="stop-button" aria-label="Dừng đọc">■</button><button id="forward-15" aria-label="Tiến 15 giây">↷<small>15</small></button></div>
         <div class="timeline"><time id="current-time">00:00</time><input id="seek-bar" type="range" min="0" max="100" value="0" aria-label="Tiến trình audio" /><time id="duration">11:32</time></div>
       </div>
-      <div class="player-options"><span class="audio-state"><i></i><span id="audio-state">SẴN SÀNG LẮNG NGHE</span></span><label class="speed-control"><span class="sr-only">Tốc độ phát</span><select id="speed-select"><option value="0.5">0.5×</option><option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="1.75">1.75×</option><option value="2">2×</option></select></label><button id="sleep-button" class="sleep-button" aria-label="Hẹn giờ tắt">☾ <span id="sleep-label">Hẹn giờ</span></button><button id="queue-button" class="queue-button" aria-label="Danh sách phát">☷</button></div>
+      <div class="player-options"><span class="audio-state"><i></i><span id="audio-state">SẴN SÀNG LẮNG NGHE</span></span><label class="speed-control"><span class="sr-only">Tốc độ phát</span><select id="speed-select"><option value="0.8">0.8×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option></select></label><label class="volume-control"><span aria-hidden="true">◖</span><span class="sr-only">Âm lượng</span><input id="volume-slider" type="range" min="0" max="1" step="0.1" value="1" aria-label="Âm lượng đọc"></label><button id="sleep-button" class="sleep-button" aria-label="Hẹn giờ tắt">☾ <span id="sleep-label">Hẹn giờ</span></button><button id="queue-button" class="queue-button" aria-label="Danh sách phát">☷</button></div>
     </section>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <dialog class="account-dialog" id="account-dialog" aria-labelledby="account-dialog-title">
+      <div class="account-dialog-inner">
+        <div class="account-heading">
+          <div><span class="card-eyebrow">ECHO—TALE ACCOUNT</span><h2 id="account-dialog-title">Chào mừng bạn</h2></div>
+          <button class="account-close" id="account-close" type="button" aria-label="Đóng">×</button>
+        </div>
+
+        <section id="account-login-view">
+          <p class="account-intro">Đăng nhập để xem hồ sơ và quản lý bộ sưu tập của bạn trên thiết bị này.</p>
+          <form id="phone-login-form" class="account-form">
+            <label for="login-phone">Số điện thoại</label>
+            <div class="account-input-row"><span aria-hidden="true">＋</span><input id="login-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="090 123 4567" required /></div>
+            <button class="account-primary" id="send-otp-button" type="submit">Gửi mã OTP</button>
+          </form>
+          <form id="otp-verify-form" class="account-form otp-form" hidden>
+            <label for="login-otp">Mã xác thực OTP</label>
+            <input id="login-otp" name="otp" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" placeholder="Nhập 6 chữ số" required />
+            <p class="otp-demo-notice" id="otp-demo-notice" role="status"></p>
+            <button class="account-primary" type="submit">Xác thực và đăng nhập</button>
+            <button class="account-text-button" id="resend-otp-button" type="button">Gửi mã mới</button>
+          </form>
+          <div class="account-divider"><span>hoặc</span></div>
+          <button class="google-login-button" id="google-login-button" type="button">
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.73 7.18l7.62 5.91c4.45-4.11 7.15-10.15 7.15-17.56z"/><path fill="#FBBC05" d="M10.53 28.59A14.4 14.4 0 0 1 9.75 24c0-1.59.27-3.13.76-4.59l-7.98-6.19A23.9 23.9 0 0 0 0 24c0 3.87.93 7.55 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.9-5.89l-7.62-5.91c-2.12 1.42-4.84 2.26-8.28 2.26-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+            Đăng nhập với Google
+          </button>
+          <p class="account-demo-disclaimer">Bản demo: OTP hiển thị ngay trên trang; Google chưa kết nối OAuth hoặc máy chủ xác thực.</p>
+        </section>
+
+        <section id="account-profile-view" hidden>
+          <div class="account-profile-summary">
+            <div class="account-avatar" id="account-avatar">?</div>
+            <div><h3 id="account-profile-name"></h3><p id="account-profile-contact"></p></div>
+          </div>
+          <div class="account-details">
+            <div><span>Ngày tham gia</span><strong id="account-joined-date"></strong></div>
+            <div><span>Phương thức đăng nhập</span><strong id="account-provider"></strong></div>
+          </div>
+          <section class="account-collections">
+            <div class="account-collections-heading"><h3>Bộ sưu tập đã lưu</h3><span id="account-collection-count">0</span></div>
+            <ul id="account-collection-list"></ul>
+          </section>
+          <form id="account-edit-form" class="account-form account-edit-form" hidden>
+            <label for="profile-name-input">Tên hiển thị</label>
+            <input id="profile-name-input" name="name" type="text" maxlength="60" required />
+            <label for="profile-avatar-input">Ảnh đại diện</label>
+            <input id="profile-avatar-input" name="avatar" type="file" accept="image/png,image/jpeg,image/webp,image/gif" />
+            <small>Chọn ảnh JPG, PNG, WebP hoặc GIF (tối đa 2 MB). Ảnh được thu nhỏ trước khi lưu.</small>
+            <div class="account-edit-actions"><button class="account-text-button" id="cancel-profile-edit" type="button">Hủy</button><button class="account-primary" type="submit">Lưu thay đổi</button></div>
+          </form>
+          <div class="account-profile-actions" id="account-profile-actions">
+            <button class="account-secondary" id="edit-profile-button" type="button">Chỉnh sửa thông tin</button>
+            <button class="account-logout" id="logout-button" type="button">Đăng xuất</button>
+          </div>
+        </section>
+      </div>
+    </dialog>
+    <dialog class="collection-dialog" id="collection-dialog" aria-labelledby="collection-dialog-title">
+      <form id="collection-dialog-form">
+        <div class="collection-dialog-heading"><div><span class="card-eyebrow">THƯ VIỆN CÁ NHÂN</span><h2 id="collection-dialog-title">Thêm vào bộ sưu tập</h2></div><button id="close-collection-dialog" type="button" aria-label="Đóng">×</button></div>
+        <p class="collection-dialog-context" id="collection-dialog-context"></p>
+        <div class="collection-choice-list" id="collection-choice-list"></div>
+        <div class="quick-collection-form"><label for="new-collection-name">Tạo bộ sưu tập mới</label><div><input id="new-collection-name" maxlength="40" placeholder="Ví dụ: Truyện yêu thích" /><button id="quick-create-collection" type="button">Tạo</button></div></div>
+        <div class="collection-dialog-actions"><button id="cancel-collection-dialog" type="button">Đóng</button><button class="collection-save-button" type="submit">Lưu lựa chọn</button></div>
+      </form>
+    </dialog>
     <div class="sleep-popover" id="sleep-popover" hidden><strong>Hẹn giờ tắt</strong><button data-timer="15">15 phút</button><button data-timer="30">30 phút</button><button data-timer="45">45 phút</button><button data-timer="end">Hết chương</button><button data-timer="cancel" class="cancel-timer">Hủy hẹn giờ</button></div>
 
+    <script src="data-service.js"></script>
     <script>
       const $ = (selector, root = document) => root.querySelector(selector);
       const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
       const toast = $("#toast");
       let toastTimeout;
       let speaking = false;
+      let speechRequestId = 0;
       let chapterFinished = false;
       let currentParagraph = 0;
       let elapsedSeconds = 0;
@@ -144,11 +254,315 @@
       let timerInterval;
       let selectedRatings = { plot: 0, voice: 0, characters: 0 };
       let inlineTarget = null;
-      const paragraphs = $$("#reading-copy p");
-      const paragraphSeconds = [72, 80, 64, 60, 69, 47];
+      let paragraphs = $$("#reading-copy p");
+      let paragraphSeconds = [72, 80, 64, 60, 69, 47];
+      let readerLoadController;
+      let fullTextChapters = [];
+      let currentTextLanguage = "vi-VN";
       const commentsKey = "echotale-comments-v1";
       const ratingsKey = "echotale-ratings-v1";
       const bookmarkKey = "echotale-bookmark-v1";
+      const favoritesKey = "echotale-story-favorites-v1";
+      const collectionsKey = "echotale-collections-v1";
+      const accountKey = "echotale-account-v1";
+      let collections = [];
+      let collectionTarget = null;
+      let currentChapterIndex = null;
+      let currentChapterTitle = "Giới thiệu tác phẩm";
+      let account = null;
+      let pendingOtp = null;
+      const stories = [
+        {
+          id: "jane-eyre",
+          title: "Jane Eyre",
+          originalTitle: "Jane Eyre",
+          author: "Charlotte Brontë",
+          genre: "Kinh điển · Tình cảm",
+          description: "Hành trình trưởng thành của Jane Eyre, từ tuổi thơ nhiều thiếu thốn đến tình yêu và tự do.",
+          cover: "J",
+          tone: "peach",
+          coverUrl: "https://www.gutenberg.org/cache/epub/1260/pg1260.cover.medium.jpg",
+          readUrl: "https://www.gutenberg.org/ebooks/1260",
+          paragraphs: [
+            "Jane Eyre mồ côi từ nhỏ, lớn lên trong sự khắc nghiệt tại nhà người dì và trường nội trú Lowood.",
+            "Khi trưởng thành, Jane nhận công việc gia sư tại điền trang Thornfield, nơi cô gặp chủ nhà Edward Rochester.",
+            "Mối quan hệ giữa Jane và Rochester phát triển trong bầu không khí bí ẩn bao quanh Thornfield.",
+            "Một bí mật bị che giấu buộc Jane phải lựa chọn giữa tình yêu và lòng tự trọng.",
+            "Tiểu thuyết của Charlotte Brontë kể về hành trình tìm kiếm tình yêu, phẩm giá và sự độc lập của một người phụ nữ.",
+            "Jane Eyre được xuất bản năm 1847. Mở liên kết Project Gutenberg để đọc toàn văn nguyên tác."
+          ]
+        },
+        {
+          id: "little-women",
+          title: "Những người phụ nữ bé nhỏ",
+          originalTitle: "Little Women",
+          author: "Louisa May Alcott",
+          genre: "Kinh điển · Gia đình",
+          description: "Bốn chị em nhà March cùng lớn lên, theo đuổi ước mơ và gìn giữ tình thân.",
+          cover: "N",
+          tone: "sage",
+          coverUrl: "https://www.gutenberg.org/cache/epub/514/pg514.cover.medium.jpg",
+          readUrl: "https://www.gutenberg.org/ebooks/514",
+          paragraphs: [
+            "Meg, Jo, Beth và Amy March sống cùng mẹ trong những năm tháng khó khăn của cuộc Nội chiến Hoa Kỳ.",
+            "Mỗi chị em có tính cách và ước mơ riêng: Meg mong một mái ấm, Jo muốn trở thành nhà văn, Beth yêu âm nhạc, còn Amy say mê hội họa.",
+            "Qua những ngày thường, các cô học cách chia sẻ, tha thứ và giúp đỡ nhau.",
+            "Tình bạn với Laurie và những đổi thay trong gia đình đem đến niềm vui lẫn thử thách.",
+            "Louisa May Alcott lấy cảm hứng từ tuổi thơ của chính mình để kể câu chuyện trưởng thành gần gũi.",
+            "Những người phụ nữ bé nhỏ xuất bản năm 1868. Mở Project Gutenberg để đọc toàn văn."
+          ]
+        },
+        {
+          id: "moby-dick",
+          title: "Moby-Dick: Cá voi trắng",
+          originalTitle: "Moby-Dick; or, The Whale",
+          author: "Herman Melville",
+          genre: "Kinh điển · Phiêu lưu",
+          description: "Thủy thủ Ishmael lên tàu Pequod trong chuyến săn cá voi do thuyền trưởng Ahab ám ảnh dẫn dắt.",
+          cover: "M",
+          tone: "blue",
+          coverUrl: "https://www.gutenberg.org/cache/epub/15/pg15.cover.medium.jpg",
+          readUrl: "https://www.gutenberg.org/ebooks/15",
+          paragraphs: [
+            "Ishmael quyết định ra khơi và gia nhập thủy thủ đoàn của con tàu săn cá voi Pequod.",
+            "Thuyền trưởng Ahab đưa con tàu vào hành trình truy đuổi Moby Dick, con cá voi trắng từng khiến ông bị thương.",
+            "Trên biển cả, những người thủy thủ đối mặt với hiểm nguy, thiên nhiên khắc nghiệt và sự quyết tâm ngày càng cực đoan của Ahab.",
+            "Ishmael vừa kể chuyến đi vừa quan sát cuộc sống trên tàu và công việc săn cá voi.",
+            "Herman Melville kết hợp phiêu lưu hàng hải với suy ngẫm về ám ảnh, số phận và giới hạn của con người.",
+            "Moby-Dick xuất bản năm 1851. Mở Project Gutenberg để đọc toàn văn nguyên tác."
+          ]
+        },
+        {
+          id: "dracula",
+          title: "Dracula",
+          originalTitle: "Dracula",
+          author: "Bram Stoker",
+          genre: "Kinh điển · Gothic",
+          description: "Những cuốn nhật ký và bức thư hé lộ cuộc đối đầu với bá tước Dracula.",
+          cover: "D",
+          tone: "violet",
+          coverUrl: "https://www.gutenberg.org/cache/epub/345/pg345.cover.medium.jpg",
+          readUrl: "https://www.gutenberg.org/ebooks/345",
+          paragraphs: [
+            "Luật sư trẻ Jonathan Harker đến Transylvania để gặp bá tước Dracula tại lâu đài hẻo lánh.",
+            "Những điều kỳ lạ ở lâu đài khiến Jonathan nhận ra mình đang bị giam giữ bên cạnh một chủ nhà bí ẩn.",
+            "Ở Anh, Mina Murray và Lucy Westenra bị cuốn vào các sự kiện bất thường liên quan đến một con tàu từ phương Đông.",
+            "Bác sĩ Van Helsing cùng những người đồng hành ghép nối nhật ký và thư từ để tìm cách đối mặt với Dracula.",
+            "Bram Stoker kể câu chuyện qua nhiều góc nhìn, tạo nên một trong những tiểu thuyết ma cà rồng nổi tiếng nhất.",
+            "Dracula xuất bản năm 1897. Mở Project Gutenberg để đọc toàn văn nguyên tác."
+          ]
+        },
+        {
+          id: "dorian-gray",
+          title: "Bức chân dung của Dorian Gray",
+          originalTitle: "The Picture of Dorian Gray",
+          author: "Oscar Wilde",
+          genre: "Kinh điển · Gothic",
+          description: "Một bức chân dung bí ẩn gắn với tuổi trẻ, lựa chọn và cái giá của sự phù phiếm.",
+          cover: "D",
+          tone: "gold",
+          coverUrl: "https://www.gutenberg.org/cache/epub/174/pg174.cover.medium.jpg",
+          readUrl: "https://www.gutenberg.org/ebooks/174",
+          paragraphs: [
+            "Họa sĩ Basil Hallward vẽ chân dung chàng trai trẻ đẹp Dorian Gray.",
+            "Dorian ước mình sẽ mãi trẻ trung, còn bức chân dung sẽ thay anh mang dấu vết của thời gian.",
+            "Khi Dorian dần bị cuốn vào lối sống hưởng thụ, bức tranh kín đáo phản chiếu những đổi thay mà gương mặt anh không để lộ.",
+            "Bí mật ấy khiến Dorian phải đối diện với hậu quả từ các lựa chọn của mình.",
+            "Oscar Wilde đặt ra câu hỏi về vẻ đẹp, đạo đức và trách nhiệm trong tiểu thuyết nổi tiếng này.",
+            "Bức chân dung của Dorian Gray xuất bản năm 1890. Mở Project Gutenberg để đọc toàn văn."
+          ]
+        },
+        {
+          id: "time-machine",
+          title: "Cỗ máy thời gian",
+          originalTitle: "The Time Machine",
+          author: "H. G. Wells",
+          genre: "Kinh điển · Khoa học viễn tưởng",
+          description: "Nhà Du Hành Thời Gian đến tương lai xa và khám phá một xã hội đã thay đổi kỳ lạ.",
+          cover: "C",
+          tone: "blue",
+          coverUrl: "https://www.gutenberg.org/cache/epub/35/pg35.cover.medium.jpg",
+          readUrl: "https://www.gutenberg.org/ebooks/35",
+          paragraphs: [
+            "Một nhà phát minh ở London tuyên bố đã chế tạo cỗ máy có thể đưa con người đi xuyên thời gian.",
+            "Sau chuyến hành trình đầu tiên, ông trở về kể với bạn bè về năm 802.701.",
+            "Tại đó, nhân loại đã phân hóa thành hai cộng đồng khác biệt: người Eloi sống trên mặt đất và người Morlock ở dưới lòng đất.",
+            "Khi cỗ máy biến mất, nhà Du Hành Thời Gian phải tìm cách khám phá bí mật của thế giới tương lai để trở về.",
+            "H. G. Wells dùng chuyến phiêu lưu khoa học viễn tưởng để suy ngẫm về tiến bộ và sự phân tầng xã hội.",
+            "Cỗ máy thời gian xuất bản năm 1895. Mở Project Gutenberg để đọc toàn văn nguyên tác."
+          ]
+        },
+        {
+          id: "pride-prejudice",
+          title: "Kiêu hãnh và định kiến",
+          originalTitle: "Pride and Prejudice",
+          author: "Jane Austen",
+          genre: "Kinh điển · Tình cảm",
+          description: "Elizabeth Bennet và Darcy phải nhìn lại những định kiến của mình trước khi hiểu nhau.",
+          cover: "K",
+          tone: "peach",
+          coverUrl: "https://www.gutenberg.org/cache/epub/1342/pg1342.cover.medium.jpg",
+          readUrl: "https://www.gutenberg.org/ebooks/1342",
+          paragraphs: [
+            "“Ai cũng biết rằng một người đàn ông độc thân có gia sản đáng kể hẳn đang cần tìm vợ.” Câu nói ấy nhanh chóng trở thành đề tài của cả vùng.",
+            "Bà Bennet nghe tin Netherfield sắp có chủ mới và lập tức nghĩ đến năm cô con gái của mình.",
+            "Người hàng xóm mới, ông Bingley, niềm nở làm quen. Đi cùng ông là Darcy, một người ít nói và có vẻ xa cách.",
+            "Tại buổi khiêu vũ đầu tiên, Elizabeth nhận ra sự kiêu hãnh có thể khiến người ta hiểu lầm nhau chỉ sau vài câu chuyện.",
+            "Những lá thư, lời đồn và cuộc gặp bất ngờ dần làm thay đổi cách Elizabeth nhìn Darcy.",
+            "Câu chuyện của Jane Austen mở ra bằng một gia đình, một vùng quê và những ấn tượng đầu tiên khó quên."
+          ]
+        },
+        {
+          id: "alice-wonderland",
+          title: "Alice ở xứ sở thần tiên",
+          originalTitle: "Alice's Adventures in Wonderland",
+          author: "Lewis Carroll",
+          genre: "Kinh điển · Kỳ ảo",
+          description: "Alice bước qua một thế giới kỳ lạ, nơi những cuộc gặp gỡ luôn thách thức trí tưởng tượng.",
+          cover: "A",
+          tone: "sage",
+          coverUrl: "https://www.gutenberg.org/cache/epub/11/pg11.cover.medium.jpg",
+          readUrl: "https://www.gutenberg.org/ebooks/11",
+          paragraphs: [
+            "Một buổi chiều yên ả bên bờ sông, Alice bắt đầu thấy buồn chán khi ngồi cạnh chị gái.",
+            "Bỗng một chú thỏ trắng mặc áo ghi-lê chạy ngang qua, vừa nhìn đồng hồ vừa lo mình sẽ đến muộn.",
+            "Alice tò mò đuổi theo và thấy chú thỏ biến mất sau một chiếc hang sâu.",
+            "Cô bé trượt xuống một lối đi dài, hai bên đầy những chiếc tủ và bản đồ kỳ lạ.",
+            "Từ đó, những điều quen thuộc liên tục thay đổi: kích thước, lối đi và cả cách cư xử của những nhân vật Alice gặp.",
+            "Tác phẩm của Lewis Carroll đưa độc giả vào chuyến phiêu lưu mộng mơ, nơi trí tò mò dẫn đường."
+          ]
+        },
+        {
+          id: "sherlock-holmes",
+          title: "Những cuộc phiêu lưu của Sherlock Holmes",
+          originalTitle: "The Adventures of Sherlock Holmes",
+          author: "Arthur Conan Doyle",
+          genre: "Kinh điển · Trinh thám",
+          description: "Sherlock Holmes và bác sĩ Watson lần theo những manh mối nhỏ để giải những vụ án khó.",
+          cover: "S",
+          tone: "blue",
+          coverUrl: "https://www.gutenberg.org/cache/epub/1661/pg1661.cover.medium.jpg",
+          readUrl: "https://www.gutenberg.org/ebooks/1661",
+          paragraphs: [
+            "Với Sherlock Holmes, Irene Adler luôn là người phụ nữ đặc biệt. Bác sĩ Watson hiếm khi nghe Holmes nhắc đến ai khác như vậy.",
+            "Một buổi tối, Holmes nhận được lời nhờ giúp đỡ từ một vị khách giấu mặt đến từ Bohemia.",
+            "Vụ việc tưởng chừng đơn giản nhanh chóng trở nên rắc rối khi một bức ảnh có thể làm thay đổi tương lai của cả một vương triều.",
+            "Watson theo chân người bạn qua những con phố London, quan sát Holmes biến những chi tiết nhỏ thành manh mối.",
+            "Nhưng Irene Adler không dễ bị đánh lừa, và Holmes sớm gặp một đối thủ xứng tầm.",
+            "Tuyển tập của Arthur Conan Doyle mở đầu bằng một cuộc đấu trí giữa óc suy luận và sự tinh tế."
+          ]
+        },
+        {
+          id: "frankenstein",
+          title: "Frankenstein",
+          originalTitle: "Frankenstein; or, The Modern Prometheus",
+          author: "Mary Shelley",
+          genre: "Kinh điển · Gothic",
+          description: "Trong hành trình khám phá Bắc Cực, một nhà thám hiểm gặp người kể lại câu chuyện về sinh mệnh nhân tạo.",
+          cover: "F",
+          tone: "violet",
+          coverUrl: "https://www.gutenberg.org/cache/epub/84/pg84.cover.medium.jpg",
+          readUrl: "https://www.gutenberg.org/ebooks/84",
+          paragraphs: [
+            "Từ con tàu giữa vùng biển phương Bắc, Robert Walton viết thư kể với chị gái về chuyến thám hiểm đầy tham vọng.",
+            "Một ngày nọ, thủy thủ đoàn nhìn thấy bóng người di chuyển trên mặt băng xa xăm.",
+            "Không lâu sau, họ cứu được Victor Frankenstein, người đàn ông kiệt sức đang lần theo dấu vết bí ẩn.",
+            "Trong những ngày hồi phục, Victor bắt đầu kể lại tuổi trẻ và khát vọng vượt qua giới hạn của con người.",
+            "Mary Shelley đan xen câu chuyện khám phá, khoa học và câu hỏi về trách nhiệm đối với những gì ta tạo ra.",
+            "Tác phẩm Gothic kinh điển mở ra bằng những lá thư lạnh giá và một cuộc gặp gỡ định mệnh."
+          ]
+        }
+      ];
+      const additionalNovels = [
+        [98, "Hai thành phố", "A Tale of Two Cities", "Charles Dickens", "Kinh điển · Lịch sử", "Giữa London và Paris thời Cách mạng Pháp, những số phận gắn kết qua hy sinh và cơ hội làm lại.", "gold", "Lucie Manette đoàn tụ với người cha vừa được trả tự do sau nhiều năm.|Luật sư Sydney Carton và Charles Darnay cùng bước vào cuộc đời của Lucie.|Darnay trở về Paris giữa lúc Cách mạng Pháp bùng nổ.|Quá khứ quý tộc của anh khiến anh đối mặt với phiên tòa nguy hiểm.|Carton đưa ra một lựa chọn thay đổi số phận của những người anh yêu quý.|Charles Dickens kể câu chuyện về bất công, lòng trắc ẩn và sự hy sinh giữa hai thành phố."],
+        [2641, "Căn phòng có tầm nhìn", "A Room with a View", "E. M. Forster", "Kinh điển · Tình cảm", "Lucy Honeychurch đứng giữa những kỳ vọng xã hội và mong muốn tự quyết định cuộc đời mình.", "sage", "Lucy Honeychurch du lịch Florence cùng người chị họ Charlotte.|Một căn phòng nhìn ra sông Arno mở đầu cho những cuộc gặp gỡ bất ngờ.|Lucy quen George Emerson, người có cách nhìn đời khác với giới thượng lưu Anh.|Sau khi về nước, cô đính hôn với Cecil Vyse theo kỳ vọng gia đình.|Những cảm xúc chưa được giải quyết khiến Lucy phải xem xét lại lựa chọn ấy.|E. M. Forster đặt câu hỏi về tự do cá nhân và những quy ước xã hội."],
+        [145, "Middlemarch", "Middlemarch", "George Eliot", "Kinh điển · Xã hội", "Bức tranh nhiều lớp về tình yêu, tham vọng và đời sống của một thị trấn Anh thế kỷ XIX.", "earth", "Dorothea Brooke mong muốn sống một cuộc đời có ích và nhiều ý nghĩa.|Cô kết hôn với học giả Edward Casaubon nhưng sớm nhận ra khoảng cách giữa họ.|Bác sĩ Tertius Lydgate đến Middlemarch với khát vọng đổi mới y học.|Những khoản nợ và xung đột trong thị trấn thử thách dự định của anh.|Fred Vincy, Mary Garth và nhiều gia đình khác cũng đối mặt với lựa chọn riêng.|George Eliot kết nối những số phận nhỏ thành bức chân dung rộng lớn về cộng đồng."],
+        [67979, "Lâu đài xanh", "The Blue Castle", "L. M. Montgomery", "Kinh điển · Tình cảm", "Valancy Stirling bắt đầu sống theo ý mình sau một tin tức làm thay đổi mọi dự định.", "blue", "Valancy Stirling sống nhiều năm theo những quy tắc của gia đình bảo thủ.|Một chẩn đoán sức khỏe khiến cô quyết định không trì hoãn mong muốn của mình.|Valancy rời căn nhà quen thuộc và nhận công việc chăm sóc Cissy Gay.|Cô gặp Barney Snaith, người có cuộc sống khác xa những lời đồn.|Tình bạn và tình yêu giúp Valancy tìm thấy sự tự tin cùng niềm vui mới.|L. M. Montgomery viết câu chuyện về tự do cá nhân và cơ hội bắt đầu lại."],
+        [2554, "Tội ác và hình phạt", "Crime and Punishment", "Fyodor Dostoevsky", "Kinh điển · Tâm lý", "Raskolnikov vật lộn với lương tâm sau một quyết định phạm tội tại thành phố Saint Petersburg.", "violet", "Sinh viên nghèo Rodion Raskolnikov sống trong cảnh túng thiếu ở Saint Petersburg.|Anh tự thuyết phục mình rằng một số người có thể vượt lên trên luật lệ thông thường.|Một vụ án khiến Raskolnikov bị cuốn vào sợ hãi và giằng xé nội tâm.|Thanh tra Porfiry từng bước chất vấn những mâu thuẫn trong lời kể của anh.|Sonia Marmeladova trở thành điểm tựa trong hành trình đối diện sự thật.|Dostoevsky khám phá tội lỗi, lòng trắc ẩn và khả năng chuộc lỗi."],
+        [1184, "Bá tước Monte Cristo", "The Count of Monte Cristo", "Alexandre Dumas", "Kinh điển · Phiêu lưu", "Edmond Dantès trở lại với thân phận mới để tìm công lý sau nhiều năm bị giam cầm oan sai.", "gold", "Thủy thủ trẻ Edmond Dantès sắp được thăng chức và kết hôn với Mercédès.|Những kẻ ganh ghét dựng chuyện khiến anh bị bắt giam không qua xét xử.|Trong nhà tù Château d'If, Dantès kết bạn với Abbé Faria và biết về kho báu bí mật.|Anh trốn thoát, tìm thấy kho báu và trở lại xã hội với thân phận Bá tước Monte Cristo.|Kế hoạch trả thù đưa anh gặp lại những người từng hủy hoại cuộc đời mình.|Alexandre Dumas kể một cuộc phiêu lưu về công lý, báo thù và lòng khoan dung."],
+        [64317, "Đại gia Gatsby", "The Great Gatsby", "F. Scott Fitzgerald", "Kinh điển · Xã hội", "Nick Carraway chứng kiến giấc mơ giàu sang của Jay Gatsby và tình yêu dành cho Daisy Buchanan.", "peach", "Nick Carraway chuyển đến Long Island và trở thành hàng xóm của Jay Gatsby.|Gatsby nổi tiếng với những bữa tiệc xa hoa nhưng sống khép kín.|Nick biết Gatsby từng yêu Daisy Buchanan và muốn gặp lại cô.|Daisy hiện đã kết hôn với Tom Buchanan, người thuộc giới thượng lưu cũ.|Cuộc hội ngộ làm lộ ra những khác biệt về tiền bạc, địa vị và ký ức.|F. Scott Fitzgerald khắc họa giấc mơ Mỹ cùng những ảo tưởng của thập niên 1920."],
+        [65238, "Bí mật ở dinh thự Chimneys", "The Secret of Chimneys", "Agatha Christie", "Trinh thám · Bí ẩn", "Một vụ án tại dinh thự Chimneys kéo theo bí mật chính trị, thân phận và những nghi phạm khó lường.", "violet", "Anthony Cade nhận lời chuyển một bản hồi ký và một bức thư quan trọng.|Công việc đưa anh đến dinh thự Chimneys, nơi giới chính khách đang tụ họp.|Một vụ giết người xảy ra và làm lộ ra câu chuyện về một vương quốc xa xôi.|Thanh tra Battle bắt đầu điều tra những vị khách có mặt tại dinh thự.|Các manh mối liên quan đến danh tính, động cơ và một món đồ bị thất lạc.|Agatha Christie kết hợp vụ án mạng với một bí ẩn chính trị đầy bất ngờ."],
+        [5200, "Hóa thân", "The Metamorphosis", "Franz Kafka", "Kinh điển · Hiện sinh", "Gregor Samsa thức dậy trong một hình hài xa lạ và nhận ra những rạn nứt trong gia đình mình.", "earth", "Gregor Samsa tỉnh dậy và phát hiện cơ thể mình đã biến đổi kỳ lạ.|Anh không thể đi làm và gia đình dần biết chuyện.|Cha mẹ và em gái Grete tìm cách thích nghi với tình cảnh mới.|Gregor bị giữ trong phòng, ngày càng bị tách khỏi đời sống bên ngoài.|Sự chăm sóc ban đầu của Grete dần nhường chỗ cho mệt mỏi và xa cách.|Franz Kafka dùng biến cố phi lý để gợi suy ngẫm về cô lập và thân phận con người."],
+        [16389, "Tháng Tư mê hoặc", "The Enchanted April", "Elizabeth von Arnim", "Kinh điển · Đời thường", "Bốn phụ nữ Anh thuê một lâu đài ở Italy và dần thay đổi trong kỳ nghỉ tháng Tư.", "sage", "Hai người phụ nữ London nhìn thấy mẩu quảng cáo thuê lâu đài nhỏ ở Italy.|Lottie Wilkins và Rose Arbuthnot rủ thêm hai người bạn cùng đi.|San Salvatore đón họ bằng khu vườn đầy hoa và ánh nắng mùa xuân.|Nhịp sống chậm giúp mỗi người nhìn lại hôn nhân và mong muốn riêng.|Những vị khách bất ngờ làm kỳ nghỉ trở nên nhiều cảm xúc hơn.|Elizabeth von Arnim kể câu chuyện nhẹ nhàng về tình bạn và sự đổi thay."],
+        [1259, "Hai mươi năm sau", "Twenty Years After", "Alexandre Dumas", "Kinh điển · Phiêu lưu", "D'Artagnan và ba chàng lính ngự lâm tái hợp giữa những biến động chính trị ở nước Pháp.", "Pháp bước vào thời kỳ nhiếp chính và những cuộc tranh giành quyền lực mới.|D'Artagnan tìm lại Athos, Porthos và Aramis sau nhiều năm xa cách.|Những người bạn cũ đứng ở các phía khác nhau trong biến động chính trị.|Nhiệm vụ đưa họ từ Paris sang Anh để can thiệp vào số phận nhà vua.|Tình bạn được thử thách bởi lòng trung thành và trách nhiệm.|Alexandre Dumas tiếp tục cuộc phiêu lưu của các chàng lính ngự lâm trong một thời đại đổi thay."],
+        [2600, "Chiến tranh và hòa bình", "War and Peace", "Leo Tolstoy", "Kinh điển · Lịch sử", "Các gia đình quý tộc Nga trải qua chiến tranh Napoleon, tình yêu và những chuyển biến của lịch sử.", "Câu chuyện bắt đầu trong giới quý tộc Nga khi chiến tranh với Napoleon đến gần.|Pierre Bezukhov bất ngờ thừa kế gia sản lớn và tìm kiếm mục đích sống.|Andrei Bolkonsky rời gia đình để tham gia chiến trận.|Natasha Rostova trưởng thành qua tình yêu, mất mát và trách nhiệm.|Cuộc xâm lược của Napoleon làm đảo lộn đời sống cá nhân và xã hội.|Tolstoy đan xen số phận nhiều gia đình với những suy ngẫm về lịch sử và chiến tranh."],
+        [394, "Cranford", "Cranford", "Elizabeth Gaskell", "Kinh điển · Đời thường", "Nhịp sống và tình bạn của những phụ nữ tại một thị trấn nhỏ nước Anh được kể bằng sự hài hước dịu dàng.", "Cranford là thị trấn nhỏ do những phụ nữ độc thân và góa phụ tạo nên nhịp sống riêng.|Mary Smith thường ghé thăm và kể lại những chuyện xảy ra trong cộng đồng.|Các quy tắc xã giao được giữ gìn nghiêm ngặt nhưng luôn có chỗ cho hài hước.|Sự xuất hiện của những người mới làm thay đổi nếp sống quen thuộc.|Những khó khăn tài chính và mất mát cho thấy sự gắn bó giữa hàng xóm.|Elizabeth Gaskell khắc họa tình bạn và lòng tử tế trong đời thường."],
+        [2160, "Chuyến hành trình của Humphry Clinker", "The Expedition of Humphry Clinker", "Tobias Smollett", "Kinh điển · Hài hước", "Một gia đình đi du lịch khắp nước Anh và Scotland, ghi lại những phong tục qua thư từ dí dỏm.", "Matthew Bramble đưa gia đình đi du lịch qua nhiều vùng của Anh và Scotland.|Mỗi thành viên ghi lại chuyến đi bằng thư từ với giọng điệu riêng.|Những phong tục địa phương và cảnh sinh hoạt thành thị trở thành nguồn hài hước.|Người hầu Humphry Clinker dần trở thành nhân vật quan trọng trong chuyến đi.|Các bí mật gia đình và hiểu lầm được hé lộ qua những lá thư.|Tobias Smollett dùng hình thức tiểu thuyết thư từ để châm biếm xã hội thế kỷ XVIII."],
+        [6761, "Những cuộc phiêu lưu của Bá tước Ferdinand Fathom", "The Adventures of Ferdinand Count Fathom", "Tobias Smollett", "Kinh điển · Phiêu lưu", "Ferdinand Fathom dùng mưu mẹo để tiến thân trong xã hội châu Âu, nhưng phải trả giá cho những lựa chọn của mình.", "Ferdinand Fathom lớn lên giữa những mối quan hệ bất ổn và tham vọng.|Anh dùng sự khéo léo cùng mưu mẹo để tìm đường tiến thân.|Những chuyến đi đưa Fathom qua nhiều thành phố và tầng lớp xã hội.|Các trò lừa đảo đem lại lợi ích trước mắt nhưng khiến anh bị nghi ngờ.|Khi vận may đổi chiều, Fathom phải đối diện hậu quả của hành động mình.|Tobias Smollett viết một tiểu thuyết phiêu lưu châm biếm về tham vọng và đạo đức."],
+        [6593, "Tom Jones", "The History of Tom Jones, a Foundling", "Henry Fielding", "Kinh điển · Hài hước", "Tom Jones lớn lên trong một gia đình quý tộc và trải qua nhiều thử thách trước khi tìm được vị trí của mình.", "Tom Jones được ông Allworthy nuôi dưỡng sau khi được tìm thấy khi còn bé.|Lớn lên, Tom đem lòng yêu Sophia Western nhưng vướng vào nhiều hiểu lầm.|Anh rời quê và gặp những nhân vật thuộc nhiều tầng lớp xã hội.|Các cuộc phiêu lưu bộc lộ tính bốc đồng nhưng cũng cho thấy lòng tốt của Tom.|Những bí mật về nguồn gốc và các mối quan hệ dần được làm sáng tỏ.|Henry Fielding kết hợp hài hước với bức tranh rộng về xã hội Anh thế kỷ XVIII."],
+        [74, "Những cuộc phiêu lưu của Tom Sawyer", "The Adventures of Tom Sawyer", "Mark Twain", "Kinh điển · Phiêu lưu", "Tom Sawyer và Huck Finn trải qua những chuyến phiêu lưu tuổi thơ bên bờ sông Mississippi.", "Tom Sawyer sống cùng dì Polly tại một thị trấn ven sông Mississippi.|Cậu thường tìm cách trốn việc và biến những ngày bình thường thành trò phiêu lưu.|Tom kết bạn với Huck Finn và cùng cậu khám phá nghĩa trang cùng hang động.|Hai cậu bé tình cờ chứng kiến một vụ án nghiêm trọng.|Tom phải lấy hết can đảm để nói ra điều mình biết.|Mark Twain khắc họa tuổi thơ, tình bạn và đời sống thị trấn miền Nam nước Mỹ."],
+        [4085, "Những cuộc phiêu lưu của Roderick Random", "The Adventures of Roderick Random", "Tobias Smollett", "Kinh điển · Phiêu lưu", "Roderick Random đi qua nhiều nghề nghiệp và chuyến hải hành để tìm người thân và một cuộc sống ổn định.", "Roderick Random lớn lên trong cảnh thiếu thốn và không rõ thân thế.|Anh rời quê để tìm cơ hội và người cha mà mình chưa từng biết.|Những chuyến đi đưa Roderick qua quân đội, biển cả và nhiều thành phố.|Anh gặp sự bất công nhưng cũng kết bạn với những người đồng cảnh.|Các manh mối về gia đình cuối cùng được hé lộ.|Tobias Smollett viết tiểu thuyết phiêu lưu dựa trên nhiều trải nghiệm xã hội đương thời."],
+        [59828, "Chuỗi ngọc trai", "The String of Pearls", "Thomas Peckett Prest", "Kinh điển · Gothic", "Một bí ẩn rùng rợn ở London Victoria xoay quanh thợ cắt tóc Sweeney Todd và những vụ mất tích.", "London thời Victoria trở thành bối cảnh cho những vụ mất tích bí ẩn.|Thợ cắt tóc Sweeney Todd bị đồn có liên quan đến sự biến mất của khách.|Một chuỗi ngọc trai và một mối tình tạo nên những đầu mối quan trọng.|Những người thân của nạn nhân tìm cách khám phá sự thật.|Các tình tiết hồi hộp lần lượt kết nối trong câu chuyện đăng dài kỳ.|Tác phẩm Gothic này góp phần tạo nên truyền thuyết nổi tiếng về Sweeney Todd."],
+        [25344, "Chữ A màu đỏ", "The Scarlet Letter", "Nathaniel Hawthorne", "Kinh điển · Lịch sử", "Hester Prynne phải sống với dấu hiệu công khai của sự phán xét trong cộng đồng Thanh giáo ở New England.", "Hester Prynne bị kết tội ngoại tình trong một cộng đồng Thanh giáo nghiêm khắc.|Cô phải mang chữ A màu đỏ trên áo và nuôi con gái Pearl một mình.|Mục sư Arthur Dimmesdale che giấu mối liên hệ của mình với Hester.|Roger Chillingworth, chồng Hester, tìm cách khám phá danh tính người đàn ông.|Sự im lặng và mặc cảm ảnh hưởng đến cả những nhân vật liên quan.|Nathaniel Hawthorne suy ngẫm về tội lỗi, lòng khoan dung và sự phán xét."],
+        [55, "Phù thủy xứ Oz", "The Wonderful Wizard of Oz", "L. Frank Baum", "Kinh điển · Kỳ ảo", "Dorothy và những người bạn mới đi tìm phù thủy Oz với hy vọng trở về nhà và đạt được điều mình mong muốn.", "Một cơn lốc đưa Dorothy và chú chó Toto đến xứ Oz xa lạ.|Trên đường đến Thành phố Ngọc Lục Bảo, cô gặp Bù Nhìn, Người Thiếc và Sư Tử Nhát.|Mỗi người bạn mong phù thủy Oz giúp mình có điều còn thiếu.|Nhóm phải vượt qua cánh đồng hoa và những thử thách do Phù thủy phương Tây gây ra.|Khi tới nơi, họ phát hiện quyền năng của Oz không giống lời đồn.|L. Frank Baum kể chuyến phiêu lưu về tình bạn, lòng can đảm và mái nhà."],
+        [1400, "Kỳ vọng lớn lao", "Great Expectations", "Charles Dickens", "Kinh điển · Trưởng thành", "Pip theo đuổi giấc mơ trở thành quý ông và dần khám phá sự thật về người bảo trợ bí ẩn của mình.", "Pip là cậu bé mồ côi sống cùng chị gái và anh rể Joe Gargery.|Một cuộc gặp với tù nhân vượt ngục khiến Pip bước vào thế giới của người lớn.|Cô Havisham và Estella khơi dậy trong Pip khát vọng đổi đời.|Một khoản tiền bí ẩn đưa Pip đến London và biến cậu thành quý ông.|Khi danh tính người bảo trợ được tiết lộ, Pip phải xét lại những điều mình coi trọng.|Charles Dickens kể câu chuyện trưởng thành về lòng biết ơn và địa vị xã hội."],
+        [161, "Lý trí và tình cảm", "Sense and Sensibility", "Jane Austen", "Kinh điển · Tình cảm", "Hai chị em Elinor và Marianne Dashwood đối diện tình yêu theo hai tính cách và cách nhìn khác nhau.", "Sau khi cha qua đời, chị em Dashwood phải rời ngôi nhà Norland.|Elinor kiềm chế cảm xúc còn Marianne bộc lộ tình cảm một cách nồng nhiệt.|Những mối quan hệ với Edward Ferrars và John Willoughby đem đến hy vọng lẫn thất vọng.|Các chị em chuyển đến Devonshire rồi sau đó tới London.|Hiểu lầm và sự thật thử thách cách mỗi người nhìn nhận tình yêu.|Jane Austen đối chiếu lý trí và cảm xúc qua hành trình trưởng thành của hai chị em."],
+        [76, "Những cuộc phiêu lưu của Huckleberry Finn", "Adventures of Huckleberry Finn", "Mark Twain", "Kinh điển · Phiêu lưu", "Huck Finn trốn khỏi cuộc sống bị kiểm soát và xuôi dòng Mississippi cùng Jim, người đang tìm tự do.", "Huck Finn trốn khỏi người cha bạo lực và gặp Jim đang bỏ trốn khỏi cảnh nô lệ.|Hai người cùng đi bè xuôi dòng sông Mississippi.|Trên đường, họ gặp nhiều thị trấn, gia đình và kẻ lừa đảo.|Huck phải cân nhắc những điều xã hội dạy với điều cậu cho là đúng.|Tình bạn giữa Huck và Jim sâu sắc hơn qua những hiểm nguy.|Mark Twain dùng hành trình trên sông để phản ánh xã hội và lương tâm."],
+        [768, "Đồi gió hú", "Wuthering Heights", "Emily Brontë", "Kinh điển · Gothic", "Heathcliff và Catherine bị cuốn vào mối quan hệ dữ dội để lại hậu quả qua hai thế hệ.", "Người thuê nhà Lockwood tìm hiểu câu chuyện về vùng đất Wuthering Heights.|Quản gia Nelly kể lại tuổi thơ của Catherine Earnshaw và Heathcliff.|Tình cảm giữa hai người bị ngăn cách bởi địa vị và những lựa chọn khó khăn.|Heathcliff rời đi rồi trở lại với quyết tâm trả đũa.|Mâu thuẫn lan sang thế hệ con cháu của hai gia đình.|Emily Brontë tạo nên tiểu thuyết Gothic về tình yêu, tổn thương và báo thù."],
+        [120, "Đảo giấu vàng", "Treasure Island", "Robert Louis Stevenson", "Kinh điển · Phiêu lưu", "Jim Hawkins lên tàu Hispaniola trong chuyến đi tìm kho báu và phải đề phòng thủy thủ Long John Silver.", "Jim Hawkins tìm thấy bản đồ kho báu trong đồ đạc của một thủy thủ bí ẩn.|Cậu tham gia chuyến đi trên tàu Hispaniola cùng bác sĩ Livesey và ông Trelawney.|Thủy thủ Long John Silver có vẻ thân thiện nhưng đang che giấu kế hoạch nổi loạn.|Khi con tàu tới đảo, Jim phát hiện cuộc săn kho báu nguy hiểm hơn dự tính.|Những người còn trung thành phải dựa vào lòng can đảm và sự khôn ngoan.|Robert Louis Stevenson viết cuộc phiêu lưu biển đảo kinh điển về lòng tham và lòng trung thành."],
+        [2852, "Chó săn nhà Baskerville", "The Hound of the Baskervilles", "Arthur Conan Doyle", "Kinh điển · Trinh thám", "Sherlock Holmes và bác sĩ Watson điều tra lời nguyền cùng cái chết bí ẩn của gia đình Baskerville.", "Bác sĩ Mortimer kể cho Holmes nghe truyền thuyết về con chó săn nhà Baskerville.|Cái chết của Sir Charles khiến người thừa kế Sir Henry gặp nguy hiểm.|Holmes cử Watson đến vùng đồng hoang để bảo vệ Sir Henry và quan sát các nghi phạm.|Những âm thanh cùng dấu vết lạ làm lời nguyền có vẻ đáng tin.|Holmes bí mật theo dõi vụ việc và thu thập chứng cứ.|Arthur Conan Doyle kết hợp truyền thuyết Gothic với suy luận trinh thám."],
+        [45, "Anne tóc đỏ dưới chái nhà xanh", "Anne of Green Gables", "L. M. Montgomery", "Kinh điển · Trưởng thành", "Anne Shirley, cô bé giàu trí tưởng tượng, tìm thấy mái ấm mới tại đảo Prince Edward.", "Matthew và Marilla Cuthbert dự định nhận một cậu bé về giúp việc ở trang trại.|Thay vào đó, Anne Shirley đến Green Gables với trí tưởng tượng phong phú.|Anne kết bạn với Diana và thường vướng vào những rắc rối hài hước.|Những năm ở Avonlea giúp cô trưởng thành và gắn bó với gia đình mới.|Một biến cố khiến Anne phải lựa chọn giữa ước mơ riêng và trách nhiệm.|L. M. Montgomery kể câu chuyện ấm áp về tình thân và tuổi lớn."],
+        [3268, "Những bí mật của Udolpho", "The Mysteries of Udolpho", "Ann Radcliffe", "Kinh điển · Gothic", "Emily St. Aubert đối mặt những bí ẩn và âm mưu sau khi bị đưa đến lâu đài Udolpho.", "Emily St. Aubert mất cha và phải sống dưới sự giám hộ của người họ hàng Montoni.|Montoni đưa Emily cùng vợ đến lâu đài Udolpho ở Italy.|Những hành lang tối và âm thanh bí ẩn khiến Emily lo sợ.|Cô tìm cách khám phá những bí mật bị che giấu trong lâu đài.|Tình cảm với Valancourt và quyền thừa kế của Emily bị đe dọa.|Ann Radcliffe tạo nên một trong những tiểu thuyết Gothic có ảnh hưởng lớn."],
+        [28054, "Anh em nhà Karamazov", "The Brothers Karamazov", "Fyodor Dostoevsky", "Kinh điển · Tâm lý", "Ba anh em Karamazov bị cuốn vào xung đột gia đình và vụ án mạng làm lay động niềm tin của họ.", "Fyodor Pavlovich Karamazov sống bất hòa với các con trai Dmitri, Ivan và Alyosha.|Mâu thuẫn về tiền bạc và tình cảm làm xung đột giữa cha con ngày càng gay gắt.|Một vụ án mạng khiến Dmitri trở thành nghi phạm chính.|Phiên tòa phơi bày những bí mật và lời khai trái ngược.|Alyosha tìm cách gìn giữ lòng tin và tình thương giữa những đổ vỡ.|Dostoevsky suy ngẫm về tự do, đức tin, trách nhiệm và tình thân."],
+        [69087, "Vụ án Roger Ackroyd", "The Murder of Roger Ackroyd", "Agatha Christie", "Kinh điển · Trinh thám", "Hercule Poirot điều tra cái chết của Roger Ackroyd trong một ngôi làng tưởng như yên bình.", "Bác sĩ James Sheppard sống tại làng King's Abbot cùng chị gái Caroline.|Cái chết của góa phụ Ferrars làm dấy lên nhiều câu hỏi trong cộng đồng.|Roger Ackroyd bị sát hại tại nhà riêng ngay sau khi nhận một lá thư.|Hercule Poirot nghỉ hưu gần đó nhưng được mời tham gia điều tra.|Những lời khai và mốc thời gian dẫn tới một lời giải bất ngờ.|Agatha Christie xây dựng vụ án bằng các manh mối được giấu trong đời sống thường nhật."],
+        [58866, "Án mạng trên sân golf", "The Murder on the Links", "Agatha Christie", "Kinh điển · Trinh thám", "Poirot đến Pháp giúp một khách hàng giàu có nhưng vụ án nhanh chóng trở nên phức tạp.", "Hercule Poirot nhận được thư khẩn cầu từ một doanh nhân sống tại Pháp.|Khi Poirot và Hastings đến nơi, người đàn ông đã bị sát hại.|Thi thể được tìm thấy trên sân golf gần biệt thự.|Một bức thư và những nhân vật có thân phận khó hiểu làm vụ án rối thêm.|Poirot xem xét chứng cứ và nhận ra nhiều chi tiết không khớp.|Agatha Christie đặt cuộc điều tra trong một bí ẩn nhiều lớp về danh tính và động cơ."],
+        [209, "Vòng xoáy ốc", "The Turn of the Screw", "Henry James", "Kinh điển · Tâm lý", "Một nữ gia sư mới đến điền trang Bly và dần tin rằng những đứa trẻ mình chăm sóc đang gặp nguy hiểm.", "Một gia sư trẻ nhận việc chăm sóc Miles và Flora tại điền trang Bly.|Người chủ nhà yêu cầu cô tự giải quyết mọi vấn đề mà không làm phiền ông.|Cô bắt đầu nhìn thấy những bóng người lạ quanh điền trang.|Nữ gia sư tin rằng các linh hồn đang tìm cách tiếp cận hai đứa trẻ.|Cách nhìn của cô khiến người đọc phải tự hỏi điều gì thực sự đang diễn ra.|Henry James tạo nên một câu chuyện ma ám giàu mơ hồ và căng thẳng tâm lý."],
+        [1695, "Người đàn ông là ngày thứ Năm", "The Man Who Was Thursday", "G. K. Chesterton", "Kinh điển · Bí ẩn", "Nhà thơ Gabriel Syme thâm nhập một tổ chức bí mật và liên tục đối mặt những cuộc đảo chiều bất ngờ.", "Gabriel Syme được tuyển vào lực lượng cảnh sát bí mật chống chủ nghĩa vô chính phủ.|Anh thâm nhập một hội đồng bí mật gồm những người mang tên các ngày trong tuần.|Syme phát hiện các thành viên không giống những kẻ âm mưu mà anh hình dung.|Cuộc truy đuổi xuyên London liên tiếp đổi hướng và thân phận.|Những tiết lộ cuối cùng đặt lại câu hỏi về trật tự và hỗn loạn.|G. K. Chesterton kết hợp trinh thám, hài hước và suy tưởng triết học."],
+        [16, "Peter Pan", "Peter Pan; or, the Boy Who Wouldn't Grow Up", "J. M. Barrie", "Kinh điển · Kỳ ảo", "Wendy, John và Michael theo Peter Pan đến Neverland, nơi trẻ em đối mặt với thuyền trưởng Hook.", "Peter Pan bay vào phòng trẻ em nhà Darling để tìm chiếc bóng của mình.|Wendy, John và Michael theo cậu đến hòn đảo Neverland.|Ở đó, họ gặp những đứa trẻ thất lạc, nàng tiên Tinker Bell và các cư dân kỳ lạ.|Thuyền trưởng Hook cùng thủy thủ đoàn trở thành mối đe dọa.|Wendy phải quyết định giữa cuộc phiêu lưu và mái nhà của mình.|J. M. Barrie kể câu chuyện kỳ ảo về tuổi thơ, trưởng thành và ký ức."],
+        [158, "Emma", "Emma", "Jane Austen", "Kinh điển · Tình cảm", "Emma Woodhouse thích mai mối cho bạn bè nhưng dần nhận ra mình hiểu sai cảm xúc của chính mình.", "Emma Woodhouse thông minh, giàu có và tin rằng mình rất giỏi mai mối.|Cô tìm cách sắp xếp chuyện tình cảm cho cô bạn Harriet Smith.|Những lời khuyên thiếu chính xác khiến Harriet và những người xung quanh bối rối.|Ông Knightley thường nhắc Emma nhìn lại các suy đoán của mình.|Một loạt hiểu lầm giúp Emma nhận ra tình cảm thật của chính cô.|Jane Austen kể chuyện trưởng thành qua sự hài hước và quan sát tinh tế."],
+        [113, "Khu vườn bí mật", "The Secret Garden", "Frances Hodgson Burnett", "Kinh điển · Gia đình", "Mary Lennox khám phá một khu vườn bị khóa và góp phần làm thay đổi cuộc sống ở Misselthwaite Manor.", "Mary Lennox mồ côi sau một trận dịch và được đưa đến nhà chú ở Yorkshire.|Cô phát hiện chìa khóa dẫn vào khu vườn đã bị khóa nhiều năm.|Mary cùng Dickon bắt đầu chăm sóc khu vườn và nhìn nó hồi sinh.|Cô nghe tiếng khóc trong nhà và gặp Colin, người em họ sống khép kín.|Tình bạn và thiên nhiên giúp những đứa trẻ thay đổi cả sức khỏe lẫn tinh thần.|Frances Hodgson Burnett kể câu chuyện về chữa lành, tình bạn và niềm hy vọng."],
+        [103, "Vòng quanh thế giới trong 80 ngày", "Around the World in Eighty Days", "Jules Verne", "Kinh điển · Phiêu lưu", "Phileas Fogg đặt cược có thể đi vòng quanh thế giới trong tám mươi ngày và lên đường cùng Passepartout.", "Quý ông Phileas Fogg cá cược rằng ông có thể đi vòng quanh thế giới trong tám mươi ngày.|Ông cùng người hầu Passepartout rời London ngay trong buổi tối.|Các chuyến tàu và tàu thủy đưa họ qua nhiều quốc gia và châu lục.|Thanh tra Fix đuổi theo Fogg vì nghi ngờ ông liên quan một vụ cướp.|Trở ngại thời tiết và lịch trình khiến cuộc cá cược ngày càng sít sao.|Jules Verne biến tiến bộ giao thông thế kỷ XIX thành một cuộc phiêu lưu hồi hộp."],
+        [164, "Hai vạn dặm dưới biển", "Twenty Thousand Leagues under the Sea", "Jules Verne", "Kinh điển · Khoa học viễn tưởng", "Giáo sư Aronnax và hai người bạn khám phá đại dương trên chiếc tàu ngầm Nautilus của thuyền trưởng Nemo.", "Những báo cáo về một sinh vật biển khổng lồ khiến các thủy thủ lo lắng.|Giáo sư Aronnax, Conseil và Ned Land tham gia chuyến săn tìm sinh vật ấy.|Họ phát hiện đó là tàu ngầm Nautilus do thuyền trưởng Nemo điều khiển.|Các vị khách được đưa qua những vùng biển và cảnh quan dưới nước kỳ lạ.|Nemo vừa mở ra thế giới đại dương vừa giữ kín quá khứ của mình.|Jules Verne kết hợp khám phá biển sâu với khoa học viễn tưởng và phiêu lưu."],
+        [215, "Tiếng gọi nơi hoang dã", "The Call of the Wild", "Jack London", "Kinh điển · Phiêu lưu", "Chú chó Buck bị đưa lên miền Bắc băng giá và học cách sinh tồn giữa những người tìm vàng.", "Buck sống yên bình tại California cho đến khi bị bắt đem bán.|Cậu bị đưa đến Yukon trong cơn sốt tìm vàng cuối thế kỷ XIX.|Môi trường khắc nghiệt buộc Buck học luật sinh tồn của chó kéo xe.|Buck lần lượt gặp những chủ nhân đối xử với mình rất khác nhau.|Sau khi tìm thấy lòng tin nơi John Thornton, Buck vẫn nghe tiếng gọi hoang dã.|Jack London kể hành trình bản năng, thích nghi và tự do của một chú chó."],
+        [135, "Những người khốn khổ", "Les Misérables", "Victor Hugo", "Kinh điển · Xã hội", "Jean Valjean tìm cách sống lương thiện trong khi thanh tra Javert không ngừng truy đuổi ông.", "Jean Valjean được thả sau nhiều năm lao động khổ sai vì ăn cắp bánh mì.|Lòng tốt của một giám mục khiến ông quyết định làm lại cuộc đời.|Valjean chăm sóc Cosette và cố bảo vệ cô khỏi những kẻ bóc lột.|Thanh tra Javert kiên trì truy tìm Valjean qua nhiều năm.|Cuộc nổi dậy ở Paris đưa các nhân vật đến những lựa chọn sinh tử.|Victor Hugo kết hợp số phận cá nhân với những bất công trong xã hội Pháp."],
+        [155, "Viên đá mặt trăng", "The Moonstone", "Wilkie Collins", "Kinh điển · Trinh thám", "Một viên kim cương quý biến mất trong đêm sinh nhật Rachel Verinder, mở đầu cuộc điều tra qua nhiều lời kể.", "Rachel Verinder được tặng viên kim cương Moonstone trong ngày sinh nhật.|Viên đá biến mất khỏi phòng cô ngay trong đêm.|Thám tử Sergeant Cuff tìm kiếm manh mối trong gia đình và người hầu.|Nhiều nhân vật lần lượt kể lại sự việc từ góc nhìn riêng.|Những chi tiết bị bỏ sót kết nối vụ mất trộm với quá khứ của viên đá.|Wilkie Collins tạo nên một trong những tiểu thuyết trinh thám dài kỳ đầu tiên."],
+        [271, "Ngựa đen", "Black Beauty", "Anna Sewell", "Kinh điển · Động vật", "Chú ngựa Black Beauty kể lại những người chủ và cách đối xử khác nhau mà mình trải qua.", "Black Beauty kể câu chuyện đời mình từ những năm đầu ở vùng quê.|Chú ngựa gặp nhiều chủ nhân, người chăm sóc và công việc khác nhau.|Có người đối xử tử tế, nhưng cũng có người đặt lợi ích lên trên sức khỏe con vật.|Những chuyến chuyển chủ đưa Beauty qua cả nông thôn lẫn thành thị.|Qua mỗi trải nghiệm, câu chuyện cho thấy hậu quả của sự tàn nhẫn và lòng tốt.|Anna Sewell viết tiểu thuyết nhằm khơi gợi sự cảm thông với động vật."],
+        [289, "Gió qua rặng liễu", "The Wind in the Willows", "Kenneth Grahame", "Kinh điển · Phiêu lưu", "Chuột Chũi, Chuột Nước, Lửng và Cóc trải qua những chuyến phiêu lưu bên bờ sông nước Anh.", "Chuột Chũi rời căn nhà dưới lòng đất để khám phá thế giới bên ngoài.|Cậu kết bạn với Chuột Nước và làm quen nhịp sống bên dòng sông.|Cóc giàu có nhưng bốc đồng thường gây rắc rối vì những sở thích mới.|Lửng giúp các bạn bảo vệ Dinh Cóc khỏi những kẻ chiếm đóng.|Những chuyến đi kết hợp tình bạn, thiên nhiên và các tình huống hài hước.|Kenneth Grahame viết câu chuyện phiêu lưu kinh điển dành cho mọi lứa tuổi."],
+        [829, "Những chuyến du hành của Gulliver", "Gulliver's Travels", "Jonathan Swift", "Kinh điển · Phiêu lưu", "Lemuel Gulliver đến những vùng đất kỳ lạ, nơi các xã hội nhỏ bé phơi bày thói quen của con người.", "Bác sĩ Lemuel Gulliver lên đường trong nhiều chuyến hải hành.|Một vụ đắm tàu đưa ông đến Lilliput, nơi cư dân chỉ cao bằng bàn tay.|Ở Brobdingnag, Gulliver lại trở thành người tí hon giữa những người khổng lồ.|Các chuyến đi tiếp theo đưa ông đến những xã hội có phong tục khác thường.|Những cuộc gặp gỡ khiến Gulliver nhìn lại chính nền văn minh của mình.|Jonathan Swift dùng kỳ ảo và châm biếm để bình luận về chính trị và xã hội."],
+        [996, "Don Quixote", "Don Quixote", "Miguel de Cervantes", "Kinh điển · Hài hước", "Một quý ông Tây Ban Nha mê truyện hiệp sĩ lên đường phiêu lưu cùng người hầu Sancho Panza.", "Alonso Quixano đọc quá nhiều truyện hiệp sĩ và quyết định trở thành hiệp sĩ lang thang.|Ông lấy tên Don Quixote và mời Sancho Panza làm người đồng hành.|Hai người đi qua miền quê Tây Ban Nha, gặp các chủ quán và lữ khách.|Don Quixote thường diễn giải những cảnh đời thường như cuộc phiêu lưu anh hùng.|Sancho vừa theo chủ vừa tìm cách giữ ông gần với thực tế.|Miguel de Cervantes vừa tôn vinh vừa châm biếm truyền thống truyện hiệp sĩ."],
+        [1837, "Hoàng tử và chú bé nghèo", "The Prince and the Pauper", "Mark Twain", "Kinh điển · Lịch sử", "Hoàng tử Edward và cậu bé nghèo Tom Canty đổi chỗ cho nhau, khám phá hai mặt của xã hội nước Anh.", "Tom Canty sống nghèo khó ở London nhưng thường mơ về cung điện.|Cậu gặp hoàng tử Edward, người có vẻ ngoài giống hệt mình.|Hai cậu bé đổi quần áo và vô tình đổi cả vị trí trong xã hội.|Tom phải học cách sống trong cung đình, còn Edward trải nghiệm đời sống đường phố.|Những thử thách giúp Edward hiểu rõ hơn cảnh khốn khó của thần dân.|Mark Twain dùng cuộc tráo đổi thân phận để kể chuyện lịch sử và công bằng."],
+        [1874, "Những đứa trẻ đường sắt", "The Railway Children", "E. Nesbit", "Kinh điển · Gia đình", "Ba chị em chuyển đến vùng quê gần đường sắt và kết bạn với những người giúp họ tìm lại cha.", "Roberta, Peter và Phyllis rời London cùng mẹ để sống trong một ngôi nhà nhỏ ở Yorkshire.|Đường sắt gần nhà trở thành một phần quan trọng trong cuộc sống mới.|Ba chị em gặp một quý ông đi tàu và giúp những người gặp nạn.|Mẹ các em cố gắng chăm sóc gia đình trong khi cha vắng mặt.|Những lá thư và sự giúp đỡ của bạn bè dần hé lộ sự thật về cha.|E. Nesbit kể câu chuyện gia đình về lòng can đảm và sự sẻ chia."],
+        [2097, "Dấu bộ tứ", "The Sign of the Four", "Arthur Conan Doyle", "Kinh điển · Trinh thám", "Sherlock Holmes cùng Mary Morstan lần theo dấu vết một kho báu và bí mật từ quá khứ ở Ấn Độ.", "Mary Morstan tìm đến Sherlock Holmes sau nhiều năm nhận được một viên ngọc trai bí ẩn.|Một lá thư hẹn gặp đưa cô cùng Holmes và Watson đến với Thaddeus Sholto.|Câu chuyện liên quan đến kho báu ở Ấn Độ và một lời hứa chưa được thực hiện.|Cái chết của Bartholomew Sholto khiến cuộc điều tra chuyển thành truy tìm hung thủ.|Holmes lần theo dấu chân, con thuyền và những manh mối nhỏ bên sông Thames.|Arthur Conan Doyle kết hợp bí ẩn gia đình với cuộc truy đuổi trinh thám."],
+        [863, "Vụ án bí ẩn ở Styles", "The Mysterious Affair at Styles", "Agatha Christie", "Kinh điển · Trinh thám", "Hercule Poirot điều tra cái chết của Emily Inglethorp tại một điền trang miền quê nước Anh.", "Hastings nghỉ dưỡng tại điền trang Styles Court và gặp lại người quen cũ.|Chủ nhà Emily Inglethorp qua đời sau một cơn bệnh đột ngột.|Hercule Poirot cùng Hastings xem xét những người có mặt trong gia đình.|Các mối quan hệ và bản di chúc khiến nhiều người trở thành nghi phạm.|Poirot chú ý đến những chi tiết nhỏ mà mọi người khác bỏ qua.|Đây là tiểu thuyết đầu tiên giới thiệu thám tử Hercule Poirot của Agatha Christie."]
+      ];
+      stories.push(...additionalNovels.map(([bookId, title, originalTitle, author, genre, description, toneOrSynopsis, synopsis]) => {
+        const hasTone = typeof synopsis === "string";
+        const coverTones = ["gold", "sage", "earth", "violet", "blue", "peach"];
+        return {
+          id: `gutenberg-${bookId}`,
+          title,
+          originalTitle,
+          author,
+          genre,
+          description,
+          cover: title[0].toUpperCase(),
+          tone: hasTone ? toneOrSynopsis : coverTones[bookId % coverTones.length],
+          coverUrl: `https://www.gutenberg.org/cache/epub/${bookId}/pg${bookId}.cover.medium.jpg`,
+          readUrl: `https://www.gutenberg.org/ebooks/${bookId}`,
+          paragraphs: (hasTone ? synopsis : toneOrSynopsis).split("|")
+        };
+      }));
+      let currentStoryId = "pride-prejudice";
+      const storiesPerPage = 12;
+      let catalogPage = 0;
+      const readerFontSizeKey = "echotale-reader-font-size-v1";
+      const defaultReaderFontSize = 14;
+      const minReaderFontSize = 12;
+      const maxReaderFontSize = 24;
+
+      function setReaderFontSize(size, persist = false) {
+        const fontSize = Math.min(maxReaderFontSize, Math.max(minReaderFontSize, size));
+        if (persist && !save(readerFontSizeKey, fontSize)) return;
+        $("#reading-copy").style.setProperty("--reader-font-size", `${fontSize}px`);
+        $("#font-size-value").textContent = `${fontSize} px`;
+        $("#font-decrease").disabled = fontSize === minReaderFontSize;
+        $("#font-increase").disabled = fontSize === maxReaderFontSize;
+      }
+
+      function storyStorageKey(kind) {
+        const baseKeys = { comments: commentsKey, ratings: ratingsKey, bookmark: bookmarkKey };
+        return `${baseKeys[kind]}-${currentStoryId}`;
+      }
 
       function notify(message) {
         toast.textContent = message;
@@ -158,25 +572,821 @@
       }
 
       function readSaved(key, fallback) {
-        try {
-          const raw = localStorage.getItem(key);
-          return raw ? JSON.parse(raw) : fallback;
-        } catch (error) {
-          console.error(`Không đọc được dữ liệu ${key}.`, error);
-          return fallback;
-        }
+        return EchoTaleDataService.local.readJSON(key, fallback);
       }
 
       function save(key, value) {
+        const saved = EchoTaleDataService.local.writeJSON(key, value);
+        if (!saved) {
+          notify("Không lưu được thay đổi. Hãy kiểm tra bộ nhớ trình duyệt.");
+        }
+        return saved;
+      }
+
+      function renderAvatar(element, user) {
+        element.replaceChildren();
+        if (user?.avatar) {
+          const image = document.createElement("img");
+          image.src = user.avatar;
+          image.alt = "";
+          element.append(image);
+          element.classList.add("has-avatar-image");
+        } else {
+          element.classList.remove("has-avatar-image");
+          element.textContent = user?.name?.trim().charAt(0).toLocaleUpperCase("vi") || "?";
+        }
+      }
+
+      function renderAccount() {
+        const loggedIn = Boolean(account);
+        $("#sidebar-profile-name").textContent = loggedIn ? account.name : "Đăng nhập";
+        $("#sidebar-profile-status").textContent = loggedIn
+          ? (account.provider === "phone" ? account.contact : account.contact)
+          : "Lưu bộ sưu tập của bạn";
+        renderAvatar($("#sidebar-profile-avatar"), account);
+        $("#account-login-view").hidden = loggedIn;
+        $("#account-profile-view").hidden = !loggedIn;
+        $("#account-dialog-title").textContent = loggedIn ? "Thông tin người dùng" : "Chào mừng bạn";
+        $("#account-edit-form").hidden = true;
+        $("#account-profile-actions").hidden = false;
+        if (!loggedIn) return;
+
+        $("#account-profile-name").textContent = account.name;
+        $("#account-profile-contact").textContent = account.contact;
+        $("#account-joined-date").textContent = new Intl.DateTimeFormat("vi-VN", { dateStyle: "long" })
+          .format(new Date(account.joinedAt));
+        $("#account-provider").textContent = account.provider === "google" ? "Google (mô phỏng)" : "Số điện thoại (OTP demo)";
+        renderAvatar($("#account-avatar"), account);
+        $("#account-collection-count").textContent = String(collections.length);
+        const list = $("#account-collection-list");
+        list.replaceChildren();
+        if (!collections.length) {
+          const empty = document.createElement("li");
+          empty.className = "account-collections-empty";
+          empty.textContent = "Bạn chưa tạo bộ sưu tập nào.";
+          list.append(empty);
+          return;
+        }
+        collections.forEach((collection) => {
+          const item = document.createElement("li");
+          const name = document.createElement("strong");
+          name.textContent = collection.name;
+          const count = document.createElement("span");
+          count.textContent = `${collection.items.length} ${collection.items.length === 1 ? "mục" : "mục"}`;
+          item.append(name, count);
+          list.append(item);
+        });
+      }
+
+      function openAccountDialog() {
+        renderAccount();
+        const dialog = $("#account-dialog");
+        if (!dialog.open) dialog.showModal();
+      }
+
+      function sendDemoOtp() {
+        const phoneInput = $("#login-phone");
+        const phone = phoneInput.value.trim();
+        const digits = phone.replace(/\D/g, "");
+        if (digits.length < 8 || digits.length > 15) {
+          phoneInput.setCustomValidity("Hãy nhập số điện thoại hợp lệ (8–15 chữ số).");
+          phoneInput.reportValidity();
+          phoneInput.setCustomValidity("");
+          return;
+        }
+        const code = String(Math.floor(100000 + Math.random() * 900000));
+        pendingOtp = { phone, code, expiresAt: Date.now() + 5 * 60 * 1000 };
+        $("#otp-verify-form").hidden = false;
+        $("#otp-demo-notice").textContent = `Mã OTP mô phỏng: ${code} · có hiệu lực trong 5 phút. Không có tin nhắn SMS thật được gửi.`;
+        $("#login-otp").value = "";
+        $("#login-otp").focus();
+        notify("Đã tạo mã OTP demo. Nhập mã hiển thị để tiếp tục.");
+      }
+
+      function completeLogin(user) {
+        if (!save(accountKey, user)) return;
+        account = user;
+        pendingOtp = null;
+        $("#otp-verify-form").hidden = true;
+        $("#phone-login-form").reset();
+        renderAccount();
+        notify("Đăng nhập demo thành công.");
+      }
+
+      function resizeAvatarImage(file) {
+        return new Promise((resolve, reject) => {
+          if (!file.type.startsWith("image/")) {
+            reject(new Error("Tệp đã chọn không phải hình ảnh."));
+            return;
+          }
+          if (file.size > 2 * 1024 * 1024) {
+            reject(new Error("Ảnh đại diện phải nhỏ hơn 2 MB."));
+            return;
+          }
+          const reader = new FileReader();
+          reader.onerror = () => reject(reader.error || new Error("Không thể đọc tệp ảnh."));
+          reader.onload = () => {
+            const image = new Image();
+            image.onerror = () => reject(new Error("Tệp ảnh không hợp lệ."));
+            image.onload = () => {
+              const scale = Math.min(1, 256 / Math.max(image.naturalWidth, image.naturalHeight));
+              const canvas = document.createElement("canvas");
+              canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
+              canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+              canvas.getContext("2d").drawImage(image, 0, 0, canvas.width, canvas.height);
+              resolve(canvas.toDataURL("image/webp", 0.82));
+            };
+            image.src = reader.result;
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      function normalizeSearch(value) {
+        return value.toLocaleLowerCase("vi").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d");
+      }
+
+      function loadCollections() {
+        const saved = readSaved(collectionsKey, []);
+        if (!Array.isArray(saved)) return [];
+        const validStoryIds = new Set(stories.map((story) => story.id));
+        return saved
+          .filter((collection) => collection && typeof collection.id === "string"
+            && typeof collection.name === "string" && Array.isArray(collection.items))
+          .map((collection) => ({
+            id: collection.id,
+            name: collection.name.trim().slice(0, 40),
+            createdAt: typeof collection.createdAt === "string" ? collection.createdAt : "",
+            updatedAt: typeof collection.updatedAt === "string" ? collection.updatedAt : "",
+            items: collection.items.filter((item) => item && validStoryIds.has(item.storyId)
+              && (item.chapterIndex === null || Number.isInteger(item.chapterIndex)))
+              .map((item) => ({
+                id: typeof item.id === "string" ? item.id : `saved-item-${item.storyId}-${item.chapterIndex ?? "intro"}`,
+                storyId: item.storyId,
+                chapterIndex: item.chapterIndex,
+                chapterTitle: typeof item.chapterTitle === "string" ? item.chapterTitle : "Giới thiệu tác phẩm",
+                paragraphIndex: Number.isInteger(item.paragraphIndex) ? Math.max(0, item.paragraphIndex) : 0,
+                addedAt: typeof item.addedAt === "string" ? item.addedAt : ""
+              }))
+          }))
+          .filter((collection) => collection.name);
+      }
+
+      function persistCollections(nextCollections) {
+        const updatedAt = new Date().toISOString();
+        const updatedCollections = nextCollections.map((collection) => ({ ...collection, updatedAt }));
+        if (!save(collectionsKey, updatedCollections)) return false;
+        collections = updatedCollections;
+        renderCollections();
+        return true;
+      }
+
+      function createCollection(name) {
+        const cleanName = name.trim().replace(/\s+/g, " ").slice(0, 40);
+        if (!cleanName) {
+          notify("Hãy nhập tên cho bộ sưu tập.");
+          return null;
+        }
+        if (collections.some((collection) => normalizeSearch(collection.name) === normalizeSearch(cleanName))) {
+          notify("Tên bộ sưu tập này đã tồn tại.");
+          return null;
+        }
+        const collection = EchoTaleDataService.models.createCollection(cleanName);
+        if (!persistCollections([...collections, collection])) return null;
+        notify(`Đã tạo bộ sưu tập “${cleanName}”.`);
+        return collection;
+      }
+
+      function collectionItemKey(item) {
+        return `${item.storyId}|${item.chapterIndex === null ? "intro" : item.chapterIndex}`;
+      }
+
+      function saveItemToCollections(collectionIds, item) {
+        const selectedIds = new Set(collectionIds);
+        const itemKey = collectionItemKey(item);
+        const nextCollections = collections.map((collection) => {
+          const items = collection.items.filter((savedItem) => collectionItemKey(savedItem) !== itemKey);
+          if (selectedIds.has(collection.id)) items.push(item);
+          return { ...collection, items };
+        });
+        if (persistCollections(nextCollections)) {
+          notify("Đã cập nhật bộ sưu tập của bạn.");
+          return true;
+        }
+        return false;
+      }
+
+      function currentCollectionItem() {
+        const story = stories.find((item) => item.id === currentStoryId);
+        if (!story) return null;
+        const paragraph = Math.min(currentParagraph, Math.max(0, paragraphs.length - 1));
+        return EchoTaleDataService.models.createCollectionItem({
+          storyId: story.id,
+          chapterIndex: currentChapterIndex,
+          chapterTitle: currentChapterTitle,
+          paragraphIndex: paragraph
+        });
+      }
+
+      function renderCollectionChoices() {
+        const list = $("#collection-choice-list");
+        const targetKey = collectionTarget ? collectionItemKey(collectionTarget) : null;
+        list.replaceChildren();
+        if (!collections.length) {
+          const empty = document.createElement("p");
+          empty.className = "collection-list-empty";
+          empty.textContent = "Bạn chưa có bộ sưu tập nào. Tạo một bộ sưu tập mới bên dưới.";
+          list.append(empty);
+          return;
+        }
+        collections.forEach((collection) => {
+          const label = document.createElement("label");
+          label.className = "collection-choice";
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.value = collection.id;
+          checkbox.checked = Boolean(targetKey && collection.items.some((item) => collectionItemKey(item) === targetKey));
+          const details = document.createElement("span");
+          const name = document.createElement("strong");
+          name.textContent = collection.name;
+          const count = document.createElement("small");
+          count.textContent = `${collection.items.length} mục đã lưu`;
+          details.append(name, count);
+          label.append(checkbox, details);
+          list.append(label);
+        });
+      }
+
+      function openCollectionDialog(target = null) {
+        collectionTarget = target;
+        const dialog = $("#collection-dialog");
+        const createMode = !target;
+        dialog.dataset.mode = createMode ? "create" : "add";
+        $("#collection-dialog-title").textContent = createMode ? "Tạo bộ sưu tập mới" : "Thêm vào bộ sưu tập";
+        $("#collection-dialog-context").textContent = target
+          ? `${stories.find((story) => story.id === target.storyId)?.title || "Tiểu thuyết"} · ${target.chapterTitle}`
+          : "Đặt tên để tạo một không gian lưu truyện của riêng bạn.";
+        $("#collection-choice-list").hidden = createMode;
+        $(".quick-collection-form label").textContent = createMode ? "Tên bộ sưu tập" : "Tạo bộ sưu tập mới";
+        $("#new-collection-name").placeholder = createMode ? "Ví dụ: Truyện yêu thích" : "Ví dụ: Đọc lúc rảnh";
+        $(".collection-save-button").textContent = createMode ? "Tạo bộ sưu tập" : "Lưu lựa chọn";
+        $("#new-collection-name").value = "";
+        renderCollectionChoices();
+        if (!dialog.open) dialog.showModal();
+        if (createMode) $("#new-collection-name").focus();
+      }
+
+      function renderCollections() {
+        const sidebar = $("#sidebar-collections");
+        sidebar.replaceChildren();
+        collections.forEach((collection, index) => {
+          const link = document.createElement("button");
+          link.type = "button";
+          link.className = "collection-link";
+          link.setAttribute("aria-label", `Mở bộ sưu tập ${collection.name}`);
+          const dot = document.createElement("span");
+          dot.className = `collection-dot dot-${["lilac", "orange", "blue"][index % 3]}`;
+          const name = document.createElement("span");
+          name.className = "collection-link-name";
+          name.textContent = collection.name;
+          const count = document.createElement("span");
+          count.textContent = String(collection.items.length).padStart(2, "0");
+          link.append(dot, name, count);
+          link.addEventListener("click", () => {
+            $("#my-collections").scrollIntoView({ behavior: "smooth", block: "start" });
+            document.getElementById(`collection-${collection.id}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
+          });
+          sidebar.append(link);
+        });
+
+        const content = $("#collections-content");
+        content.replaceChildren();
+        if (!collections.length) {
+          const empty = document.createElement("div");
+          empty.className = "collections-empty";
+          const title = document.createElement("strong");
+          title.textContent = "Bộ sưu tập của bạn đang trống";
+          const description = document.createElement("p");
+          description.textContent = "Tạo bộ sưu tập đầu tiên, sau đó lưu truyện hoặc chương ngay trong trình đọc.";
+          const create = document.createElement("button");
+          create.type = "button";
+          create.className = "create-collection-button";
+          create.textContent = "＋ Tạo bộ sưu tập mới";
+          create.addEventListener("click", () => openCollectionDialog());
+          empty.append(title, description, create);
+          content.append(empty);
+          return;
+        }
+
+        collections.forEach((collection) => {
+          const card = document.createElement("article");
+          card.className = "collection-card";
+          card.id = `collection-${collection.id}`;
+          const heading = document.createElement("div");
+          heading.className = "collection-card-heading";
+          const titleBlock = document.createElement("div");
+          const title = document.createElement("h3");
+          title.textContent = collection.name;
+          const count = document.createElement("span");
+          count.textContent = `${collection.items.length} ${collection.items.length === 1 ? "mục đã lưu" : "mục đã lưu"}`;
+          titleBlock.append(title, count);
+          const removeCollection = document.createElement("button");
+          removeCollection.type = "button";
+          removeCollection.className = "collection-delete-button";
+          removeCollection.textContent = "Xóa bộ sưu tập";
+          removeCollection.setAttribute("aria-label", `Xóa bộ sưu tập ${collection.name}`);
+          removeCollection.addEventListener("click", () => {
+            if (!window.confirm(`Bạn có chắc muốn xóa bộ sưu tập “${collection.name}” và các mục đã lưu bên trong?`)) return;
+            persistCollections(collections.filter((item) => item.id !== collection.id));
+            notify(`Đã xóa bộ sưu tập “${collection.name}”.`);
+          });
+          heading.append(titleBlock, removeCollection);
+          card.append(heading);
+          if (!collection.items.length) {
+            const emptyItems = document.createElement("p");
+            emptyItems.className = "collection-list-empty";
+            emptyItems.textContent = "Chưa có truyện nào. Mở truyện và chọn “＋ Bộ sưu tập” để lưu vào đây.";
+            card.append(emptyItems);
+          } else {
+            const itemList = document.createElement("div");
+            itemList.className = "collection-item-list";
+            collection.items.forEach((item) => {
+              const story = stories.find((entry) => entry.id === item.storyId);
+              if (!story) return;
+              const row = document.createElement("div");
+              row.className = "collection-item";
+              const cover = document.createElement("img");
+              cover.src = story.coverUrl;
+              cover.alt = "";
+              cover.loading = "lazy";
+              cover.addEventListener("error", () => {
+                cover.hidden = true;
+                row.classList.add("collection-item-no-cover");
+              });
+              const info = document.createElement("div");
+              info.className = "collection-item-info";
+              const bookName = document.createElement("strong");
+              bookName.textContent = story.title;
+              const chapterName = document.createElement("small");
+              chapterName.textContent = item.chapterTitle;
+              info.append(bookName, chapterName);
+              const actions = document.createElement("div");
+              actions.className = "collection-item-actions";
+              const read = document.createElement("button");
+              read.type = "button";
+              read.className = "collection-open-button";
+              read.textContent = "Mở";
+              read.addEventListener("click", () => openCollectionItem(item));
+              const remove = document.createElement("button");
+              remove.type = "button";
+              remove.className = "collection-item-remove";
+              remove.textContent = "Xóa";
+              remove.setAttribute("aria-label", `Xóa ${story.title} - ${item.chapterTitle} khỏi ${collection.name}`);
+              remove.addEventListener("click", () => {
+                const itemKey = collectionItemKey(item);
+                const nextCollections = collections.map((entry) => entry.id === collection.id
+                  ? { ...entry, items: entry.items.filter((savedItem) => collectionItemKey(savedItem) !== itemKey) }
+                  : entry);
+                if (persistCollections(nextCollections)) notify(`Đã xóa “${story.title}” khỏi bộ sưu tập.`);
+              });
+              actions.append(read, remove);
+              row.append(cover, info, actions);
+              itemList.append(row);
+            });
+            card.append(itemList);
+          }
+          content.append(card);
+        });
+      }
+
+      async function openCollectionItem(item) {
+        const story = stories.find((entry) => entry.id === item.storyId);
+        if (!story) {
+          notify("Không tìm thấy truyện đã lưu.");
+          return;
+        }
+        if (Number.isInteger(item.chapterIndex) && story.readUrl) {
+          const loaded = await openNovelInReader(story.id);
+          if (!loaded || item.chapterIndex >= fullTextChapters.length) return;
+          displayNovelChapter(item.chapterIndex);
+          currentParagraph = Math.min(item.paragraphIndex, Math.max(0, paragraphs.length - 1));
+          paragraphs[currentParagraph]?.scrollIntoView({ behavior: "smooth", block: "center" });
+          return;
+        }
+        selectStory(story.id);
+        currentParagraph = Math.min(item.paragraphIndex, Math.max(0, paragraphs.length - 1));
+        paragraphs[currentParagraph]?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      function renderStoryCatalog() {
+        const storedFavorites = readSaved(favoritesKey, []);
+        const validStoryIds = new Set(stories.map((story) => story.id));
+        const favoriteIds = new Set(
+          Array.isArray(storedFavorites) ? storedFavorites.filter((id) => validStoryIds.has(id)) : []
+        );
+        $("#favorite-count").textContent = String(favoriteIds.size).padStart(2, "0");
+        const query = normalizeSearch($("#library-search").value.trim());
+        const favoritesOnly = $("#favorites-filter").getAttribute("aria-pressed") === "true";
+        const matchingStories = stories.filter((story) => {
+          const matchesQuery = normalizeSearch(`${story.title} ${story.originalTitle} ${story.author} ${story.genre}`).includes(query);
+          return matchesQuery && (!favoritesOnly || favoriteIds.has(story.id));
+        });
+        const pageCount = Math.ceil(matchingStories.length / storiesPerPage);
+        catalogPage = Math.min(catalogPage, Math.max(0, pageCount - 1));
+        const pageStories = matchingStories.slice(catalogPage * storiesPerPage, (catalogPage + 1) * storiesPerPage);
+        const grid = $("#story-grid");
+        grid.replaceChildren();
+        pageStories.forEach((story) => {
+          const card = document.createElement("article");
+          card.className = "story-card";
+          const cover = document.createElement("div");
+          cover.className = `story-cover cover-${story.tone}`;
+          const coverLetter = document.createElement("span");
+          coverLetter.textContent = story.cover;
+          if (story.coverUrl) {
+            const image = document.createElement("img");
+            image.className = "story-cover-image";
+            image.src = story.coverUrl;
+            image.alt = `Bìa sách ${story.title}`;
+            image.loading = "lazy";
+            image.referrerPolicy = "no-referrer";
+            cover.classList.add("has-image");
+            coverLetter.hidden = true;
+            image.addEventListener("error", () => {
+              image.remove();
+              cover.classList.remove("has-image");
+              coverLetter.hidden = false;
+            });
+            cover.append(image, coverLetter);
+          } else {
+            cover.setAttribute("aria-hidden", "true");
+            cover.append(coverLetter);
+          }
+          const genre = document.createElement("span");
+          genre.className = "story-genre";
+          genre.textContent = story.genre;
+          const title = document.createElement("h3");
+          title.textContent = story.title;
+          const author = document.createElement("p");
+          author.className = "story-author";
+          author.textContent = story.originalTitle ? `${story.originalTitle} · ${story.author}` : `Tác giả: ${story.author}`;
+          const description = document.createElement("p");
+          description.className = "story-description";
+          description.textContent = story.description;
+          const actions = document.createElement("div");
+          actions.className = "story-actions";
+          const readButton = document.createElement("button");
+          readButton.type = "button";
+          readButton.className = "story-read";
+          readButton.textContent = currentStoryId === story.id ? "Đang xem" : story.readUrl ? "Xem giới thiệu" : "Đọc thử";
+          readButton.setAttribute("aria-label", `${readButton.textContent}: ${story.title}`);
+          readButton.addEventListener("click", () => selectStory(story.id));
+          const directReadLink = document.createElement("a");
+          directReadLink.className = "story-read-now";
+          directReadLink.href = "#reader";
+          directReadLink.textContent = "Đọc ngay";
+          directReadLink.setAttribute("aria-label", `Đọc toàn văn ${story.title} ngay trên trang`);
+          directReadLink.addEventListener("click", (event) => {
+            event.preventDefault();
+            openNovelInReader(story.id);
+          });
+          const favoriteButton = document.createElement("button");
+          favoriteButton.type = "button";
+          favoriteButton.className = "story-favorite";
+          favoriteButton.textContent = favoriteIds.has(story.id) ? "♥" : "♡";
+          favoriteButton.setAttribute("aria-pressed", String(favoriteIds.has(story.id)));
+          favoriteButton.setAttribute("aria-label", `${favoriteIds.has(story.id) ? "Bỏ yêu thích" : "Thêm vào yêu thích"}: ${story.title}`);
+          favoriteButton.addEventListener("click", () => toggleStoryFavorite(story.id));
+          actions.append(readButton, directReadLink, favoriteButton);
+          card.append(cover, genre, title, author, description, actions);
+          grid.append(card);
+        });
+        $("#library-empty").hidden = matchingStories.length > 0;
+        $("#library-pagination").hidden = pageCount <= 1;
+        $("#library-page-status").textContent = pageCount > 0
+          ? `Trang ${catalogPage + 1} / ${pageCount} · ${matchingStories.length} tiểu thuyết`
+          : "";
+        $("#library-previous").disabled = catalogPage === 0;
+        $("#library-next").disabled = catalogPage >= pageCount - 1;
+      }
+
+      function toggleStoryFavorite(storyId) {
+        const storedFavorites = readSaved(favoritesKey, []);
+        const validStoryIds = new Set(stories.map((story) => story.id));
+        const favorites = Array.isArray(storedFavorites) ? storedFavorites.filter((id) => validStoryIds.has(id)) : [];
+        const isFavorite = favorites.includes(storyId);
+        const updatedFavorites = isFavorite
+          ? favorites.filter((id) => id !== storyId)
+          : [...favorites, storyId];
+        if (!save(favoritesKey, updatedFavorites)) return;
+        renderStoryCatalog();
+        notify(isFavorite ? "Đã bỏ truyện khỏi danh sách yêu thích." : "Đã thêm truyện vào danh sách yêu thích.");
+      }
+
+      function renderReadingParagraphs(texts) {
+        const copy = $("#reading-copy");
+        copy.replaceChildren();
+        texts.forEach((text) => {
+          const chunks = [];
+          let chunk = "";
+          text.split(/(\s+)/).forEach((part) => {
+            if (chunk.length + part.length > 1600 && chunk.trim()) {
+              chunks.push(chunk.trim());
+              chunk = "";
+            }
+            chunk += part;
+          });
+          if (chunk.trim()) chunks.push(chunk.trim());
+          chunks.forEach((content) => {
+            const paragraph = document.createElement("p");
+            paragraph.textContent = content;
+            addInlineCommentTrigger(paragraph);
+            copy.append(paragraph);
+          });
+        });
+        paragraphs = $$("#reading-copy > p");
+        paragraphSeconds = paragraphs.map((paragraph) => Math.max(3, Math.round(paragraph.textContent.trim().split(/\s+/).length / 2.2)));
+        currentParagraph = 0;
+        elapsedSeconds = 0;
+        updateTimeline();
+      }
+
+      function parseNovelChapters(source) {
+        let text = source.replace(/^\uFEFF/, "").replace(/\r/g, "");
+        const startMarker = text.search(/\*\*\*\s*START OF (?:THE|THIS) PROJECT GUTENBERG EBOOK[\s\S]*?\*\*\*/i);
+        if (startMarker >= 0) {
+          const markerEnd = text.indexOf("***", startMarker + 3);
+          if (markerEnd >= 0) text = text.slice(markerEnd + 3);
+        }
+        const endMarker = text.search(/\*\*\*\s*END OF (?:THE|THIS) PROJECT GUTENBERG EBOOK/i);
+        if (endMarker >= 0) text = text.slice(0, endMarker);
+
+        const headingPattern = /^[ \t]*((?:CHAPTER|Chapter|PART|Part)[ \t]+(?:[IVXLCDM]+|\d+|[A-Z][A-Za-z0-9'. -]{0,60})(?:[.:][ \t]*[A-Z][^\r\n]{0,60})?)[ \t]*$/gm;
+        const headings = [];
+        let match;
+        while ((match = headingPattern.exec(text)) !== null) {
+          headings.push({ title: match[1].trim().replace(/[. ]+$/, ""), start: match.index, end: headingPattern.lastIndex });
+        }
+        const headingKeys = headings.map((heading) => heading.title.match(/^(?:CHAPTER|Chapter|PART|Part)\s+([A-Z0-9]+)/)?.[1].toUpperCase());
+        const lastHeadingByKey = new Map();
+        const headingOccurrences = new Map();
+        headingKeys.forEach((key, index) => {
+          if (!key) return;
+          lastHeadingByKey.set(key, index);
+          headingOccurrences.set(key, (headingOccurrences.get(key) || 0) + 1);
+        });
+        const duplicateHeadingEnds = headingKeys
+          .map((key, index) => key && headingOccurrences.get(key) > 1 && lastHeadingByKey.get(key) === index ? index : -1)
+          .filter((index) => index >= 0);
+        const contentStartIndex = duplicateHeadingEnds.length ? Math.min(...duplicateHeadingEnds) : 0;
+        const contentHeadings = headings.slice(contentStartIndex);
+        const sections = contentHeadings.map((heading, index) => ({
+          title: heading.title,
+          body: text.slice(heading.end, contentHeadings[index + 1]?.start ?? text.length)
+        }));
+        const chapters = sections.map(({ title, body }) => ({
+          title,
+          paragraphs: body
+            .split(/\n\s*\n/)
+            .map((paragraph) => paragraph.replace(/\s*\n\s*/g, " ").trim())
+            .filter((paragraph) => paragraph.length > 35 && !/^\[Illustration/i.test(paragraph))
+        })).filter((chapter) => chapter.paragraphs.length > 0
+          && chapter.paragraphs.reduce((length, paragraph) => length + paragraph.length, 0) > 250);
+
+        if (chapters.length) return chapters;
+        const paragraphs = text
+          .split(/\n\s*\n/)
+          .map((paragraph) => paragraph.replace(/\s*\n\s*/g, " ").trim())
+          .filter((paragraph) => paragraph.length > 35 && !/^\[Illustration/i.test(paragraph));
+        if (!paragraphs.length) throw new Error("Không tìm thấy nội dung đọc trong bản toàn văn.");
+        return [{ title: "Toàn văn", paragraphs }];
+      }
+
+      function renderChapterRail(activeIndex) {
+        const list = $("#chapter-list");
+        const firstIndex = Math.min(
+          Math.max(0, activeIndex - 2),
+          Math.max(0, fullTextChapters.length - 5)
+        );
+        const visibleChapters = fullTextChapters.slice(firstIndex, firstIndex + 5);
+        list.replaceChildren();
+        visibleChapters.forEach((chapter, offset) => {
+          const chapterIndex = firstIndex + offset;
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = chapterIndex === activeIndex ? "chapter-active" : "";
+          if (chapterIndex === activeIndex) button.setAttribute("aria-current", "page");
+          const number = document.createElement("span");
+          number.className = chapterIndex === activeIndex ? "chapter-number chapter-number-active" : "chapter-number";
+          number.textContent = String(chapterIndex + 1).padStart(2, "0");
+          const label = document.createElement("span");
+          const eyebrow = document.createElement("small");
+          eyebrow.textContent = `CHƯƠNG ${String(chapterIndex + 1).padStart(2, "0")}`;
+          const title = document.createElement("strong");
+          title.textContent = chapter.title;
+          label.append(eyebrow, title);
+          button.append(number, label);
+          button.addEventListener("click", () => displayNovelChapter(chapterIndex));
+          list.append(button);
+        });
+        $("#all-chapters").hidden = fullTextChapters.length < 2;
+        $("#all-chapters").innerHTML = `Chọn trong ${fullTextChapters.length} chương <span>↗</span>`;
+      }
+
+      function displayNovelChapter(index) {
+        const chapter = fullTextChapters[index];
+        if (!chapter) return;
+        if (speaking) stopPlayback();
+        $(".chapter-card").classList.remove("preview-story");
+        currentTextLanguage = "en-US";
+        currentChapterIndex = index;
+        currentChapterTitle = chapter.title;
+        $("#chapter-select").value = String(index);
+        $("#reader .chapter-heading h2").textContent = chapter.title;
+        $("#reader .chapter-kicker").textContent = `TOÀN VĂN NGUYÊN TÁC · TIẾNG ANH · ${index + 1} / ${fullTextChapters.length} CHƯƠNG`;
+        $("#reader .eyebrow").innerHTML = `<span class="live-dot"></span> TÁC PHẨM ĐANG ĐỌC <span class="eyebrow-separator">/</span> ${index + 1} — ${fullTextChapters.length}`;
+        $("#reader .chapter-end span:nth-child(2)").textContent = "HẾT CHƯƠNG";
+        $("#reader .chapter-navigation > span").innerHTML = `${index + 1} <i>/</i> ${fullTextChapters.length}`;
+        $("#chapter-progress-value").innerHTML = `${index + 1}<small>/${fullTextChapters.length}</small>`;
+        $("#chapter-progress-percent").textContent = `${Math.round(((index + 1) / fullTextChapters.length) * 100)}%`;
+        $("#chapter-card-title").textContent = "Các chương trong sách";
+        $("#previous-chapter").disabled = index === 0;
+        $("#next-chapter").disabled = index >= fullTextChapters.length - 1;
+        $("#return-to-intro").hidden = false;
+        renderChapterRail(index);
+        renderReadingParagraphs(chapter.paragraphs);
+        $("#story-source").hidden = true;
+        $("#reading-load-status").hidden = true;
+        $("#reading-copy").classList.remove("reading-copy-updating");
+        requestAnimationFrame(() => $("#reading-copy").classList.add("reading-copy-updating"));
+      }
+
+      async function openNovelInReader(storyId) {
+        const story = stories.find((item) => item.id === storyId);
+        if (!story?.readUrl) return false;
+        selectStory(storyId);
+        readerLoadController?.abort();
+        const controller = new AbortController();
+        readerLoadController = controller;
+        const loadStatus = $("#reading-load-status");
+        loadStatus.textContent = `Đang tải toàn văn “${story.title}”…`;
+        loadStatus.hidden = false;
+        $("#chapter-setting").hidden = true;
+        $("#reader .chapter-heading h2").textContent = "Đang tải toàn văn…";
         try {
-          localStorage.setItem(key, JSON.stringify(value));
+          const bookId = story.readUrl.match(/\/ebooks\/(\d+)/)?.[1];
+          if (!bookId) throw new Error("Không xác định được mã sách từ nguồn đọc.");
+          let chapters = null;
+          let fromCache = false;
+          try {
+            const cachedNovel = await EchoTaleDataService.content.getCachedNovel(story.id);
+            if (Array.isArray(cachedNovel?.chapters) && cachedNovel.chapters.length
+              && cachedNovel.chapters.every((chapter) => chapter && typeof chapter.title === "string"
+                && Array.isArray(chapter.paragraphs)
+                && chapter.paragraphs.every((paragraph) => typeof paragraph === "string"))) {
+              chapters = cachedNovel.chapters;
+              fromCache = true;
+            }
+          } catch (error) {
+            console.warn(`Không đọc được bộ nhớ đệm của "${story.title}", sẽ tải từ nguồn.`, error);
+          }
+          if (!chapters) {
+            let response = await fetch(`https://www.gutenberg.org/cache/epub/${bookId}/pg${bookId}.txt`, {
+              signal: controller.signal,
+              cache: "force-cache"
+            });
+            if (!response.ok) {
+              response = await fetch(`https://www.gutenberg.org/ebooks/${bookId}.txt.utf-8`, {
+                signal: controller.signal,
+                cache: "force-cache"
+              });
+            }
+            if (!response.ok) throw new Error(`Nguồn sách trả về lỗi ${response.status}.`);
+            const sourceText = await response.text();
+            if (controller.signal.aborted) return false;
+            chapters = parseNovelChapters(sourceText);
+            EchoTaleDataService.content.cacheNovel(story.id, {
+              title: story.title,
+              author: story.author,
+              sourceUrl: story.readUrl,
+              language: "en-US",
+              chapters
+            }).catch((error) => {
+              console.warn(`Không lưu được bộ nhớ đệm của "${story.title}".`, error);
+            });
+          }
+          if (controller.signal.aborted) return;
+          fullTextChapters = chapters;
+          const chapterSelect = $("#chapter-select");
+          chapterSelect.replaceChildren(...chapters.map((chapter, index) => {
+            const option = document.createElement("option");
+            option.value = String(index);
+            option.textContent = `${index + 1}. ${chapter.title}`;
+            return option;
+          }));
+          $("#chapter-setting").hidden = chapters.length < 2;
+          displayNovelChapter(0);
+          $("#reader").scrollIntoView({ behavior: "smooth", block: "start" });
+          notify(`${fromCache ? "Đã mở bản đã lưu" : "Đã tải toàn văn"} ${story.title} (${chapters.length} chương).`);
           return true;
         } catch (error) {
-          console.error(`Không thể lưu dữ liệu ${key}.`, error);
-          notify("Không lưu được thay đổi. Hãy kiểm tra bộ nhớ trình duyệt.");
+          if (error.name === "AbortError") return false;
+          console.error(`Không thể tải toàn văn "${story.title}".`, error);
+          loadStatus.textContent = "Không tải được toàn văn. Hãy kiểm tra kết nối rồi thử lại.";
+          $("#reader .chapter-heading h2").textContent = "Chưa tải được toàn văn";
+          notify("Không tải được sách từ Project Gutenberg. Bạn có thể thử lại sau.");
           return false;
         }
       }
+
+      function selectStory(storyId) {
+        const story = stories.find((item) => item.id === storyId);
+        if (!story) return;
+        readerLoadController?.abort();
+        readerLoadController = undefined;
+        if (speaking) stopPlayback();
+        fullTextChapters = [];
+        currentTextLanguage = "vi-VN";
+        $("#chapter-setting").hidden = true;
+        $("#reading-load-status").hidden = true;
+        $("#story-source").hidden = !story.readUrl;
+        currentStoryId = story.id;
+        currentChapterIndex = null;
+        currentChapterTitle = "Giới thiệu tác phẩm";
+        currentParagraph = 0;
+        elapsedSeconds = 0;
+        chapterFinished = false;
+        $("#reader h1").textContent = story.title;
+        $("#reader .book-byline .tiny-cover").textContent = story.cover;
+        const bylineAuthors = $$(".book-byline strong");
+        bylineAuthors[0].textContent = story.author;
+        bylineAuthors[1].textContent = story.originalTitle;
+        const isOnlineNovel = Boolean(story.readUrl);
+        $("#reader .chapter-heading h2").textContent = isOnlineNovel ? "Giới thiệu tác phẩm" : story.title;
+        const chapterNumber = "01";
+        $("#reader .chapter-kicker").textContent = isOnlineNovel ? "TÓM TẮT · ĐỌC TOÀN VĂN TRỰC TUYẾN" : "GIỚI THIỆU · ĐỌC THỬ";
+        $("#reader .eyebrow").innerHTML = `<span class="live-dot"></span> TÁC PHẨM ĐANG XEM <span class="eyebrow-separator">/</span> ${chapterNumber} — ${stories.length}`;
+        $("#reader .chapter-navigation > span").innerHTML = `${chapterNumber} <i>/</i> ${stories.length}`;
+        $("#reader .chapter-end span:nth-child(2)").textContent = isOnlineNovel ? "HẾT PHẦN GIỚI THIỆU" : "HẾT PHẦN ĐỌC THỬ";
+        $("#reader .chapter-navigation #previous-chapter").disabled = true;
+        $("#reader .chapter-navigation #next-chapter").disabled = true;
+        $("#return-to-intro").hidden = true;
+        document.title = `${story.title} — ECHO-TALE`;
+        $("#player-book-title").textContent = story.title;
+        $("#player-book-author").textContent = `${story.title} · ${story.author}`;
+        $("#player-cover-title").textContent = story.cover;
+        $("#chapter-card-title").textContent = story.title;
+        $(".chapter-card").classList.add("preview-story");
+        $("#chapter-progress-value").innerHTML = `0<small>/—</small>`;
+        $("#chapter-progress-percent").textContent = "chưa tải chương";
+        renderReadingParagraphs(story.paragraphs);
+        const emptyChapterList = document.createElement("p");
+        emptyChapterList.className = "chapter-list-empty";
+        emptyChapterList.textContent = "Chọn “Đọc ngay” để tải danh sách chương.";
+        $("#chapter-list").replaceChildren(emptyChapterList);
+        $("#all-chapters").hidden = true;
+        $("#inline-panel").hidden = true;
+        inlineTarget = null;
+        $("#play-button").textContent = "▶";
+        $("#play-button").setAttribute("aria-label", "Phát");
+        $("#audio-state").textContent = "SẴN SÀNG LẮNG NGHE";
+        const savedBookmark = readSaved(storyStorageKey("bookmark"), null);
+        const hasBookmark = Boolean(savedBookmark?.saved);
+        currentParagraph = hasBookmark ? Math.min(savedBookmark.paragraph || 0, paragraphs.length - 1) : 0;
+        $$("#bookmark-button, #player-bookmark").forEach((button) => {
+          button.setAttribute("aria-pressed", String(hasBookmark));
+          button.classList.toggle("is-saved", hasBookmark);
+          if (button.id === "player-bookmark") button.textContent = hasBookmark ? "♥" : "♡";
+        });
+        selectedRatings = { plot: 0, voice: 0, characters: 0 };
+        $$(".star-picker button").forEach((star) => {
+          star.classList.remove("selected");
+          star.setAttribute("aria-pressed", "false");
+        });
+        renderComments();
+        updateTimeline();
+        renderStoryCatalog();
+        $("#reader").scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      const savedReaderFontSize = readSaved(readerFontSizeKey, defaultReaderFontSize);
+      setReaderFontSize(
+        Number.isFinite(savedReaderFontSize) ? savedReaderFontSize : defaultReaderFontSize
+      );
+      const readerThemeKey = "echotale-reader-theme-v1";
+      const readerFontKey = "echotale-reader-font-v1";
+      const savedReaderTheme = readSaved(readerThemeKey, "dark");
+      const savedReaderFont = readSaved(readerFontKey, "literary");
+      $("#reader-theme").value = ["dark", "light", "sepia"].includes(savedReaderTheme) ? savedReaderTheme : "dark";
+      $("#reader-font").value = ["literary", "sans", "serif"].includes(savedReaderFont) ? savedReaderFont : "literary";
+      $(".reader-card").dataset.readingTheme = $("#reader-theme").value;
+      document.body.dataset.readerTheme = $("#reader-theme").value;
+      const readerFontFamilies = {
+        literary: '"Playfair Display", serif',
+        sans: '"DM Sans", sans-serif',
+        serif: 'Georgia, "Times New Roman", serif'
+      };
+      $("#reading-copy").style.setProperty("--reader-font-family", readerFontFamilies[$("#reader-font").value]);
 
       function formatTime(seconds) {
         const mins = Math.floor(seconds / 60).toString().padStart(2, "0");
@@ -218,16 +1428,24 @@
           notify("Trình duyệt này chưa hỗ trợ đọc văn bản thành tiếng.");
           return;
         }
-        const utterance = new SpeechSynthesisUtterance(paragraphs[index].textContent);
-        utterance.lang = "vi-VN";
+        const requestId = ++speechRequestId;
+        const paragraphCopy = paragraphs[index].cloneNode(true);
+        $(".inline-comment-trigger", paragraphCopy)?.remove();
+        const utterance = new SpeechSynthesisUtterance(paragraphCopy.textContent);
+        utterance.lang = currentTextLanguage;
         utterance.rate = Number($("#speed-select").value);
-        utterance.onstart = () => { $("#audio-state").textContent = "ĐANG ĐỌC VĂN BẢN"; };
+        utterance.volume = Number($("#volume-slider").value);
+        utterance.onstart = () => {
+          if (requestId === speechRequestId) $("#audio-state").textContent = "ĐANG ĐỌC VĂN BẢN";
+        };
         utterance.onend = () => {
+          if (requestId !== speechRequestId) return;
           elapsedSeconds = paragraphSeconds.slice(0, index + 1).reduce((sum, value) => sum + value, 0);
           updateTimeline();
           if (speaking) speakParagraph(index + 1);
         };
         utterance.onerror = (event) => {
+          if (requestId !== speechRequestId) return;
           if (event.error !== "canceled" && event.error !== "interrupted") {
             stopPlayback(false);
             notify("Không thể phát giọng đọc trên thiết bị này.");
@@ -245,28 +1463,44 @@
           speaking = true;
           window.speechSynthesis.resume();
           $("#play-button").textContent = "Ⅱ";
+          $("#play-button").setAttribute("aria-label", "Tạm dừng");
           $("#audio-state").textContent = "ĐANG PHÁT";
           return;
         }
         speaking = true;
         chapterFinished = false;
         $("#play-button").textContent = "Ⅱ";
+        $("#play-button").setAttribute("aria-label", "Tạm dừng");
         speakParagraph(currentParagraph);
       }
 
       function stopPlayback(reset = true) {
         speaking = false;
+        speechRequestId += 1;
         if ("speechSynthesis" in window) window.speechSynthesis.cancel();
         $("#play-button").textContent = "▶";
-        $("#audio-state").textContent = "ĐÃ TẠM DỪNG";
+        $("#play-button").setAttribute("aria-label", "Phát");
+        $("#audio-state").textContent = reset ? "ĐÃ DỪNG" : "ĐÃ TẠM DỪNG";
         if (reset) {
           paragraphs.forEach((paragraph) => paragraph.classList.remove("is-speaking"));
+          currentParagraph = 0;
+          elapsedSeconds = 0;
+          updateTimeline();
         }
+      }
+
+      function continuePlaybackAt(index) {
+        stopPlayback(false);
+        speaking = true;
+        $("#play-button").textContent = "Ⅱ";
+        $("#play-button").setAttribute("aria-label", "Tạm dừng");
+        speakParagraph(index);
       }
 
       function setBookmark(button) {
         const isSaved = button.getAttribute("aria-pressed") !== "true";
-        if (!save(bookmarkKey, { chapter: 4, paragraph: currentParagraph, saved: isSaved })) return;
+        const chapter = 1;
+        if (!save(storyStorageKey("bookmark"), { chapter, paragraph: currentParagraph, saved: isSaved })) return;
         $$("#bookmark-button, #player-bookmark").forEach((item) => {
           item.setAttribute("aria-pressed", String(isSaved));
           item.classList.toggle("is-saved", isSaved);
@@ -276,7 +1510,7 @@
       }
 
       function renderComments() {
-        const comments = readSaved(commentsKey, []);
+        const comments = readSaved(storyStorageKey("comments"), []);
         const list = $("#comments-list");
         $$(".user-comment", list).forEach((comment) => comment.remove());
         comments.forEach((comment) => {
@@ -305,10 +1539,10 @@
           article.append(avatar, content);
           list.prepend(article);
         });
-        $("#comment-count").textContent = String(3 + comments.length).padStart(2, "0");
+        $("#comment-count").textContent = String(comments.length).padStart(2, "0");
       }
 
-      paragraphs.forEach((paragraph) => {
+      function addInlineCommentTrigger(paragraph) {
         const button = document.createElement("button");
         button.className = "inline-comment-trigger";
         button.type = "button";
@@ -322,7 +1556,9 @@
           $("#inline-panel").scrollIntoView({ behavior: "smooth", block: "nearest" });
         });
         paragraph.append(button);
-      });
+      }
+
+      paragraphs.forEach(addInlineCommentTrigger);
 
       $$(".star-picker").forEach((picker) => {
         const criterion = picker.dataset.criterion;
@@ -342,7 +1578,7 @@
         }
       });
 
-      const savedBookmark = readSaved(bookmarkKey, null);
+      const savedBookmark = readSaved(storyStorageKey("bookmark"), null);
       if (savedBookmark?.saved) {
         $$("#bookmark-button, #player-bookmark").forEach((button) => {
           button.setAttribute("aria-pressed", "true");
@@ -351,6 +1587,17 @@
         });
         currentParagraph = Math.min(savedBookmark.paragraph || 0, paragraphs.length - 1);
       }
+      collections = loadCollections();
+      const savedAccount = readSaved(accountKey, null);
+      account = savedAccount && typeof savedAccount.name === "string"
+        && typeof savedAccount.contact === "string"
+        && ["phone", "google"].includes(savedAccount.provider)
+        && Number.isFinite(Date.parse(savedAccount.joinedAt))
+        ? savedAccount
+        : null;
+      renderAccount();
+      renderCollections();
+      renderStoryCatalog();
       renderComments();
       updateTimeline();
 
@@ -359,16 +1606,33 @@
           if ("speechSynthesis" in window) window.speechSynthesis.pause();
           speaking = false;
           $("#play-button").textContent = "▶";
+          $("#play-button").setAttribute("aria-label", "Tiếp tục đọc");
           $("#audio-state").textContent = "ĐÃ TẠM DỪNG";
         } else startPlayback();
       });
+      $("#stop-button").addEventListener("click", () => stopPlayback());
       $("#speed-select").addEventListener("change", () => {
         if (!speaking) return;
-        const resumeAt = currentParagraph;
-        stopPlayback(false);
-        speaking = true;
-        speakParagraph(resumeAt);
+        continuePlaybackAt(currentParagraph);
       });
+      $("#volume-slider").addEventListener("change", () => {
+        if (!speaking) return;
+        continuePlaybackAt(currentParagraph);
+      });
+      $("#chapter-select").addEventListener("change", (event) => {
+        displayNovelChapter(Number(event.currentTarget.value));
+      });
+      $("#all-chapters").addEventListener("click", () => $("#chapter-select").focus());
+      $("#previous-chapter").addEventListener("click", () => {
+        const index = Number($("#chapter-select").value) - 1;
+        if (index >= 0) displayNovelChapter(index);
+      });
+      $("#next-chapter").addEventListener("click", () => {
+        const index = Number($("#chapter-select").value) + 1;
+        if (index < fullTextChapters.length) displayNovelChapter(index);
+      });
+      $("#return-to-intro").addEventListener("click", () => selectStory(currentStoryId));
+      $("#story-source-link").addEventListener("click", () => openNovelInReader(currentStoryId));
       $("#seek-bar").addEventListener("input", (event) => {
         elapsedSeconds = Math.round((Number(event.target.value) / 100) * totalDuration());
         let total = 0;
@@ -379,9 +1643,7 @@
         currentParagraph = Math.max(0, currentParagraph);
         updateTimeline();
         if (speaking) {
-          stopPlayback(false);
-          speaking = true;
-          speakParagraph(currentParagraph);
+          continuePlaybackAt(currentParagraph);
         }
       });
       $("#back-15").addEventListener("click", () => {
@@ -389,22 +1651,67 @@
         currentParagraph = Math.max(0, currentParagraph - (elapsedSeconds === 0 ? 1 : 0));
         updateTimeline();
         if (speaking) {
-          stopPlayback(false);
-          speaking = true;
-          speakParagraph(currentParagraph);
+          continuePlaybackAt(currentParagraph);
         }
       });
       $("#forward-15").addEventListener("click", () => {
         elapsedSeconds = Math.min(totalDuration(), elapsedSeconds + 15);
         updateTimeline();
         if (speaking) {
-          stopPlayback(false);
-          speaking = true;
-          speakParagraph(currentParagraph);
+          continuePlaybackAt(currentParagraph);
         }
       });
       $("#bookmark-button").addEventListener("click", (event) => setBookmark(event.currentTarget));
       $("#player-bookmark").addEventListener("click", (event) => setBookmark(event.currentTarget));
+      $("#add-to-collection").addEventListener("click", () => openCollectionDialog(currentCollectionItem()));
+      $("#create-collection-button").addEventListener("click", () => openCollectionDialog());
+      $("#create-collection-shortcut").addEventListener("click", () => openCollectionDialog());
+      $("#close-collection-dialog").addEventListener("click", () => $("#collection-dialog").close());
+      $("#cancel-collection-dialog").addEventListener("click", () => $("#collection-dialog").close());
+      $("#quick-create-collection").addEventListener("click", () => {
+        const collection = createCollection($("#new-collection-name").value);
+        if (!collection) return;
+        $("#new-collection-name").value = "";
+        if (collectionTarget) {
+          saveItemToCollections([collection.id], collectionTarget);
+          renderCollectionChoices();
+        } else {
+          $("#collection-dialog").close();
+        }
+      });
+      $("#collection-dialog-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        if ($("#collection-dialog").dataset.mode === "create") {
+          const collection = createCollection($("#new-collection-name").value);
+          if (collection) $("#collection-dialog").close();
+          return;
+        }
+        if (!collectionTarget) return;
+        const selectedIds = $$("#collection-choice-list input[type='checkbox']:checked").map((checkbox) => checkbox.value);
+        if (!saveItemToCollections(selectedIds, collectionTarget)) return;
+        $("#collection-dialog").close();
+      });
+      $("#collection-dialog").addEventListener("click", (event) => {
+        if (event.target === event.currentTarget) event.currentTarget.close();
+      });
+      $("#font-decrease").addEventListener("click", () => {
+        const currentSize = parseFloat(getComputedStyle($("#reading-copy")).getPropertyValue("--reader-font-size"));
+        setReaderFontSize(currentSize - 1, true);
+      });
+      $("#font-increase").addEventListener("click", () => {
+        const currentSize = parseFloat(getComputedStyle($("#reading-copy")).getPropertyValue("--reader-font-size"));
+        setReaderFontSize(currentSize + 1, true);
+      });
+      $("#font-reset").addEventListener("click", () => setReaderFontSize(defaultReaderFontSize, true));
+      $("#reader-theme").addEventListener("change", (event) => {
+        $(".reader-card").dataset.readingTheme = event.currentTarget.value;
+        document.body.dataset.readerTheme = event.currentTarget.value;
+        save(readerThemeKey, event.currentTarget.value);
+      });
+      $("#reader-font").addEventListener("change", (event) => {
+        $("#reading-copy").style.setProperty("--reader-font-family", readerFontFamilies[event.currentTarget.value]);
+        save(readerFontKey, event.currentTarget.value);
+      });
       $("#mode-toggle").addEventListener("click", (event) => {
         const listening = event.currentTarget.getAttribute("aria-pressed") !== "true";
         event.currentTarget.setAttribute("aria-pressed", String(listening));
@@ -421,9 +1728,9 @@
         event.preventDefault();
         const text = $("#inline-input").value.trim();
         if (!text || !inlineTarget) return;
-        const comments = readSaved(commentsKey, []);
+        const comments = readSaved(storyStorageKey("comments"), []);
         comments.push({ text, quote: inlineTarget.textContent.replace("↳ Bình luận đoạn", "").trim() });
-        if (!save(commentsKey, comments)) return;
+        if (!save(storyStorageKey("comments"), comments)) return;
         $("#inline-input").value = "";
         $("#inline-panel").hidden = true;
         inlineTarget = null;
@@ -436,9 +1743,9 @@
         const input = $("#comment-input");
         const text = input.value.trim();
         if (!text) return;
-        const comments = readSaved(commentsKey, []);
+        const comments = readSaved(storyStorageKey("comments"), []);
         comments.push({ text, quote: "" });
-        if (!save(commentsKey, comments)) return;
+        if (!save(storyStorageKey("comments"), comments)) return;
         input.value = "";
         renderComments();
         notify("Bình luận của bạn đã được thêm.");
@@ -448,9 +1755,9 @@
           notify("Hãy chấm điểm đủ cả ba tiêu chí nhé.");
           return;
         }
-        const ratings = readSaved(ratingsKey, []);
+        const ratings = readSaved(storyStorageKey("ratings"), []);
         ratings.push({ ...selectedRatings, createdAt: new Date().toISOString() });
-        if (!save(ratingsKey, ratings)) return;
+        if (!save(storyStorageKey("ratings"), ratings)) return;
         notify("Cảm ơn bạn đã chia sẻ cảm nhận.");
       });
       $("#sleep-button").addEventListener("click", () => { $("#sleep-popover").hidden = !$("#sleep-popover").hidden; });
@@ -488,11 +1795,125 @@
           $("#sleep-popover").hidden = true;
         });
       });
-      $("#next-chapter").addEventListener("click", () => notify("Chương tiếp theo sẽ sớm được cập nhật."));
-      $("#search-button").addEventListener("click", () => notify("Tìm kiếm sẽ khả dụng khi kết nối thư viện."));
+      $("#search-button").addEventListener("click", () => {
+        $("#library").scrollIntoView({ behavior: "smooth", block: "start" });
+        $("#library-search").focus({ preventScroll: true });
+      });
+      $("#library-search").addEventListener("input", () => {
+        catalogPage = 0;
+        renderStoryCatalog();
+      });
+      $("#library-previous").addEventListener("click", () => {
+        if (catalogPage === 0) return;
+        catalogPage -= 1;
+        renderStoryCatalog();
+      });
+      $("#library-next").addEventListener("click", () => {
+        catalogPage += 1;
+        renderStoryCatalog();
+      });
+      $("#favorites-filter").addEventListener("click", (event) => {
+        const button = event.currentTarget;
+        const showFavorites = button.getAttribute("aria-pressed") !== "true";
+        button.setAttribute("aria-pressed", String(showFavorites));
+        button.classList.toggle("filter-active", showFavorites);
+        catalogPage = 0;
+        renderStoryCatalog();
+      });
       $("#notifications").addEventListener("click", () => notify("Bạn đã xem hết thông báo mới."));
       $("#queue-button").addEventListener("click", () => notify("Danh sách phát đang được cập nhật."));
-      $("#profile-button").addEventListener("click", () => notify("Tài khoản mẫu — đăng nhập sẽ có ở phiên bản tiếp theo."));
+      $("#profile-button").addEventListener("click", openAccountDialog);
+      $("#account-close").addEventListener("click", () => $("#account-dialog").close());
+      $("#account-dialog").addEventListener("click", (event) => {
+        if (event.target === event.currentTarget) event.currentTarget.close();
+      });
+      $("#phone-login-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        sendDemoOtp();
+      });
+      $("#resend-otp-button").addEventListener("click", sendDemoOtp);
+      $("#otp-verify-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (!pendingOtp || Date.now() > pendingOtp.expiresAt) {
+          pendingOtp = null;
+          notify("Mã OTP đã hết hạn. Hãy yêu cầu mã mới.");
+          $("#otp-verify-form").hidden = true;
+          return;
+        }
+        if ($("#login-otp").value.trim() !== pendingOtp.code) {
+          notify("Mã OTP không chính xác. Vui lòng thử lại.");
+          $("#login-otp").focus();
+          return;
+        }
+        const phone = pendingOtp.phone;
+        completeLogin({
+          name: "Bạn đọc",
+          contact: phone,
+          provider: "phone",
+          joinedAt: new Date().toISOString(),
+          avatar: ""
+        });
+      });
+      $("#google-login-button").addEventListener("click", () => {
+        completeLogin({
+          name: "Bạn đọc Google",
+          contact: "nguoidung.demo@gmail.com",
+          provider: "google",
+          joinedAt: new Date().toISOString(),
+          avatar: ""
+        });
+      });
+      $("#edit-profile-button").addEventListener("click", () => {
+        $("#profile-name-input").value = account?.name || "";
+        $("#profile-avatar-input").value = "";
+        $("#account-edit-form").hidden = false;
+        $("#account-profile-actions").hidden = true;
+        $("#profile-name-input").focus();
+      });
+      $("#cancel-profile-edit").addEventListener("click", () => {
+        $("#account-edit-form").hidden = true;
+        $("#account-profile-actions").hidden = false;
+      });
+      $("#account-edit-form").addEventListener("submit", async (event) => {
+        event.preventDefault();
+        if (!account) return;
+        const name = $("#profile-name-input").value.trim();
+        if (!name) {
+          $("#profile-name-input").focus();
+          return;
+        }
+        const avatarFile = $("#profile-avatar-input").files[0];
+        let avatar = account.avatar || "";
+        if (avatarFile) {
+          try {
+            avatar = await resizeAvatarImage(avatarFile);
+          } catch (error) {
+            console.error("Không thể cập nhật ảnh đại diện.", error);
+            notify(error.message || "Không thể xử lý ảnh đại diện.");
+            return;
+          }
+        }
+        const updatedAccount = { ...account, name, avatar };
+        if (!save(accountKey, updatedAccount)) return;
+        account = updatedAccount;
+        renderAccount();
+        notify("Đã cập nhật thông tin tài khoản.");
+      });
+      $("#logout-button").addEventListener("click", () => {
+        try {
+          localStorage.removeItem(accountKey);
+        } catch (error) {
+          console.error("Không thể xóa phiên đăng nhập demo.", error);
+          notify("Không thể đăng xuất trên thiết bị này.");
+          return;
+        }
+        account = null;
+        pendingOtp = null;
+        renderAccount();
+        $("#otp-verify-form").hidden = true;
+        $("#account-dialog").close();
+        notify("Đã đăng xuất khỏi tài khoản demo.");
+      });
       $("#footer-about").addEventListener("click", () => notify("ECHO-TALE — đọc bằng mắt, lắng nghe bằng tâm trí."));
       $("#mobile-menu").addEventListener("click", () => document.body.classList.toggle("sidebar-open"));
       document.addEventListener("keydown", (event) => {
