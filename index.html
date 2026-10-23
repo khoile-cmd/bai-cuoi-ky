@@ -179,25 +179,34 @@
         </div>
 
         <section id="account-login-view">
-          <p class="account-intro">Đăng nhập để xem hồ sơ và quản lý bộ sưu tập của bạn trên thiết bị này.</p>
-          <form id="phone-login-form" class="account-form">
-            <label for="login-phone">Số điện thoại</label>
-            <div class="account-input-row"><span aria-hidden="true">＋</span><input id="login-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="090 123 4567" required /></div>
-            <button class="account-primary" id="send-otp-button" type="submit">Gửi mã OTP</button>
+          <p class="account-intro">Đăng nhập để xem hồ sơ và quản lý bộ sưu tập của bạn.</p>
+          <form id="account-login-form" class="account-form">
+            <label for="login-email">Email</label>
+            <input id="login-email" name="email" type="email" maxlength="254" autocomplete="email" placeholder="ban@example.com" required />
+            <label for="login-password">Mật khẩu</label>
+            <input id="login-password" name="password" type="password" autocomplete="current-password" required />
+            <p class="account-form-message" id="login-error" role="alert" hidden></p>
+            <button class="account-primary" id="account-login-submit" type="submit">Đăng nhập</button>
           </form>
-          <form id="otp-verify-form" class="account-form otp-form" hidden>
-            <label for="login-otp">Mã xác thực OTP</label>
-            <input id="login-otp" name="otp" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" placeholder="Nhập 6 chữ số" required />
-            <p class="otp-demo-notice" id="otp-demo-notice" role="status"></p>
-            <button class="account-primary" type="submit">Xác thực và đăng nhập</button>
-            <button class="account-text-button" id="resend-otp-button" type="button">Gửi mã mới</button>
+          <p class="account-switch">Chưa có tài khoản? <button class="account-text-button" id="show-register" type="button">Đăng ký</button></p>
+        </section>
+
+        <section id="account-register-view" hidden>
+          <p class="account-intro">Tạo tài khoản để lưu hồ sơ và bộ sưu tập của bạn.</p>
+          <form id="account-register-form" class="account-form">
+            <label for="register-username">Tên hiển thị</label>
+            <input id="register-username" name="username" type="text" minlength="1" maxlength="60" autocomplete="name" required />
+            <label for="register-email">Email</label>
+            <input id="register-email" name="email" type="email" maxlength="254" autocomplete="email" placeholder="ban@example.com" required />
+            <label for="register-password">Mật khẩu</label>
+            <input id="register-password" name="password" type="password" minlength="12" maxlength="72" autocomplete="new-password" aria-describedby="password-hint" required />
+            <small id="password-hint" class="account-password-hint">Ít nhất 12 ký tự, tối đa 72 byte UTF-8.</small>
+            <label for="register-password-confirm">Xác nhận mật khẩu</label>
+            <input id="register-password-confirm" name="password-confirm" type="password" minlength="12" maxlength="72" autocomplete="new-password" required />
+            <p class="account-form-message" id="register-error" role="alert" hidden></p>
+            <button class="account-primary" id="account-register-submit" type="submit">Tạo tài khoản</button>
           </form>
-          <div class="account-divider"><span>hoặc</span></div>
-          <button class="google-login-button" id="google-login-button" type="button">
-            <svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.73 7.18l7.62 5.91c4.45-4.11 7.15-10.15 7.15-17.56z"/><path fill="#FBBC05" d="M10.53 28.59A14.4 14.4 0 0 1 9.75 24c0-1.59.27-3.13.76-4.59l-7.98-6.19A23.9 23.9 0 0 0 0 24c0 3.87.93 7.55 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.9-5.89l-7.62-5.91c-2.12 1.42-4.84 2.26-8.28 2.26-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-            Đăng nhập với Google
-          </button>
-          <p class="account-demo-disclaimer">Bản demo: OTP hiển thị ngay trên trang; Google chưa kết nối OAuth hoặc máy chủ xác thực.</p>
+          <p class="account-switch">Đã có tài khoản? <button class="account-text-button" id="show-login" type="button">Đăng nhập</button></p>
         </section>
 
         <section id="account-profile-view" hidden>
@@ -228,6 +237,18 @@
         </section>
       </div>
     </dialog>
+    <dialog class="guest-access-dialog" id="guest-access-dialog" aria-labelledby="guest-access-title">
+      <div class="guest-access-content">
+        <span class="card-eyebrow">ECHO—TALE MEMBERS</span>
+        <h2 id="guest-access-title">Mở khóa trọn vẹn câu chuyện</h2>
+        <p>Vui lòng Đăng nhập hoặc Đăng ký để đọc toàn bộ câu chuyện và sử dụng đầy đủ tính năng.</p>
+        <div class="guest-access-actions">
+          <button class="account-primary" id="guest-login-button" type="button">Đăng nhập</button>
+          <button class="account-secondary" id="guest-register-button" type="button">Đăng ký</button>
+        </div>
+        <button class="account-text-button guest-continue-button" id="guest-continue-button" type="button">Tiếp tục xem phần giới thiệu</button>
+      </div>
+    </dialog>
     <dialog class="collection-dialog" id="collection-dialog" aria-labelledby="collection-dialog-title">
       <form id="collection-dialog-form">
         <div class="collection-dialog-heading"><div><span class="card-eyebrow">THƯ VIỆN CÁ NHÂN</span><h2 id="collection-dialog-title">Thêm vào bộ sưu tập</h2></div><button id="close-collection-dialog" type="button" aria-label="Đóng">×</button></div>
@@ -240,6 +261,7 @@
     <div class="sleep-popover" id="sleep-popover" hidden><strong>Hẹn giờ tắt</strong><button data-timer="15">15 phút</button><button data-timer="30">30 phút</button><button data-timer="45">45 phút</button><button data-timer="end">Hết chương</button><button data-timer="cancel" class="cancel-timer">Hủy hẹn giờ</button></div>
 
     <script src="data-service.js"></script>
+    <script src="auth-client.js"></script>
     <script>
       const $ = (selector, root = document) => root.querySelector(selector);
       const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -264,13 +286,19 @@
       const bookmarkKey = "echotale-bookmark-v1";
       const favoritesKey = "echotale-story-favorites-v1";
       const collectionsKey = "echotale-collections-v1";
-      const accountKey = "echotale-account-v1";
+      const accountPreferencesKey = "echotale-account-profile-v1";
       let collections = [];
       let collectionTarget = null;
       let currentChapterIndex = null;
       let currentChapterTitle = "Giới thiệu tác phẩm";
       let account = null;
-      let pendingOtp = null;
+      let accountPreferences = null;
+      let pendingMemberAction = null;
+      let resolveAuthSessionReady;
+      const authSessionReady = new Promise((resolve) => {
+        resolveAuthSessionReady = resolve;
+      });
+      let chapterListRequestId = 0;
       const stories = [
         {
           id: "jane-eyre",
@@ -585,37 +613,48 @@
 
       function renderAvatar(element, user) {
         element.replaceChildren();
-        if (user?.avatar) {
+        const preferences = accountPreferences?.userId === user?.id ? accountPreferences : null;
+        const avatar = preferences?.avatar || "";
+        const displayName = preferences?.name || user?.username || user?.email;
+        if (avatar) {
           const image = document.createElement("img");
-          image.src = user.avatar;
+          image.src = avatar;
           image.alt = "";
           element.append(image);
           element.classList.add("has-avatar-image");
         } else {
           element.classList.remove("has-avatar-image");
-          element.textContent = user?.name?.trim().charAt(0).toLocaleUpperCase("vi") || "?";
+          element.textContent = displayName?.trim().charAt(0).toLocaleUpperCase("vi") || "?";
         }
       }
 
       function renderAccount() {
         const loggedIn = Boolean(account);
-        $("#sidebar-profile-name").textContent = loggedIn ? account.name : "Đăng nhập";
-        $("#sidebar-profile-status").textContent = loggedIn
-          ? (account.provider === "phone" ? account.contact : account.contact)
-          : "Lưu bộ sưu tập của bạn";
+        if (!loggedIn) {
+          const favoritesFilter = $("#favorites-filter");
+          favoritesFilter.setAttribute("aria-pressed", "false");
+          favoritesFilter.classList.remove("filter-active");
+          catalogPage = 0;
+        }
+        const registering = $("#account-register-view").dataset.active === "true";
+        const preferences = accountPreferences?.userId === account?.id ? accountPreferences : null;
+        const displayName = preferences?.name || account?.username;
+        $("#sidebar-profile-name").textContent = loggedIn ? displayName : "Đăng nhập";
+        $("#sidebar-profile-status").textContent = loggedIn ? account.email : "Lưu bộ sưu tập của bạn";
         renderAvatar($("#sidebar-profile-avatar"), account);
-        $("#account-login-view").hidden = loggedIn;
+        $("#account-login-view").hidden = loggedIn || registering;
+        $("#account-register-view").hidden = loggedIn || !registering;
         $("#account-profile-view").hidden = !loggedIn;
         $("#account-dialog-title").textContent = loggedIn ? "Thông tin người dùng" : "Chào mừng bạn";
         $("#account-edit-form").hidden = true;
         $("#account-profile-actions").hidden = false;
         if (!loggedIn) return;
 
-        $("#account-profile-name").textContent = account.name;
-        $("#account-profile-contact").textContent = account.contact;
+        $("#account-profile-name").textContent = displayName;
+        $("#account-profile-contact").textContent = account.email;
         $("#account-joined-date").textContent = new Intl.DateTimeFormat("vi-VN", { dateStyle: "long" })
-          .format(new Date(account.joinedAt));
-        $("#account-provider").textContent = account.provider === "google" ? "Google (mô phỏng)" : "Số điện thoại (OTP demo)";
+          .format(new Date(account.createdAt));
+        $("#account-provider").textContent = "Email và mật khẩu";
         renderAvatar($("#account-avatar"), account);
         $("#account-collection-count").textContent = String(collections.length);
         const list = $("#account-collection-list");
@@ -638,39 +677,53 @@
         });
       }
 
-      function openAccountDialog() {
+      function ensureMemberAccess(action) {
+        return authSessionReady.then(() => {
+          if (account) return true;
+          pendingMemberAction = action || null;
+          const dialog = $("#guest-access-dialog");
+          if (!dialog.open) dialog.showModal();
+          return false;
+        });
+      }
+
+      function runMemberAction(action) {
+        ensureMemberAccess(action).then((allowed) => {
+          if (allowed) return action();
+          return undefined;
+        }).catch((error) => {
+          console.error("Không thể thực hiện thao tác thành viên.", error);
+          notify(error.message || "Không thể hoàn thành thao tác. Vui lòng thử lại.");
+        });
+      }
+
+      function completeMemberAction() {
+        $("#guest-access-dialog").close();
+        const action = pendingMemberAction;
+        pendingMemberAction = null;
+        if (action) runMemberAction(action);
+      }
+
+      function openAccountDialog(registering = false) {
+        if (registering) {
+          $("#account-register-view").dataset.active = "true";
+        } else {
+          delete $("#account-register-view").dataset.active;
+        }
         renderAccount();
         const dialog = $("#account-dialog");
         if (!dialog.open) dialog.showModal();
+        if (registering) $("#register-username").focus();
       }
 
-      function sendDemoOtp() {
-        const phoneInput = $("#login-phone");
-        const phone = phoneInput.value.trim();
-        const digits = phone.replace(/\D/g, "");
-        if (digits.length < 8 || digits.length > 15) {
-          phoneInput.setCustomValidity("Hãy nhập số điện thoại hợp lệ (8–15 chữ số).");
-          phoneInput.reportValidity();
-          phoneInput.setCustomValidity("");
-          return;
-        }
-        const code = String(Math.floor(100000 + Math.random() * 900000));
-        pendingOtp = { phone, code, expiresAt: Date.now() + 5 * 60 * 1000 };
-        $("#otp-verify-form").hidden = false;
-        $("#otp-demo-notice").textContent = `Mã OTP mô phỏng: ${code} · có hiệu lực trong 5 phút. Không có tin nhắn SMS thật được gửi.`;
-        $("#login-otp").value = "";
-        $("#login-otp").focus();
-        notify("Đã tạo mã OTP demo. Nhập mã hiển thị để tiếp tục.");
+      function setAccountError(element, error) {
+        element.textContent = error.message || "Đã xảy ra lỗi. Vui lòng thử lại.";
+        element.hidden = false;
       }
 
-      function completeLogin(user) {
-        if (!save(accountKey, user)) return;
-        account = user;
-        pendingOtp = null;
-        $("#otp-verify-form").hidden = true;
-        $("#phone-login-form").reset();
-        renderAccount();
-        notify("Đăng nhập demo thành công.");
+      function loadAccountPreferences(user) {
+        const savedPreferences = readSaved(accountPreferencesKey, null);
+        accountPreferences = savedPreferences?.userId === user?.id ? savedPreferences : null;
       }
 
       function resizeAvatarImage(file) {
@@ -818,6 +871,10 @@
       }
 
       function openCollectionDialog(target = null) {
+        if (!account) {
+          runMemberAction(() => openCollectionDialog(target));
+          return;
+        }
         collectionTarget = target;
         const dialog = $("#collection-dialog");
         const createMode = !target;
@@ -839,6 +896,12 @@
       function renderCollections() {
         const sidebar = $("#sidebar-collections");
         sidebar.replaceChildren();
+        sidebar.hidden = !account;
+        $("#my-collections").hidden = !account;
+        if (!account) {
+          $("#collections-content").replaceChildren();
+          return;
+        }
         collections.forEach((collection, index) => {
           const link = document.createElement("button");
           link.type = "button";
@@ -896,9 +959,11 @@
           removeCollection.textContent = "Xóa bộ sưu tập";
           removeCollection.setAttribute("aria-label", `Xóa bộ sưu tập ${collection.name}`);
           removeCollection.addEventListener("click", () => {
-            if (!window.confirm(`Bạn có chắc muốn xóa bộ sưu tập “${collection.name}” và các mục đã lưu bên trong?`)) return;
-            persistCollections(collections.filter((item) => item.id !== collection.id));
-            notify(`Đã xóa bộ sưu tập “${collection.name}”.`);
+            runMemberAction(() => {
+              if (!window.confirm(`Bạn có chắc muốn xóa bộ sưu tập “${collection.name}” và các mục đã lưu bên trong?`)) return;
+              persistCollections(collections.filter((item) => item.id !== collection.id));
+              notify(`Đã xóa bộ sưu tập “${collection.name}”.`);
+            });
           });
           heading.append(titleBlock, removeCollection);
           card.append(heading);
@@ -943,11 +1008,13 @@
               remove.textContent = "Xóa";
               remove.setAttribute("aria-label", `Xóa ${story.title} - ${item.chapterTitle} khỏi ${collection.name}`);
               remove.addEventListener("click", () => {
-                const itemKey = collectionItemKey(item);
-                const nextCollections = collections.map((entry) => entry.id === collection.id
-                  ? { ...entry, items: entry.items.filter((savedItem) => collectionItemKey(savedItem) !== itemKey) }
-                  : entry);
-                if (persistCollections(nextCollections)) notify(`Đã xóa “${story.title}” khỏi bộ sưu tập.`);
+                runMemberAction(() => {
+                  const itemKey = collectionItemKey(item);
+                  const nextCollections = collections.map((entry) => entry.id === collection.id
+                    ? { ...entry, items: entry.items.filter((savedItem) => collectionItemKey(savedItem) !== itemKey) }
+                    : entry);
+                  if (persistCollections(nextCollections)) notify(`Đã xóa “${story.title}” khỏi bộ sưu tập.`);
+                });
               });
               actions.append(read, remove);
               row.append(cover, info, actions);
@@ -960,6 +1027,7 @@
       }
 
       async function openCollectionItem(item) {
+        if (!(await ensureMemberAccess(() => openCollectionItem(item)))) return;
         const story = stories.find((entry) => entry.id === item.storyId);
         if (!story) {
           notify("Không tìm thấy truyện đã lưu.");
@@ -981,9 +1049,9 @@
       function renderStoryCatalog() {
         const storedFavorites = readSaved(favoritesKey, []);
         const validStoryIds = new Set(stories.map((story) => story.id));
-        const favoriteIds = new Set(
-          Array.isArray(storedFavorites) ? storedFavorites.filter((id) => validStoryIds.has(id)) : []
-        );
+        const favoriteIds = new Set(account && Array.isArray(storedFavorites)
+          ? storedFavorites.filter((id) => validStoryIds.has(id))
+          : []);
         $("#favorite-count").textContent = String(favoriteIds.size).padStart(2, "0");
         const query = normalizeSearch($("#library-search").value.trim());
         const favoritesOnly = $("#favorites-filter").getAttribute("aria-pressed") === "true";
@@ -1071,6 +1139,10 @@
       }
 
       function toggleStoryFavorite(storyId) {
+        if (!account) {
+          runMemberAction(() => toggleStoryFavorite(storyId));
+          return;
+        }
         const storedFavorites = readSaved(favoritesKey, []);
         const validStoryIds = new Set(stories.map((story) => story.id));
         const favorites = Array.isArray(storedFavorites) ? storedFavorites.filter((id) => validStoryIds.has(id)) : [];
@@ -1193,9 +1265,89 @@
         $("#all-chapters").innerHTML = `Chọn trong ${fullTextChapters.length} chương <span>↗</span>`;
       }
 
-      function displayNovelChapter(index) {
+      async function fetchNovelChapters(story, signal) {
+        const bookId = story.readUrl.match(/\/ebooks\/(\d+)/)?.[1];
+        if (!bookId) throw new Error("Không xác định được mã sách từ nguồn đọc.");
+
+        let chapters = null;
+        let fromCache = false;
+        try {
+          const cachedNovel = await EchoTaleDataService.content.getCachedNovel(story.id);
+          if (Array.isArray(cachedNovel?.chapters) && cachedNovel.chapters.length
+            && cachedNovel.chapters.every((chapter) => chapter && typeof chapter.title === "string"
+              && Array.isArray(chapter.paragraphs)
+              && chapter.paragraphs.every((paragraph) => typeof paragraph === "string"))) {
+            chapters = cachedNovel.chapters;
+            fromCache = true;
+          }
+        } catch (error) {
+          console.warn(`Không đọc được bộ nhớ đệm của "${story.title}", sẽ tải từ nguồn.`, error);
+        }
+        if (signal.aborted) return null;
+
+        if (!chapters) {
+          let response = await fetch(`https://www.gutenberg.org/cache/epub/${bookId}/pg${bookId}.txt`, {
+            signal,
+            cache: "force-cache"
+          });
+          if (!response.ok) {
+            response = await fetch(`https://www.gutenberg.org/ebooks/${bookId}.txt.utf-8`, {
+              signal,
+              cache: "force-cache"
+            });
+          }
+          if (!response.ok) throw new Error(`Nguồn sách trả về lỗi ${response.status}.`);
+          const sourceText = await response.text();
+          if (signal.aborted) return null;
+          chapters = parseNovelChapters(sourceText);
+          EchoTaleDataService.content.cacheNovel(story.id, {
+            title: story.title,
+            author: story.author,
+            sourceUrl: story.readUrl,
+            language: "en-US",
+            chapters
+          }).catch((error) => {
+            console.warn(`Không lưu được bộ nhớ đệm của "${story.title}".`, error);
+          });
+        }
+        return { chapters, fromCache };
+      }
+
+      async function loadGuestChapterList(story, requestId) {
+        const controller = new AbortController();
+        readerLoadController = controller;
+        const loadStatus = $("#reading-load-status");
+        loadStatus.textContent = `Đang tải danh sách chương “${story.title}”…`;
+        loadStatus.hidden = false;
+        try {
+          const result = await fetchNovelChapters(story, controller.signal);
+          if (!result || controller.signal.aborted || requestId !== chapterListRequestId
+            || currentStoryId !== story.id || currentChapterIndex !== null) return;
+          fullTextChapters = result.chapters;
+          $("#chapter-select").replaceChildren(...result.chapters.map((chapter, index) => {
+            const option = document.createElement("option");
+            option.value = String(index);
+            option.textContent = `${index + 1}. ${chapter.title}`;
+            return option;
+          }));
+          $("#chapter-setting").hidden = result.chapters.length < 2;
+          $(".chapter-card").classList.remove("preview-story");
+          $("#chapter-card-title").textContent = "Các chương trong sách";
+          $("#chapter-progress-value").innerHTML = `0<small>/${result.chapters.length}</small>`;
+          $("#chapter-progress-percent").textContent = "chỉ xem giới thiệu";
+          renderChapterRail(-1);
+          loadStatus.hidden = true;
+        } catch (error) {
+          if (error.name === "AbortError" || controller.signal.aborted) return;
+          console.error(`Không thể tải danh sách chương của "${story.title}".`, error);
+          loadStatus.textContent = "Không tải được danh sách chương. Phần giới thiệu vẫn khả dụng.";
+        }
+      }
+
+      async function displayNovelChapter(index) {
         const chapter = fullTextChapters[index];
         if (!chapter) return;
+        if (!(await ensureMemberAccess(() => displayNovelChapter(index)))) return;
         if (speaking) stopPlayback();
         $(".chapter-card").classList.remove("preview-story");
         currentTextLanguage = "en-US";
@@ -1224,7 +1376,8 @@
       async function openNovelInReader(storyId) {
         const story = stories.find((item) => item.id === storyId);
         if (!story?.readUrl) return false;
-        selectStory(storyId);
+        if (!(await ensureMemberAccess(() => openNovelInReader(storyId)))) return false;
+        if (currentStoryId !== storyId) selectStory(storyId);
         readerLoadController?.abort();
         const controller = new AbortController();
         readerLoadController = controller;
@@ -1234,48 +1387,9 @@
         $("#chapter-setting").hidden = true;
         $("#reader .chapter-heading h2").textContent = "Đang tải toàn văn…";
         try {
-          const bookId = story.readUrl.match(/\/ebooks\/(\d+)/)?.[1];
-          if (!bookId) throw new Error("Không xác định được mã sách từ nguồn đọc.");
-          let chapters = null;
-          let fromCache = false;
-          try {
-            const cachedNovel = await EchoTaleDataService.content.getCachedNovel(story.id);
-            if (Array.isArray(cachedNovel?.chapters) && cachedNovel.chapters.length
-              && cachedNovel.chapters.every((chapter) => chapter && typeof chapter.title === "string"
-                && Array.isArray(chapter.paragraphs)
-                && chapter.paragraphs.every((paragraph) => typeof paragraph === "string"))) {
-              chapters = cachedNovel.chapters;
-              fromCache = true;
-            }
-          } catch (error) {
-            console.warn(`Không đọc được bộ nhớ đệm của "${story.title}", sẽ tải từ nguồn.`, error);
-          }
-          if (!chapters) {
-            let response = await fetch(`https://www.gutenberg.org/cache/epub/${bookId}/pg${bookId}.txt`, {
-              signal: controller.signal,
-              cache: "force-cache"
-            });
-            if (!response.ok) {
-              response = await fetch(`https://www.gutenberg.org/ebooks/${bookId}.txt.utf-8`, {
-                signal: controller.signal,
-                cache: "force-cache"
-              });
-            }
-            if (!response.ok) throw new Error(`Nguồn sách trả về lỗi ${response.status}.`);
-            const sourceText = await response.text();
-            if (controller.signal.aborted) return false;
-            chapters = parseNovelChapters(sourceText);
-            EchoTaleDataService.content.cacheNovel(story.id, {
-              title: story.title,
-              author: story.author,
-              sourceUrl: story.readUrl,
-              language: "en-US",
-              chapters
-            }).catch((error) => {
-              console.warn(`Không lưu được bộ nhớ đệm của "${story.title}".`, error);
-            });
-          }
-          if (controller.signal.aborted) return;
+          const result = await fetchNovelChapters(story, controller.signal);
+          if (!result || controller.signal.aborted) return false;
+          const { chapters, fromCache } = result;
           fullTextChapters = chapters;
           const chapterSelect = $("#chapter-select");
           chapterSelect.replaceChildren(...chapters.map((chapter, index) => {
@@ -1302,6 +1416,7 @@
       function selectStory(storyId) {
         const story = stories.find((item) => item.id === storyId);
         if (!story) return;
+        const listRequestId = ++chapterListRequestId;
         readerLoadController?.abort();
         readerLoadController = undefined;
         if (speaking) stopPlayback();
@@ -1342,7 +1457,9 @@
         renderReadingParagraphs(story.paragraphs);
         const emptyChapterList = document.createElement("p");
         emptyChapterList.className = "chapter-list-empty";
-        emptyChapterList.textContent = "Chọn “Đọc ngay” để tải danh sách chương.";
+        emptyChapterList.textContent = story.readUrl
+          ? "Đang chuẩn bị danh sách chương…"
+          : "Danh sách chương chưa có.";
         $("#chapter-list").replaceChildren(emptyChapterList);
         $("#all-chapters").hidden = true;
         $("#inline-panel").hidden = true;
@@ -1367,6 +1484,16 @@
         updateTimeline();
         renderStoryCatalog();
         $("#reader").scrollIntoView({ behavior: "smooth", block: "start" });
+        if (story.readUrl) {
+          authSessionReady.then(() => {
+            if (!account && currentStoryId === story.id && currentChapterIndex === null) {
+              return loadGuestChapterList(story, listRequestId);
+            }
+            return undefined;
+          }).catch((error) => {
+            console.error(`Không thể chuẩn bị danh sách chương của "${story.title}".`, error);
+          });
+        }
       }
 
       const savedReaderFontSize = readSaved(readerFontSizeKey, defaultReaderFontSize);
@@ -1454,7 +1581,8 @@
         engine.speak(utterance);
       }
 
-      function startPlayback() {
+      async function startPlayback() {
+        if (!(await ensureMemberAccess(() => startPlayback()))) return;
         if (!("speechSynthesis" in window)) {
           notify("Trình duyệt này chưa hỗ trợ TTS. Có thể dùng file audio trong bản kết nối backend.");
           return;
@@ -1498,6 +1626,10 @@
       }
 
       function setBookmark(button) {
+        if (!account) {
+          runMemberAction(() => setBookmark(button));
+          return;
+        }
         const isSaved = button.getAttribute("aria-pressed") !== "true";
         const chapter = 1;
         if (!save(storyStorageKey("bookmark"), { chapter, paragraph: currentParagraph, saved: isSaved })) return;
@@ -1510,9 +1642,13 @@
       }
 
       function renderComments() {
-        const comments = readSaved(storyStorageKey("comments"), []);
         const list = $("#comments-list");
         $$(".user-comment", list).forEach((comment) => comment.remove());
+        if (!account) {
+          $("#comment-count").textContent = "—";
+          return;
+        }
+        const comments = readSaved(storyStorageKey("comments"), []);
         comments.forEach((comment) => {
           const article = document.createElement("article");
           article.className = "comment user-comment";
@@ -1549,11 +1685,13 @@
         button.textContent = "↳ Bình luận đoạn";
         button.setAttribute("aria-label", `Bình luận đoạn: ${paragraph.textContent.slice(0, 55)}`);
         button.addEventListener("click", () => {
-          inlineTarget = paragraph;
-          $("#selected-excerpt").textContent = `“${paragraph.textContent.slice(0, 100)}${paragraph.textContent.length > 100 ? "…" : ""}”`;
-          $("#inline-panel").hidden = false;
-          $("#inline-input").focus();
-          $("#inline-panel").scrollIntoView({ behavior: "smooth", block: "nearest" });
+          runMemberAction(() => {
+            inlineTarget = paragraph;
+            $("#selected-excerpt").textContent = `“${paragraph.textContent.slice(0, 100)}${paragraph.textContent.length > 100 ? "…" : ""}”`;
+            $("#inline-panel").hidden = false;
+            $("#inline-input").focus();
+            $("#inline-panel").scrollIntoView({ behavior: "smooth", block: "nearest" });
+          });
         });
         paragraph.append(button);
       }
@@ -1568,10 +1706,12 @@
           button.textContent = "★";
           button.setAttribute("aria-label", `${value} trên 5`);
           button.addEventListener("click", () => {
-            selectedRatings[criterion] = value;
-            $$(".star-picker button", picker).forEach((star, index) => {
-              star.classList.toggle("selected", index < value);
-              star.setAttribute("aria-pressed", String(index < value));
+            runMemberAction(() => {
+              selectedRatings[criterion] = value;
+              $$(".star-picker button", picker).forEach((star, index) => {
+                star.classList.toggle("selected", index < value);
+                star.setAttribute("aria-pressed", String(index < value));
+              });
             });
           });
           picker.append(button);
@@ -1588,20 +1728,41 @@
         currentParagraph = Math.min(savedBookmark.paragraph || 0, paragraphs.length - 1);
       }
       collections = loadCollections();
-      const savedAccount = readSaved(accountKey, null);
-      account = savedAccount && typeof savedAccount.name === "string"
-        && typeof savedAccount.contact === "string"
-        && ["phone", "google"].includes(savedAccount.provider)
-        && Number.isFinite(Date.parse(savedAccount.joinedAt))
-        ? savedAccount
-        : null;
+      accountPreferences = null;
       renderAccount();
       renderCollections();
       renderStoryCatalog();
       renderComments();
       updateTimeline();
+      document.body.classList.add("auth-session-checking");
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          const user = await EchoTaleAuth.currentUser();
+          account = user;
+          loadAccountPreferences(user);
+          renderAccount();
+          renderCollections();
+          renderStoryCatalog();
+          renderComments();
+        } catch (error) {
+          console.error("Không thể kiểm tra phiên đăng nhập.", error);
+          account = null;
+          renderAccount();
+          renderCollections();
+          renderStoryCatalog();
+          renderComments();
+          notify("Không thể kiểm tra phiên đăng nhập. Các tính năng thành viên cần máy chủ hoạt động.");
+        } finally {
+          document.body.classList.remove("auth-session-checking");
+          resolveAuthSessionReady();
+        }
+      }, { once: true });
 
       $("#play-button").addEventListener("click", () => {
+        if (!account) {
+          runMemberAction(() => $("#play-button").click());
+          return;
+        }
         if (speaking) {
           if ("speechSynthesis" in window) window.speechSynthesis.pause();
           speaking = false;
@@ -1669,6 +1830,10 @@
       $("#close-collection-dialog").addEventListener("click", () => $("#collection-dialog").close());
       $("#cancel-collection-dialog").addEventListener("click", () => $("#collection-dialog").close());
       $("#quick-create-collection").addEventListener("click", () => {
+        if (!account) {
+          runMemberAction(() => $("#quick-create-collection").click());
+          return;
+        }
         const collection = createCollection($("#new-collection-name").value);
         if (!collection) return;
         $("#new-collection-name").value = "";
@@ -1681,6 +1846,10 @@
       });
       $("#collection-dialog-form").addEventListener("submit", (event) => {
         event.preventDefault();
+        if (!account) {
+          runMemberAction(() => $("#collection-dialog-form").requestSubmit());
+          return;
+        }
         if ($("#collection-dialog").dataset.mode === "create") {
           const collection = createCollection($("#new-collection-name").value);
           if (collection) $("#collection-dialog").close();
@@ -1713,6 +1882,10 @@
         save(readerFontKey, event.currentTarget.value);
       });
       $("#mode-toggle").addEventListener("click", (event) => {
+        if (!account) {
+          runMemberAction(() => $("#mode-toggle").click());
+          return;
+        }
         const listening = event.currentTarget.getAttribute("aria-pressed") !== "true";
         event.currentTarget.setAttribute("aria-pressed", String(listening));
         event.currentTarget.classList.toggle("mode-active", listening);
@@ -1726,6 +1899,10 @@
       });
       $("#inline-form").addEventListener("submit", (event) => {
         event.preventDefault();
+        if (!account) {
+          runMemberAction(() => $("#inline-form").requestSubmit());
+          return;
+        }
         const text = $("#inline-input").value.trim();
         if (!text || !inlineTarget) return;
         const comments = readSaved(storyStorageKey("comments"), []);
@@ -1740,6 +1917,10 @@
       $("#close-inline").addEventListener("click", () => { $("#inline-panel").hidden = true; inlineTarget = null; });
       $("#comment-form").addEventListener("submit", (event) => {
         event.preventDefault();
+        if (!account) {
+          runMemberAction(() => $("#comment-form").requestSubmit());
+          return;
+        }
         const input = $("#comment-input");
         const text = input.value.trim();
         if (!text) return;
@@ -1751,6 +1932,10 @@
         notify("Bình luận của bạn đã được thêm.");
       });
       $("#submit-rating").addEventListener("click", () => {
+        if (!account) {
+          runMemberAction(() => $("#submit-rating").click());
+          return;
+        }
         if (Object.values(selectedRatings).some((rating) => rating === 0)) {
           notify("Hãy chấm điểm đủ cả ba tiêu chí nhé.");
           return;
@@ -1814,57 +1999,105 @@
       });
       $("#favorites-filter").addEventListener("click", (event) => {
         const button = event.currentTarget;
-        const showFavorites = button.getAttribute("aria-pressed") !== "true";
-        button.setAttribute("aria-pressed", String(showFavorites));
-        button.classList.toggle("filter-active", showFavorites);
-        catalogPage = 0;
-        renderStoryCatalog();
+        runMemberAction(() => {
+          const showFavorites = button.getAttribute("aria-pressed") !== "true";
+          button.setAttribute("aria-pressed", String(showFavorites));
+          button.classList.toggle("filter-active", showFavorites);
+          catalogPage = 0;
+          renderStoryCatalog();
+        });
       });
       $("#notifications").addEventListener("click", () => notify("Bạn đã xem hết thông báo mới."));
       $("#queue-button").addEventListener("click", () => notify("Danh sách phát đang được cập nhật."));
-      $("#profile-button").addEventListener("click", openAccountDialog);
-      $("#account-close").addEventListener("click", () => $("#account-dialog").close());
-      $("#account-dialog").addEventListener("click", (event) => {
-        if (event.target === event.currentTarget) event.currentTarget.close();
+      $("#profile-button").addEventListener("click", () => openAccountDialog(false));
+      $("#guest-login-button").addEventListener("click", () => openAccountDialog(false));
+      $("#guest-register-button").addEventListener("click", () => openAccountDialog(true));
+      $("#guest-continue-button").addEventListener("click", () => {
+        pendingMemberAction = null;
+        $("#guest-access-dialog").close();
       });
-      $("#phone-login-form").addEventListener("submit", (event) => {
+      $("#account-dialog").addEventListener("cancel", (event) => {
         event.preventDefault();
-        sendDemoOtp();
       });
-      $("#resend-otp-button").addEventListener("click", sendDemoOtp);
-      $("#otp-verify-form").addEventListener("submit", (event) => {
+      $("#guest-access-dialog").addEventListener("cancel", (event) => {
         event.preventDefault();
-        if (!pendingOtp || Date.now() > pendingOtp.expiresAt) {
-          pendingOtp = null;
-          notify("Mã OTP đã hết hạn. Hãy yêu cầu mã mới.");
-          $("#otp-verify-form").hidden = true;
+      });
+      $("#show-register").addEventListener("click", () => {
+        $("#account-register-view").dataset.active = "true";
+        $("#login-error").hidden = true;
+        renderAccount();
+        $("#register-username").focus();
+      });
+      $("#show-login").addEventListener("click", () => {
+        delete $("#account-register-view").dataset.active;
+        $("#register-error").hidden = true;
+        renderAccount();
+        $("#login-email").focus();
+      });
+      $("#account-login-form").addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const form = event.currentTarget;
+        const submit = $("#account-login-submit");
+        $("#login-error").hidden = true;
+        submit.disabled = true;
+        try {
+          account = await EchoTaleAuth.login({
+            email: $("#login-email").value,
+            password: $("#login-password").value
+          });
+          delete $("#account-register-view").dataset.active;
+          loadAccountPreferences(account);
+          renderAccount();
+          renderCollections();
+          renderStoryCatalog();
+          renderComments();
+          form.reset();
+          $("#account-dialog").close();
+          notify("Đăng nhập thành công.");
+          completeMemberAction();
+        } catch (error) {
+          setAccountError($("#login-error"), error);
+        } finally {
+          submit.disabled = false;
+        }
+      });
+      $("#account-register-form").addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const form = event.currentTarget;
+        const password = $("#register-password").value;
+        if (password !== $("#register-password-confirm").value) {
+          setAccountError($("#register-error"), new Error("Mật khẩu xác nhận không khớp."));
+          $("#register-password-confirm").focus();
           return;
         }
-        if ($("#login-otp").value.trim() !== pendingOtp.code) {
-          notify("Mã OTP không chính xác. Vui lòng thử lại.");
-          $("#login-otp").focus();
-          return;
+        const submit = $("#account-register-submit");
+        $("#register-error").hidden = true;
+        submit.disabled = true;
+        try {
+          account = await EchoTaleAuth.register({
+            username: $("#register-username").value,
+            email: $("#register-email").value,
+            password
+          });
+          delete $("#account-register-view").dataset.active;
+          loadAccountPreferences(account);
+          renderAccount();
+          renderCollections();
+          renderStoryCatalog();
+          renderComments();
+          form.reset();
+          $("#account-dialog").close();
+          notify("Tài khoản đã được tạo.");
+          completeMemberAction();
+        } catch (error) {
+          setAccountError($("#register-error"), error);
+        } finally {
+          submit.disabled = false;
         }
-        const phone = pendingOtp.phone;
-        completeLogin({
-          name: "Bạn đọc",
-          contact: phone,
-          provider: "phone",
-          joinedAt: new Date().toISOString(),
-          avatar: ""
-        });
-      });
-      $("#google-login-button").addEventListener("click", () => {
-        completeLogin({
-          name: "Bạn đọc Google",
-          contact: "nguoidung.demo@gmail.com",
-          provider: "google",
-          joinedAt: new Date().toISOString(),
-          avatar: ""
-        });
       });
       $("#edit-profile-button").addEventListener("click", () => {
-        $("#profile-name-input").value = account?.name || "";
+        const preferences = accountPreferences?.userId === account?.id ? accountPreferences : null;
+        $("#profile-name-input").value = preferences?.name || account?.username || "";
         $("#profile-avatar-input").value = "";
         $("#account-edit-form").hidden = false;
         $("#account-profile-actions").hidden = true;
@@ -1883,7 +2116,8 @@
           return;
         }
         const avatarFile = $("#profile-avatar-input").files[0];
-        let avatar = account.avatar || "";
+        const existingPreferences = accountPreferences?.userId === account.id ? accountPreferences : null;
+        let avatar = existingPreferences?.avatar || "";
         if (avatarFile) {
           try {
             avatar = await resizeAvatarImage(avatarFile);
@@ -1893,26 +2127,31 @@
             return;
           }
         }
-        const updatedAccount = { ...account, name, avatar };
-        if (!save(accountKey, updatedAccount)) return;
-        account = updatedAccount;
+        const updatedPreferences = { userId: account.id, name, avatar };
+        if (!save(accountPreferencesKey, updatedPreferences)) return;
+        accountPreferences = updatedPreferences;
         renderAccount();
-        notify("Đã cập nhật thông tin tài khoản.");
+        notify("Đã cập nhật hồ sơ trên thiết bị này.");
       });
-      $("#logout-button").addEventListener("click", () => {
+      $("#logout-button").addEventListener("click", async () => {
         try {
-          localStorage.removeItem(accountKey);
+          await EchoTaleAuth.logout();
         } catch (error) {
-          console.error("Không thể xóa phiên đăng nhập demo.", error);
-          notify("Không thể đăng xuất trên thiết bị này.");
+          console.error("Không thể đăng xuất khỏi tài khoản.", error);
+          notify(error.message || "Không thể kết nối máy chủ để đăng xuất.");
           return;
         }
         account = null;
-        pendingOtp = null;
+        accountPreferences = null;
+        delete $("#account-register-view").dataset.active;
+        if (speaking) stopPlayback();
+        if (currentChapterIndex !== null) selectStory(currentStoryId);
         renderAccount();
-        $("#otp-verify-form").hidden = true;
+        renderCollections();
+        renderStoryCatalog();
+        renderComments();
         $("#account-dialog").close();
-        notify("Đã đăng xuất khỏi tài khoản demo.");
+        notify("Đã đăng xuất khỏi tài khoản.");
       });
       $("#footer-about").addEventListener("click", () => notify("ECHO-TALE — đọc bằng mắt, lắng nghe bằng tâm trí."));
       $("#mobile-menu").addEventListener("click", () => document.body.classList.toggle("sidebar-open"));

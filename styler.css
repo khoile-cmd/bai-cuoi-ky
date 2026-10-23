@@ -157,16 +157,45 @@ a { color: inherit; text-decoration: none; }
 .collection-item-remove { padding: 0 9px; }
 .profile-avatar.has-avatar-image, .account-avatar.has-avatar-image { overflow: hidden; padding: 0; }
 .profile-avatar img, .account-avatar img { width: 100%; height: 100%; display: block; border-radius: inherit; object-fit: cover; }
-.account-dialog { width: min(440px, calc(100vw - 30px)); max-height: min(86vh, 740px); overflow: auto; padding: 0; border: 1px solid #393a32; border-radius: 16px; background: #191a16; color: var(--text); box-shadow: 0 24px 80px #000a; animation: account-dialog-enter .22s ease-out both; }
+.account-dialog { width: min(440px, calc(100vw - 30px)); max-height: min(86vh, 740px); overflow: auto; padding: 0; border: 1px solid #393a32; border-radius: 16px; background: #191a16; color: var(--text); box-shadow: 0 24px 80px #000a; }
 .account-dialog::backdrop { background: #080907c2; backdrop-filter: blur(5px); }
 .account-dialog-inner { padding: 23px; }
+.guest-access-dialog { width: min(420px, calc(100vw - 30px)); padding: 0; border: 1px solid #393a32; border-radius: 16px; background: #191a16; color: var(--text); box-shadow: 0 24px 80px #000a; }
+.guest-access-dialog::backdrop { background: #080907c9; backdrop-filter: blur(6px); }
+.guest-access-content { padding: 26px; text-align: center; }
+.guest-access-content h2 { margin: 9px 0; color: #e5e1d6; font: 500 24px/1.25 "Playfair Display", serif; }
+.guest-access-content > p { margin: 0; color: #aaa99f; font-size: 11px; line-height: 1.7; }
+.guest-access-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 20px; }
+.guest-access-actions button { min-height: 40px; }
+.guest-continue-button { margin-top: 13px; }
+.guest-access-dialog[open] { animation: dialog-enter .28s cubic-bezier(.2, .75, .25, 1) both; }
+.guest-access-dialog::backdrop { animation: backdrop-enter .24s ease-out both; }
+body[data-reader-theme="light"] .guest-access-dialog { border-color: #d8d2c5; background: #fbfaf6; color: #29271f; }
+body[data-reader-theme="light"] .guest-access-content h2 { color: #29271f; }
+body[data-reader-theme="light"] .guest-access-content > p { color: #686459; }
+body[data-reader-theme="sepia"] .guest-access-dialog { border-color: #786d58; background: #eee2c9; color: #3e3427; }
+body[data-reader-theme="sepia"] .guest-access-content h2 { color: #3e3427; }
+body[data-reader-theme="sepia"] .guest-access-content > p { color: #6a5c47; }
 .account-heading { display: flex; align-items: start; justify-content: space-between; gap: 15px; }
 .account-heading h2 { margin: 7px 0 0; color: #e5e1d6; font: 500 24px "Playfair Display", serif; }
 .account-close { width: 32px; height: 32px; border: 1px solid #34352d; border-radius: var(--radius-control); background: transparent; color: #aaa99f; cursor: pointer; font-size: 20px; }
+#account-dialog .account-close { display: none; }
+body.auth-session-checking::before {
+  position: fixed;
+  z-index: 20;
+  inset: 0;
+  background: #10110f8c;
+  backdrop-filter: blur(4px);
+  content: "";
+}
 .account-intro { margin: 12px 0 20px; color: #9b9a90; font-size: 11px; line-height: 1.65; }
 .account-form { display: grid; gap: 9px; }
 .account-form > label { margin-top: 3px; color: #c6c2b6; font-size: 10px; }
 .account-form input:not([type="file"]) { width: 100%; min-height: 42px; padding: 0 12px; border: 1px solid #36372f; border-radius: var(--radius-control); background: #131410; color: var(--text); font-size: 12px; }
+.account-form-message { margin: 2px 0; color: #e0a18d; font-size: 10px; line-height: 1.5; }
+.account-password-hint { margin-top: -5px; color: #8f8c80; font-size: 9px; line-height: 1.5; }
+.account-switch { margin: 14px 0 0; color: #99978c; font-size: 10px; text-align: center; }
+.account-switch .account-text-button { display: inline; }
 .account-input-row { display: flex; align-items: center; gap: 10px; padding-left: 12px; border: 1px solid #36372f; border-radius: var(--radius-control); background: #131410; color: #aaa99f; }
 .account-input-row > span { font-size: 11px; }
 .account-input-row input:not([type="file"]) { min-width: 0; border: 0; background: transparent; }
@@ -208,7 +237,6 @@ a { color: inherit; text-decoration: none; }
 .account-edit-form > small { color: #77776e; font-size: 9px; line-height: 1.5; }
 .account-edit-actions { display: flex; align-items: center; justify-content: end; gap: 8px; margin-top: 7px; }
 .account-edit-actions .account-text-button { margin-right: auto; }
-@keyframes account-dialog-enter { from { opacity: 0; transform: translateY(10px) scale(.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
 .reader-bookmark-actions { display: flex; align-items: center; gap: 8px; }
 .collection-add-button { min-height: 32px; padding: 0 9px; border: 1px solid #3a4035; border-radius: var(--radius-control); background: #1d211c; color: #b9c5aa; cursor: pointer; font-size: 9px; white-space: nowrap; }
 .collection-add-button:hover { border-color: #657557; color: #d2dfc5; }
@@ -570,5 +598,141 @@ h1 em { color: var(--accent-bright); font-weight: 500; }
   to { background-position: 100% 50%; }
 }
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  *, *::before, *::after { scroll-behavior: auto !important; animation-delay: 0s !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-delay: 0s !important; transition-duration: .01ms !important; }
+}
+
+button, a, select, input, textarea {
+  transition: color .22s ease, background-color .22s ease, border-color .22s ease, box-shadow .22s ease, filter .22s ease, transform .22s ease, outline-color .22s ease;
+}
+button:not(:disabled):hover, a:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+button:not(:disabled):active, a:active {
+  transform: scale(.97);
+}
+.library-search:focus-within {
+  border-color: #75644b;
+  box-shadow: 0 0 0 3px #c9a87c18;
+}
+
+.story-card, .collection-card {
+  transition: border-color .28s ease, background .28s ease, box-shadow .28s ease, transform .28s cubic-bezier(.2, .75, .25, 1);
+}
+.story-card:hover, .collection-card:hover {
+  box-shadow: 0 10px 28px #0003;
+}
+.story-card:focus-within, .collection-card:focus-within {
+  border-color: #75644b;
+  box-shadow: 0 0 0 3px #c9a87c18, 0 10px 28px #0003;
+}
+.collection-card:hover {
+  transform: translateY(-3px);
+  border-color: #4b4638;
+}
+.story-cover {
+  transition: transform .3s cubic-bezier(.2, .75, .25, 1), box-shadow .3s ease;
+}
+.story-card:hover .story-cover {
+  transform: scale(1.035) rotate(-1deg);
+  box-shadow: 3px 7px 14px #0006;
+}
+
+.library-section { animation: section-enter .65s .04s cubic-bezier(.2, .7, .25, 1) both; }
+.collections-section { animation: section-enter .65s .12s cubic-bezier(.2, .7, .25, 1) both; }
+.reader-page { animation: section-enter .65s .2s cubic-bezier(.2, .7, .25, 1) both; }
+#story-grid > .story-card, #collections-content > *, #comments-list > .comment {
+  animation: item-enter .45s ease both;
+}
+#story-grid > .story-card:nth-child(2), #collections-content > :nth-child(2), #comments-list > .comment:nth-child(2) { animation-delay: .06s; }
+#story-grid > .story-card:nth-child(3), #collections-content > :nth-child(3), #comments-list > .comment:nth-child(3) { animation-delay: .12s; }
+#story-grid > .story-card:nth-child(4), #collections-content > :nth-child(4), #comments-list > .comment:nth-child(4) { animation-delay: .18s; }
+#story-grid > .story-card:nth-child(5), #collections-content > :nth-child(5), #comments-list > .comment:nth-child(5) { animation-delay: .24s; }
+#story-grid > .story-card:nth-child(6), #collections-content > :nth-child(6), #comments-list > .comment:nth-child(6) { animation-delay: .3s; }
+
+.story-favorite[aria-pressed="true"], #bookmark-button.is-saved, #player-bookmark.is-saved {
+  animation: interaction-pop .32s cubic-bezier(.2, .8, .3, 1);
+}
+.sidebar {
+  background: #141512ed;
+  backdrop-filter: blur(12px);
+}
+.side-link, .collection-link, .chapter-list > button, .collection-choice, #account-collection-list li {
+  transition: color .22s ease, background-color .22s ease, border-color .22s ease, transform .22s ease, box-shadow .22s ease;
+}
+.side-link:hover, .collection-link:hover, .chapter-list > button:not(:disabled):hover,
+.collection-choice:hover, #account-collection-list li:hover {
+  transform: translateX(2px);
+}
+.chapter-list > button.chapter-active:hover { transform: translateX(2px); }
+.side-link:active, .collection-link:active {
+  transform: translateX(2px) scale(.98);
+}
+.topbar {
+  background: linear-gradient(180deg, #10110fbb, #10110f66);
+  backdrop-filter: blur(12px);
+}
+.account-dialog, .collection-dialog {
+  transform-origin: center;
+  animation: dialog-enter .28s cubic-bezier(.2, .75, .25, 1) both;
+}
+.account-dialog::backdrop, .collection-dialog::backdrop {
+  animation: backdrop-enter .24s ease-out both;
+}
+.sleep-popover:not([hidden]) {
+  animation: popover-enter .2s cubic-bezier(.2, .75, .25, 1) both;
+}
+.reading-load-status:not([hidden]) {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  animation: section-enter .28s ease-out both;
+}
+.reading-load-status:not([hidden])::after {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, #dfc49c16 50%, transparent 65%);
+  background-size: 220% 100%;
+  animation: loading-shimmer 1.1s ease-out 1;
+  content: "";
+  pointer-events: none;
+}
+
+@supports (animation-timeline: view()) {
+  #story-grid > .story-card,
+  #collections-content > *,
+  #comments-list > .comment {
+    animation-timeline: view();
+    animation-range: entry 0% entry 35%;
+  }
+}
+@keyframes section-enter {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes item-enter {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes interaction-pop {
+  0% { transform: scale(.86); }
+  65% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+@keyframes dialog-enter {
+  from { opacity: 0; transform: translateY(12px) scale(.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes backdrop-enter {
+  from { background-color: transparent; }
+  to { background-color: #080907c2; }
+}
+@keyframes popover-enter {
+  from { opacity: 0; transform: translateY(6px) scale(.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes loading-shimmer {
+  from { background-position: 120% 0; }
+  to { background-position: -120% 0; }
 }
